@@ -32,6 +32,8 @@
     <modules>
         <module>keycloak-client</module>
         <module>keycloak-token-exchange</module>
+        <module>keycloak-otp</module>
+
     </modules>
 
 </project>
