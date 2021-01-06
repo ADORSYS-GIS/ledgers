@@ -16,8 +16,8 @@ import java.util.concurrent.ThreadLocalRandom;
  * the Keycloak admin console UI:
  * <p>
  * - Add email address to the necessary user.
- * - "Authentication" -> create copy of "Browser" -> "Actions" -> "Add executions" -> "Email OTP" -> "Save".
- * - "Bindings" -> "Browser flow" -> set the flow you have created before -> "Save".
+ * - "Authentication" - create copy of "Browser" - "Actions" - "Add executions" - "Email OTP" - "Save".
+ * - "Bindings" - "Browser flow" - set the flow you have created before - "Save".
  */
 @SuppressWarnings("PMD")
 public class EmailCodeAuthenticator implements Authenticator {
