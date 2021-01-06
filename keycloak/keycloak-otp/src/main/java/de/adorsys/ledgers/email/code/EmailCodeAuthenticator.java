@@ -19,6 +19,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * - "Authentication" -> create copy of "Browser" -> "Actions" -> "Add executions" -> "Email OTP" -> "Save".
  * - "Bindings" -> "Browser flow" -> set the flow you have created before -> "Save".
  */
+@SuppressWarnings("PMD")
 public class EmailCodeAuthenticator implements Authenticator {
 
     private static final String TPL_CODE = "login-email.ftl";
