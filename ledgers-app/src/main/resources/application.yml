@@ -72,7 +72,7 @@ spring:
     host: smtp.gmail.com
     port: 465
     username: 12345sandbox12345@gmail.com
-    password: Abcd123$
+    password: secret
     properties:
       mail:
         smtp:
