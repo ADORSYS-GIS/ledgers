@@ -69,14 +69,18 @@ spring:
       write_dates_as_timestamps: false
   mail:
     default-encoding: UTF-8
-    host: localhost
-    port: 2500
-    username: login
-    password: pass
+    host: smtp.gmail.com
+    port: 465
+    username: 12345sandbox12345@gmail.com
+    password: Abcd123$
     properties:
       mail:
         smtp:
-          auth: false
+          starttls:
+            enable: false
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+          auth: true
           ssl: true
           from: changeme
 
