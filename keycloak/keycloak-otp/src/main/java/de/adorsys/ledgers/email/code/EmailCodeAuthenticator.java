@@ -9,8 +9,13 @@ import org.jboss.logging.Logger;
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.AuthenticationFlowError;
 import org.keycloak.authentication.Authenticator;
+import org.keycloak.common.ClientConnection;
+import org.keycloak.events.EventBuilder;
 import org.keycloak.models.*;
 import org.keycloak.models.credential.PasswordCredentialModel;
+import org.keycloak.protocol.oidc.TokenManager;
+import org.keycloak.representations.AccessTokenResponse;
+import org.keycloak.services.util.DefaultClientSessionContext;
 import org.keycloak.sessions.AuthenticationSessionModel;
 import org.keycloak.theme.Theme;
 
@@ -35,11 +40,14 @@ public class EmailCodeAuthenticator implements Authenticator {
 
     private static final String TPL_CODE = "login-email.ftl";
 
+    private final TokenManager tokenManager = new TokenManager();
+
     @Override
     public void authenticate(AuthenticationFlowContext context) {
         AuthenticatorConfigModel config = context.getAuthenticatorConfig();
         UserModel user = context.getUser();
-
+        AccessTokenResponse tokenResponse = extracted(context).build();
+        LOG.info(tokenResponse.getToken());
         String userEmail = user.getEmail();
 
         int length = Integer.parseInt(config.getConfig().get("length"));
@@ -48,7 +56,7 @@ public class EmailCodeAuthenticator implements Authenticator {
         String code = generateAuthCode(length);
         AuthenticationSessionModel authSession = context.getAuthenticationSession();
         authSession.setAuthNote("code", code);
-        authSession.setAuthNote("ttl", Long.toString(System.currentTimeMillis() + (ttl * 1000)));
+        authSession.setAuthNote("ttl", Long.toString(System.currentTimeMillis() + (ttl * 1000L)));
 
         try {
             LOG.debug("Sending OTP: " + code + " to user with email: " + userEmail);
@@ -80,6 +88,18 @@ public class EmailCodeAuthenticator implements Authenticator {
                                      context.form().setError("emailAuthEmailNotSent", e.getMessage())
                                              .createErrorPage(Response.Status.INTERNAL_SERVER_ERROR));
         }
+    }
+
+    private TokenManager.AccessTokenResponseBuilder extracted(AuthenticationFlowContext context) {
+        RealmModel realm = context.getRealm();
+        ClientModel client = context.getAuthenticationSession().getClient();
+        KeycloakSession kks = context.getSession();
+        ClientConnection clientConnection = context.getConnection();
+        EventBuilder event = new EventBuilder(realm, kks, clientConnection);
+        UserSessionModel userSession = context.getSession().sessions().getUserSession(realm, context.getAuthenticationSession().getParentSession().getId());
+        ClientSessionContext clientSessionCtx = DefaultClientSessionContext.fromClientSessionScopeParameter(userSession.getAuthenticatedClientSessionByClient(client.getClientId()), kks);
+        return tokenManager.responseBuilder(realm, client, event, kks, userSession, clientSessionCtx)
+                       .generateAccessToken();
     }
 
     @Override
