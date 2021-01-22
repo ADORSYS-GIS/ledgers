@@ -4,6 +4,7 @@ public class ScaMethod {
     private String id;
     private String type;
     private String description;
+    private boolean isDecoupled;
 
     public ScaMethod() {
     }
@@ -12,6 +13,13 @@ public class ScaMethod {
         this.id = id;
         this.type = type;
         this.description = description;
+    }
+
+    public ScaMethod(String id, String type, String description, boolean isDecoupled) {
+        this.id = id;
+        this.type = type;
+        this.description = description;
+        this.isDecoupled = isDecoupled;
     }
 
     public String getId() {
@@ -37,4 +45,13 @@ public class ScaMethod {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public boolean isDecoupled() {
+        return isDecoupled;
+    }
+
+    public void setDecoupled(boolean decoupled) {
+        isDecoupled = decoupled;
+    }
+
 }

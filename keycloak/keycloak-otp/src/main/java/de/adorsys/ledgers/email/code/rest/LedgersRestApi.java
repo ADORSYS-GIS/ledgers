@@ -1,5 +1,6 @@
 package de.adorsys.ledgers.email.code.rest;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import de.adorsys.ledgers.email.code.domain.EmailRequest;
 import org.keycloak.broker.provider.util.SimpleHttp;
 import org.keycloak.models.KeycloakSession;
@@ -17,9 +18,9 @@ public class LedgersRestApi {
         }
     }
 
-    public static Object getUser(String url, KeycloakSession keycloakSession) {
+    public static JsonNode getUser(String url, KeycloakSession keycloakSession) {
         try {
-            return SimpleHttp.doGet(url, keycloakSession).asJson(Object.class);
+            return SimpleHttp.doGet(url, keycloakSession).asJson();
         } catch (IOException e) {
             return null; // TODO
         }

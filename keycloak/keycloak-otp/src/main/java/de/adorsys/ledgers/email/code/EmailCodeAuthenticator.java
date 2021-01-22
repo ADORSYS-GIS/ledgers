@@ -46,8 +46,6 @@ public class EmailCodeAuthenticator implements Authenticator {
     public void authenticate(AuthenticationFlowContext context) {
         AuthenticatorConfigModel config = context.getAuthenticatorConfig();
         UserModel user = context.getUser();
-        AccessTokenResponse tokenResponse = extracted(context).build();
-        LOG.info(tokenResponse.getToken());
         String userEmail = user.getEmail();
 
         int length = Integer.parseInt(config.getConfig().get("length"));
@@ -66,20 +64,7 @@ public class EmailCodeAuthenticator implements Authenticator {
 
             LedgersRestApi.sendEmail(message, "http://localhost:8088/fapi/email", session);
 
-            TokenRequest tokenRequest = new TokenRequest();
-            tokenRequest.setGrant_type("password");
-            tokenRequest.setUsername(user.getUsername());
-
-            PassProvider passProvider = new PassProvider(session);
-            PasswordCredentialModel pcd = passProvider.getPassword(context.getRealm(), user);
-
-            // TODO: Password cannot be obtained - only hash :(
-            tokenRequest.setPassword(pcd.getPasswordSecretData().getValue());
-            tokenRequest.setClient_id("admin-cli");
-
-            JsonNode tokenNode = KeycloakRestApi.getToken("http://localhost:8080/auth/realms/master/protocol/openid-connect/token", tokenRequest, session);
-
-//            Object userRetrieved = LedgersRestApi.getUser("http://localhost:8088/users/me", session);
+            JsonNode userRetrieved = LedgersRestApi.getUser("http://localhost:8088/users/me", session);
 
             context.challenge(context.form().setAttribute("realm", context.getRealm()).createForm(TPL_CODE));
         } catch (Exception e) {
@@ -88,18 +73,6 @@ public class EmailCodeAuthenticator implements Authenticator {
                                      context.form().setError("emailAuthEmailNotSent", e.getMessage())
                                              .createErrorPage(Response.Status.INTERNAL_SERVER_ERROR));
         }
-    }
-
-    private TokenManager.AccessTokenResponseBuilder extracted(AuthenticationFlowContext context) {
-        RealmModel realm = context.getRealm();
-        ClientModel client = context.getAuthenticationSession().getClient();
-        KeycloakSession kks = context.getSession();
-        ClientConnection clientConnection = context.getConnection();
-        EventBuilder event = new EventBuilder(realm, kks, clientConnection);
-        UserSessionModel userSession = context.getSession().sessions().getUserSession(realm, context.getAuthenticationSession().getParentSession().getId());
-        ClientSessionContext clientSessionCtx = DefaultClientSessionContext.fromClientSessionScopeParameter(userSession.getAuthenticatedClientSessionByClient(client.getClientId()), kks);
-        return tokenManager.responseBuilder(realm, client, event, kks, userSession, clientSessionCtx)
-                       .generateAccessToken();
     }
 
     @Override
