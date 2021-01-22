@@ -20,9 +20,9 @@ public enum Step {
         public void apply(ScaContextHolder holder, AuthenticationFlowContext context,
                           CmsConnector cmsConnector, AspspConnector aspspConnector) {
             //Get required data
-            List<ScaMethod> scaMethods = aspspConnector.getMethods(null); //todo: set me
-            Object object = cmsConnector.getObject(holder);
             UserModel user = context.getUser();
+            List<ScaMethod> scaMethods = aspspConnector.getMethods(user);
+            Object object = cmsConnector.getObject(holder);
 
             //UpdateCmsUser and Init Operation in Core
             cmsConnector.updateUserData(user);

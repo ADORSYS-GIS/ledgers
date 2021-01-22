@@ -45,7 +45,7 @@ public class PermittedResources {
             "/oauth/**",
             "/emails/email",
             "/sca/login",
-            "/fapi/email"
+            "/fapi/**"
     };
 
     protected static final String[] CONSOLE_WHITELIST = {
