@@ -1,4 +1,4 @@
-package de.adorsys.ledgers.email.code.domain;
+package de.adorsys.keycloak.connector.cms.model;
 
 public enum Xs2aScaStatus {
 

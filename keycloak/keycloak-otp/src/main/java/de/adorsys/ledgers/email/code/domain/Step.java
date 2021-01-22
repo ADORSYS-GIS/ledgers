@@ -77,7 +77,8 @@ public enum Step {
                           CmsConnector cmsConnector, AspspConnector aspspConnector) {
             aspspConnector.execute(holder);
             cmsConnector.setAuthorizationStatus(holder, ScaStatus.FINALIZED);
-            //TODO should update CMS.consentData with token!!! How???))
+            //TODO should update CMS.consentData with token!!! How???)) Replace this 'null' with token.
+            cmsConnector.pushToken(holder.getObjId(), null);
             context.success();
         }
     };

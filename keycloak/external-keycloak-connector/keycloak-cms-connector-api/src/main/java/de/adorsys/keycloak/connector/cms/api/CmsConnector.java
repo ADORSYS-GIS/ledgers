@@ -13,5 +13,5 @@ public interface CmsConnector {
 
     void updateUserData(UserModel user);
 
-    void pushToken(AccessToken accessToken);
+    void pushToken(String objId, AccessToken accessToken);
 }
