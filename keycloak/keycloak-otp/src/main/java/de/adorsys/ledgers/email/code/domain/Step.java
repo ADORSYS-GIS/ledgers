@@ -1,7 +1,9 @@
 package de.adorsys.ledgers.email.code.domain;
 
-import de.adorsys.ledgers.email.code.api.CmsConnector;
-import de.adorsys.ledgers.email.code.api.CoreConnector;
+import de.adorsys.keycloak.connector.aspsp.api.AspspConnector;
+import de.adorsys.keycloak.connector.cms.api.CmsConnector;
+import de.adorsys.keycloak.otp.core.domain.ScaMethod;
+import de.adorsys.keycloak.otp.core.domain.ScaStatus;
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.AuthenticationFlowError;
 import org.keycloak.models.UserModel;
@@ -10,20 +12,21 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 import static de.adorsys.ledgers.email.code.domain.ScaConstants.*;
-import static de.adorsys.ledgers.email.code.domain.ScaStatus.*;
+import static de.adorsys.keycloak.otp.core.domain.ScaStatus.*;
 
 public enum Step {
     CONFIRM_OBJ {
         @Override
-        public void apply(ScaContextHolder holder, AuthenticationFlowContext context, CmsConnector cmsConnector, CoreConnector coreConnector) {
+        public void apply(ScaContextHolder holder, AuthenticationFlowContext context,
+                          CmsConnector cmsConnector, AspspConnector aspspConnector) {
             //Get required data
-            List<ScaMethod> scaMethods = coreConnector.getMethods();
+            List<ScaMethod> scaMethods = aspspConnector.getMethods(null); //todo: set me
             Object object = cmsConnector.getObject(holder);
             UserModel user = context.getUser();
 
             //UpdateCmsUser and Init Operation in Core
             cmsConnector.updateUserData(user);
-            coreConnector.initObj(holder, object);
+            aspspConnector.initObj(holder, object);
 
             //Pick corresponding ScaStatus and View to display
             ScaStatus status = scaMethods.isEmpty() ? EXEMPTED : IDENTIFIED;
@@ -35,20 +38,22 @@ public enum Step {
     },
     METHOD_SELECTED {
         @Override
-        public void apply(ScaContextHolder holder, AuthenticationFlowContext context, CmsConnector cmsConnector, CoreConnector coreConnector) {
+        public void apply(ScaContextHolder holder, AuthenticationFlowContext context,
+                          CmsConnector cmsConnector, AspspConnector aspspConnector) {
             String methodId = context.getHttpRequest().getDecodedFormParameters().getFirst("methodId");
 
             //StartSca and SelectMethod, update Cms with status
-            coreConnector.selectMethod(holder, methodId);
+            aspspConnector.selectMethod(holder, methodId);
             cmsConnector.setAuthorizationStatus(holder, ScaStatus.METHOD_SELECTED);
             context.challenge(context.form().setAttribute(REALM, context.getRealm()).createForm(CODE_INPUT));
         }
     },
     CODE_VALIDATION {
         @Override
-        public void apply(ScaContextHolder holder, AuthenticationFlowContext context, CmsConnector cmsConnector, CoreConnector coreConnector) {
+        public void apply(ScaContextHolder holder, AuthenticationFlowContext context,
+                          CmsConnector cmsConnector, AspspConnector aspspConnector) {
             String code = context.getHttpRequest().getDecodedFormParameters().getFirst("code");
-            boolean isValid = coreConnector.validateCode(holder, code);
+            boolean isValid = aspspConnector.validateCode(holder, code);
             if (isValid) {
                 cmsConnector.setAuthorizationStatus(holder, VALIDATED);
                 context.challenge(context.form().setAttribute(REALM, context.getRealm()).createForm(REDIRECT_VIEW));
@@ -60,20 +65,23 @@ public enum Step {
     },
     REJECTED {
         @Override
-        public void apply(ScaContextHolder holder, AuthenticationFlowContext context, CmsConnector cmsConnector, CoreConnector coreConnector) {
+        public void apply(ScaContextHolder holder, AuthenticationFlowContext context,
+                          CmsConnector cmsConnector, AspspConnector aspspConnector) {
             context.failureChallenge(AuthenticationFlowError.INTERNAL_ERROR,
                                      context.form().createErrorPage(Response.Status.INTERNAL_SERVER_ERROR));
         }
     },
     FINALIZED {
         @Override
-        public void apply(ScaContextHolder holder, AuthenticationFlowContext context, CmsConnector cmsConnector, CoreConnector coreConnector) {
-            coreConnector.execute(holder);
+        public void apply(ScaContextHolder holder, AuthenticationFlowContext context,
+                          CmsConnector cmsConnector, AspspConnector aspspConnector) {
+            aspspConnector.execute(holder);
             cmsConnector.setAuthorizationStatus(holder, ScaStatus.FINALIZED);
             //TODO should update CMS.consentData with token!!! How???))
             context.success();
         }
     };
 
-    public abstract void apply(ScaContextHolder holder, AuthenticationFlowContext context, CmsConnector cmsConnector, CoreConnector coreConnector);
+    public abstract void apply(ScaContextHolder holder, AuthenticationFlowContext context,
+                               CmsConnector cmsConnector, AspspConnector aspspConnector);
 }

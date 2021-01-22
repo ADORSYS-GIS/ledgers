@@ -14,7 +14,7 @@ public class KeycloakRestApi {
             return SimpleHttp.doPost(url, keycloakSession)
                            .header("Content-Type", "application/x-www-form-urlencoded")
                            .param("grant_type", tokenRequest.getGrant_type())
-                           .param("username", tokenRequest.getPassword())
+                           .param("username", tokenRequest.getUsername())
                            .param("password", tokenRequest.getPassword())
                            .param("client_id", tokenRequest.getClient_id())
                            .asJson();

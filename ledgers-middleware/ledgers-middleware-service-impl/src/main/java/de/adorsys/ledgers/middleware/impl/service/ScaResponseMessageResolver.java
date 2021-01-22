@@ -45,6 +45,9 @@ public class ScaResponseMessageResolver {
     }
 
     public String updateMessage(String template, SCAOperationBO operation) {
+        if (template == null) {
+            return null;
+        }
         if (SCAMETHODSELECTED.equals(operation.getScaStatus())) {
             return String.format(template, operation.getTan());
         } else if (FINALISED.equals(operation.getScaStatus())) {

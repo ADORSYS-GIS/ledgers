@@ -29,7 +29,7 @@
         <module>ledgers-security</module>
 		<module>ledgers-jaxb-api</module>
 		<module>keycloak</module>
-    </modules>
+	</modules>
 
 	<packaging>pom</packaging>
 
@@ -156,7 +156,8 @@
 			**/*Provider*.java,
 			**/*Test*.java,
 			**/api/**/*,
-			**/keycloak/client/model/**/*
+			**/keycloak/client/model/**/*,
+			**/keycloak-modelbank-theme/**/*
 		</sonar.coverage.exclusions>
 		<sonar.moduleName>${project.artifactId}</sonar.moduleName>
 

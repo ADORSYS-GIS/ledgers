@@ -1,4 +1,4 @@
-package de.adorsys.ledgers.email.code.domain;
+package de.adorsys.keycloak.otp.core.domain;
 
 public class ScaMethod {
     private String id;

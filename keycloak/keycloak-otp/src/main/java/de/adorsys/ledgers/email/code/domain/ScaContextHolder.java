@@ -1,8 +1,9 @@
 package de.adorsys.ledgers.email.code.domain;
 
+import de.adorsys.keycloak.otp.core.ScaDataContext;
 import org.jboss.resteasy.spi.HttpRequest;
 
-public class ScaContextHolder {
+public class ScaContextHolder implements ScaDataContext {
     private String objId;
     private String authId;
     private String objType;
@@ -15,6 +16,7 @@ public class ScaContextHolder {
         this.step = Step.valueOf(request.getDecodedFormParameters().getFirst("step "));
     }
 
+    @Override
     public String getObjId() {
         return objId;
     }
@@ -23,6 +25,7 @@ public class ScaContextHolder {
         this.objId = objId;
     }
 
+    @Override
     public String getAuthId() {
         return authId;
     }
@@ -31,6 +34,7 @@ public class ScaContextHolder {
         this.authId = authId;
     }
 
+    @Override
     public String getObjType() {
         return objType;
     }

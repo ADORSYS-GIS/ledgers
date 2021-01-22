@@ -1,11 +1,12 @@
 package de.adorsys.ledgers.email.code.api;
 
+import de.adorsys.keycloak.otp.core.domain.ScaMethod;
 import de.adorsys.ledgers.email.code.domain.ScaContextHolder;
-import de.adorsys.ledgers.email.code.domain.ScaMethod;
 import org.keycloak.models.UserModel;
 
 import java.util.List;
 
+@Deprecated
 public interface CoreConnector {
     List<ScaMethod> getMethods(UserModel user);
 

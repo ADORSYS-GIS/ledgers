@@ -15,30 +15,27 @@
 
     <parent>
         <groupId>de.adorsys.ledgers</groupId>
-        <artifactId>ledgers</artifactId>
+        <artifactId>keycloak</artifactId>
         <version>4.5-SNAPSHOT</version>
-        <relativePath>..</relativePath>
     </parent>
 
-    <artifactId>keycloak</artifactId>
-    <name>keycloak</name>
+    <artifactId>external-keycloak-connector</artifactId>
+    <name>external-keycloak-connector</name>
 
     <packaging>pom</packaging>
 
     <properties>
-        <ruleset.basedir>..</ruleset.basedir>
+        <ruleset.basedir>../..</ruleset.basedir>
     </properties>
 
     <modules>
-        <module>keycloak-client</module>
-        <module>keycloak-token-exchange</module>
+        <!-- connector to CMS-->
+        <module>keycloak-cms-connector-api</module>
+        <module>keycloak-cms-connector-impl</module>
 
-        <module>keycloak-modelbank-theme</module>
-
-        <module>keycloak-otp</module>
-        <module>keycloak-otp-core</module>
-        <module>external-keycloak-connector</module>
-
+        <!-- connector to ASPSP-->
+        <module>keycloak-aspsp-connector-api</module>
+        <module>keycloak-ledgers-connector-impl</module>
     </modules>
 
 </project>

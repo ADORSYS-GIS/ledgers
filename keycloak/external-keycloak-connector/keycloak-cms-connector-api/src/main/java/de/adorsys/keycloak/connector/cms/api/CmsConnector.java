@@ -1,15 +1,15 @@
-package de.adorsys.ledgers.email.code.api;
+package de.adorsys.keycloak.connector.cms.api;
 
+import de.adorsys.keycloak.otp.core.ScaDataContext;
 import de.adorsys.keycloak.otp.core.domain.ScaStatus;
-import de.adorsys.ledgers.email.code.domain.ScaContextHolder;
 import org.keycloak.models.UserModel;
 import org.keycloak.representations.AccessToken;
 
-@Deprecated
 public interface CmsConnector {
-    Object getObject(ScaContextHolder holder);
 
-    void setAuthorizationStatus(ScaContextHolder holder, ScaStatus identified);
+    Object getObject(ScaDataContext scaDataContext);
+
+    void setAuthorizationStatus(ScaDataContext scaDataContext, ScaStatus scaStatus);
 
     void updateUserData(UserModel user);
 

@@ -7,4 +7,7 @@ public class ScaConstants {
     public static final String REDIRECT_VIEW = "redirect_view.ftl";
 
     public static final String REALM = "realm";
+
+    private ScaConstants() {
+    }
 }
