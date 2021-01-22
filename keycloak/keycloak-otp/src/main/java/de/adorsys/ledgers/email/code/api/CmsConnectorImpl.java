@@ -1,9 +1,9 @@
 package de.adorsys.ledgers.email.code.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import de.adorsys.keycloak.otp.core.domain.ScaStatus;
 import de.adorsys.ledgers.email.code.domain.CmsTokenRequest;
 import de.adorsys.ledgers.email.code.domain.ScaContextHolder;
-import de.adorsys.ledgers.email.code.domain.ScaStatus;
 import de.adorsys.ledgers.email.code.domain.Xs2aScaStatus;
 import org.apache.commons.lang.StringUtils;
 import org.jboss.logging.Logger;
