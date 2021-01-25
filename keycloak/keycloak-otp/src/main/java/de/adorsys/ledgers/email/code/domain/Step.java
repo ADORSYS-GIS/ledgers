@@ -26,7 +26,7 @@ public enum Step {
 
             //UpdateCmsUser and Init Operation in Core
             cmsConnector.updateUserData(user);
-            aspspConnector.initObj(holder, object);
+            aspspConnector.initObj(holder, object, user.getUsername());
 
             //Pick corresponding ScaStatus and View to display
             ScaStatus status = scaMethods.isEmpty() ? EXEMPTED : IDENTIFIED;
@@ -43,7 +43,7 @@ public enum Step {
             String methodId = context.getHttpRequest().getDecodedFormParameters().getFirst("methodId");
 
             //StartSca and SelectMethod, update Cms with status
-            aspspConnector.selectMethod(holder, methodId);
+            aspspConnector.selectMethod(holder, methodId, context.getUser().getUsername());
             cmsConnector.setAuthorizationStatus(holder, ScaStatus.METHOD_SELECTED);
             context.challenge(context.form().setAttribute(REALM, context.getRealm()).createForm(CODE_INPUT));
         }
@@ -53,7 +53,7 @@ public enum Step {
         public void apply(ScaContextHolder holder, AuthenticationFlowContext context,
                           CmsConnector cmsConnector, AspspConnector aspspConnector) {
             String code = context.getHttpRequest().getDecodedFormParameters().getFirst("code");
-            boolean isValid = aspspConnector.validateCode(holder, code);
+            boolean isValid = aspspConnector.validateCode(holder, code, context.getUser().getUsername());
             if (isValid) {
                 cmsConnector.setAuthorizationStatus(holder, VALIDATED);
                 context.challenge(context.form().setAttribute(REALM, context.getRealm()).createForm(REDIRECT_VIEW));
@@ -75,7 +75,7 @@ public enum Step {
         @Override
         public void apply(ScaContextHolder holder, AuthenticationFlowContext context,
                           CmsConnector cmsConnector, AspspConnector aspspConnector) {
-            aspspConnector.execute(holder);
+            aspspConnector.execute(holder, context.getUser().getUsername());
             cmsConnector.setAuthorizationStatus(holder, ScaStatus.FINALIZED);
             //TODO should update CMS.consentData with token!!! How???)) Replace this 'null' with token.
             cmsConnector.pushToken(holder.getObjId(), null);

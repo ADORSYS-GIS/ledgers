@@ -35,11 +35,12 @@
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-server-spi</artifactId>
             <version>${keycloak-adapter-bom.version}</version>
-        </dependency>        <dependency>
-        <groupId>org.keycloak</groupId>
-        <artifactId>keycloak-services</artifactId>
-        <version>${keycloak-adapter-bom.version}</version>
-    </dependency>
+        </dependency>
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-services</artifactId>
+            <version>${keycloak-adapter-bom.version}</version>
+        </dependency>
 
     </dependencies>
 

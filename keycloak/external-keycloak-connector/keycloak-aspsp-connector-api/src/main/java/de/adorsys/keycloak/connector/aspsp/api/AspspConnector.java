@@ -10,11 +10,11 @@ public interface AspspConnector {
 
     List<ScaMethod> getMethods(UserModel user);
 
-    void initObj(ScaDataContext scaDataContext, Object object);
+    void initObj(ScaDataContext scaDataContext, Object object, String login);
 
-    void selectMethod(ScaDataContext scaDataContext, String methodId);
+    void selectMethod(ScaDataContext scaDataContext, String methodId, String login);
 
-    boolean validateCode(ScaDataContext scaDataContext, String code);
+    boolean validateCode(ScaDataContext scaDataContext, String code, String login);
 
-    void execute(ScaDataContext scaDataContext);
+    void execute(ScaDataContext scaDataContext, String login);
 }
