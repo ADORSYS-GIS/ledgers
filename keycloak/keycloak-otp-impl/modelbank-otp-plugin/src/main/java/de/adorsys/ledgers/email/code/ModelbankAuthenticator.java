@@ -20,9 +20,7 @@ public class ModelbankAuthenticator implements Authenticator {
 
     @Override
     public void authenticate(AuthenticationFlowContext context) {
-        //TODO Check login+pwd valid, is it done in previous steps?
-
-        CmsConnector connector = new CmsConnectorImpl(context.getSession());
+        CmsConnector cmsConnector = new CmsConnectorImpl(context.getSession());
 
         ScaContextHolder scaContextHolder = new ScaContextHolder(context.getHttpRequest());
         Object object = cmsConnector.getObject(scaContextHolder);
@@ -43,7 +41,7 @@ public class ModelbankAuthenticator implements Authenticator {
 
     @Override
     public boolean configuredFor(KeycloakSession keycloakSession, RealmModel realmModel, UserModel userModel) {
-        return false;
+        return true;
     }
 
     @Override

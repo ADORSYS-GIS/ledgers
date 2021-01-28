@@ -46,7 +46,7 @@ public class ModelbankAuthenticatorFactory implements AuthenticatorFactory, Serv
 
     @Override
     public boolean isUserSetupAllowed() {
-        return false;
+        return true;
     }
 
     @Override
