@@ -1,21 +1,16 @@
 package de.adorsys.ledgers.email.code;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import de.adorsys.keycloak.connector.cms.CmsConnectorImpl;
 import de.adorsys.ledgers.email.code.domain.EmailRequest;
-import de.adorsys.ledgers.email.code.domain.TokenRequest;
-import de.adorsys.ledgers.email.code.rest.KeycloakRestApi;
+import de.adorsys.ledgers.email.code.domain.ScaContextHolder;
 import de.adorsys.ledgers.email.code.rest.LedgersRestApi;
 import org.jboss.logging.Logger;
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.AuthenticationFlowError;
 import org.keycloak.authentication.Authenticator;
-import org.keycloak.common.ClientConnection;
-import org.keycloak.events.EventBuilder;
 import org.keycloak.models.*;
-import org.keycloak.models.credential.PasswordCredentialModel;
 import org.keycloak.protocol.oidc.TokenManager;
-import org.keycloak.representations.AccessTokenResponse;
-import org.keycloak.services.util.DefaultClientSessionContext;
 import org.keycloak.sessions.AuthenticationSessionModel;
 import org.keycloak.theme.Theme;
 
@@ -48,10 +43,14 @@ public class EmailCodeAuthenticator implements Authenticator {
         UserModel user = context.getUser();
         String userEmail = user.getEmail();
 
+//        ScaContextHolder scaContextHolder = new ScaContextHolder(context.getHttpRequest());
+//        CmsConnectorImpl connector = new CmsConnectorImpl(context.getSession());
+
         int length = Integer.parseInt(config.getConfig().get("length"));
         int ttl = Integer.parseInt(config.getConfig().get("ttl"));
 
-        String code = generateAuthCode(length);
+//        String code = generateAuthCode(length);
+        String code = "1111";
         AuthenticationSessionModel authSession = context.getAuthenticationSession();
         authSession.setAuthNote("code", code);
         authSession.setAuthNote("ttl", Long.toString(System.currentTimeMillis() + (ttl * 1000L)));
@@ -114,7 +113,7 @@ public class EmailCodeAuthenticator implements Authenticator {
 
     @Override
     public boolean requiresUser() {
-        return true;
+        return false;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package de.adorsys.ledgers.email.code;
 
 import de.adorsys.keycloak.connector.aspsp.api.AspspConnector;
+import de.adorsys.keycloak.connector.cms.CmsConnectorImpl;
 import de.adorsys.keycloak.connector.cms.api.CmsConnector;
 import de.adorsys.ledgers.email.code.domain.ScaContextHolder;
 import org.keycloak.authentication.AuthenticationFlowContext;
@@ -12,7 +13,7 @@ import org.keycloak.models.UserModel;
 import static de.adorsys.ledgers.email.code.domain.ScaConstants.DISPLAY_OBJ;
 import static de.adorsys.ledgers.email.code.domain.ScaConstants.REALM;
 
-public class CustomAuthenticator implements Authenticator {
+public class ModelbankAuthenticator implements Authenticator {
 
     private final CmsConnector cmsConnector = null; //TODO STUB HERE!!!
     private final AspspConnector aspspConnector = null; //TODO STUB HERE!!!
@@ -20,6 +21,9 @@ public class CustomAuthenticator implements Authenticator {
     @Override
     public void authenticate(AuthenticationFlowContext context) {
         //TODO Check login+pwd valid, is it done in previous steps?
+
+        CmsConnector connector = new CmsConnectorImpl(context.getSession());
+
         ScaContextHolder scaContextHolder = new ScaContextHolder(context.getHttpRequest());
         Object object = cmsConnector.getObject(scaContextHolder);
         //TODO view add object

@@ -55,7 +55,7 @@ public enum Step {
             String code = context.getHttpRequest().getDecodedFormParameters().getFirst("code");
             boolean isValid = aspspConnector.validateCode(holder, code, context.getUser().getUsername());
             if (isValid) {
-                cmsConnector.setAuthorizationStatus(holder, VALIDATED);
+//                cmsConnector.setAuthorizationStatus(holder, VALIDATED);
                 context.challenge(context.form().setAttribute(REALM, context.getRealm()).createForm(REDIRECT_VIEW));
             } else {
                 context.failureChallenge(AuthenticationFlowError.INTERNAL_ERROR,
