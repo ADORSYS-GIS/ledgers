@@ -31,59 +31,12 @@
 
     </properties>
 
-<!--    <build>-->
-<!--        <plugins>-->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-jar-plugin</artifactId>-->
-<!--            </plugin>-->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-assembly-plugin</artifactId>-->
-<!--            </plugin>-->
-<!--        </plugins>-->
-
-<!--        <pluginManagement>-->
-<!--            <plugins>-->
-<!--                <plugin>-->
-<!--                    <groupId>org.apache.maven.plugins</groupId>-->
-<!--                    <artifactId>maven-assembly-plugin</artifactId>-->
-<!--                    <version>${maven.assembly.plugin.version}</version>-->
-<!--                    <configuration>-->
-<!--                        <descriptorRefs>-->
-<!--                            <descriptorRef>jar-with-dependencies</descriptorRef>-->
-<!--                        </descriptorRefs>-->
-<!--                        &lt;!&ndash;                    <archive>&ndash;&gt;-->
-<!--                        &lt;!&ndash;                        <manifest>&ndash;&gt;-->
-<!--                        &lt;!&ndash;                            <mainClass>Main</mainClass>&ndash;&gt;-->
-<!--                        &lt;!&ndash;                        </manifest>&ndash;&gt;-->
-<!--                        &lt;!&ndash;                    </archive>&ndash;&gt;-->
-<!--                    </configuration>-->
-<!--                    <executions>-->
-<!--                        <execution>-->
-<!--                            <id>make-assembly</id>-->
-<!--                            <phase>package</phase>-->
-<!--                            <goals>-->
-<!--                                <goal>single</goal>-->
-<!--                            </goals>-->
-<!--                        </execution>-->
-<!--                    </executions>-->
-<!--                </plugin>-->
-<!--            </plugins>-->
-<!--        </pluginManagement>-->
-<!--    </build>-->
-
-<!--    <modules>-->
-<!--        <module>keycloak-client</module>-->
-<!--        <module>keycloak-token-exchange</module>-->
-
-<!--        <module>keycloak-modelbank-theme</module>-->
-
-<!--        <module>keycloak-otp</module>-->
-<!--        <module>keycloak-otp-core</module>-->
-<!--        <module>external-keycloak-connector</module>-->
-
-<!--    </modules>-->
+    <modules>
+        <module>keycloak-client</module>
+        <module>keycloak-token-exchange</module>
+        <module>keycloak-modelbank-theme</module>
+        <module>keycloak-otp-impl</module>
+    </modules>
 
 
 </project>
