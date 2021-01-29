@@ -13,7 +13,7 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.UserModel;
 
 import java.io.IOException;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LedgersConnectorImpl implements AspspConnector {
@@ -62,7 +62,7 @@ public class LedgersConnectorImpl implements AspspConnector {
     }
 
     private List<ScaMethod> getMethodsFromLedgers(String login) {
-        List<ScaMethod> methods = Collections.emptyList();
+        List<ScaMethod> methods = new ArrayList<>();
         JsonNode response;
 
         try {
@@ -72,13 +72,12 @@ public class LedgersConnectorImpl implements AspspConnector {
             return null; // TODO:
         }
 
-        while (response.elements().hasNext()) {
-            JsonNode element = response.elements().next();
+        for (JsonNode jsonNode : response) {
             ScaMethod scaMethod = new ScaMethod();
-            scaMethod.setId(element.get("id").asText());
-            scaMethod.setDecoupled(element.get("decoupled").asBoolean());
-            scaMethod.setType(element.get("scaMethod").asText());
-            scaMethod.setDescription(element.get("methodValue").asText());
+            scaMethod.setId(jsonNode.get("id").asText());
+            scaMethod.setDecoupled(jsonNode.get("decoupled").asBoolean());
+            scaMethod.setType(jsonNode.get("scaMethod").asText());
+            scaMethod.setDescription(jsonNode.get("methodValue").asText());
 
             methods.add(scaMethod);
         }
