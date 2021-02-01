@@ -1,6 +1,5 @@
 package de.adorsys.ledgers.email.code;
 
-import com.sun.xml.bind.v2.TODO;
 import de.adorsys.keycloak.connector.aspsp.LedgersConnectorImpl;
 import de.adorsys.keycloak.connector.aspsp.api.AspspConnector;
 import de.adorsys.keycloak.connector.cms.api.CmsConnector;
@@ -15,22 +14,35 @@ import org.keycloak.models.UserModel;
 
 import java.util.List;
 
-import static de.adorsys.ledgers.email.code.domain.ScaConstants.DISPLAY_OBJ;
 import static de.adorsys.ledgers.email.code.domain.ScaConstants.REALM;
+import static de.adorsys.ledgers.email.code.domain.ScaConstants.SELECT_METHOD;
 
 public class ModelbankAuthenticator implements Authenticator {
+
+    public ModelbankAuthenticator() {
+        this.ledgersConnector = new LedgersConnectorImpl();
+    }
+
+    private LedgersConnectorImpl ledgersConnector;
 
     private final CmsConnector cmsConnector = null; //TODO STUB HERE!!!
     private final AspspConnector aspspConnector = null; //TODO STUB HERE!!!
 
     @Override
     public void authenticate(AuthenticationFlowContext context) {
+
 //        CmsConnector cmsConnector = new CmsConnectorImpl(context.getSession());
 //
-//        ScaContextHolder scaContextHolder = new ScaContextHolder(context.getHttpRequest());
+        ScaContextHolder scaContextHolder = new ScaContextHolder(context.getHttpRequest());
 //        Object object = cmsConnector.getObject(scaContextHolder);
 //        //TODO view add object
-        context.challenge(context.form().setAttribute(REALM, context.getRealm()).createForm(DISPLAY_OBJ));
+        ledgersConnector.setKeycloakSession(context.getSession());
+        List<ScaMethod> scaMethods = ledgersConnector.getMethods(context.getUser());
+
+        context.challenge(context.form().setAttribute(REALM, context.getRealm())
+                                  .setAttribute("javaString", "test string!")
+                                  .setAttribute("scaMethods", scaMethods.toArray())
+                                  .createForm(SELECT_METHOD));
     }
 
     @Override
@@ -46,7 +58,7 @@ public class ModelbankAuthenticator implements Authenticator {
 
     @Override
     public boolean configuredFor(KeycloakSession keycloakSession, RealmModel realmModel, UserModel userModel) {
-        LedgersConnectorImpl ledgersConnector = new LedgersConnectorImpl(keycloakSession);
+        ledgersConnector.setKeycloakSession(keycloakSession);
         List<ScaMethod> methodsForUser = ledgersConnector.getMethods(userModel);
         return CollectionUtils.isNotEmpty(methodsForUser);
         // TODO: think about exempted

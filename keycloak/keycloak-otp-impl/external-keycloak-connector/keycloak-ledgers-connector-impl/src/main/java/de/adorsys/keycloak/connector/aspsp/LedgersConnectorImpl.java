@@ -22,9 +22,9 @@ public class LedgersConnectorImpl implements AspspConnector {
 
     private KeycloakSession keycloakSession;
 
-    public LedgersConnectorImpl(KeycloakSession keycloakSession) {
-        this.keycloakSession = keycloakSession;
-    }
+//    public LedgersConnectorImpl(KeycloakSession keycloakSession) {
+//        this.keycloakSession = keycloakSession;
+//    }
 
     private static final String LEDGERS_BASE_URL = "http://localhost:8088/";
 
@@ -171,4 +171,7 @@ public class LedgersConnectorImpl implements AspspConnector {
         throw new IllegalArgumentException("Unsupported object type: " + objectType);
     }
 
+    public void setKeycloakSession(KeycloakSession keycloakSession) {
+        this.keycloakSession = keycloakSession;
+    }
 }
