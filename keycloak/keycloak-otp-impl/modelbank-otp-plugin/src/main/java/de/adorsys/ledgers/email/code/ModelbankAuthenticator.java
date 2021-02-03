@@ -33,14 +33,22 @@ public class ModelbankAuthenticator implements Authenticator {
 
 //        CmsConnector cmsConnector = new CmsConnectorImpl(context.getSession());
 //
-        ScaContextHolder scaContextHolder = new ScaContextHolder(context.getHttpRequest());
+//        ScaContextHolder scaContextHolder = new ScaContextHolder(context.getHttpRequest());
 //        Object object = cmsConnector.getObject(scaContextHolder);
 //        //TODO view add object
         ledgersConnector.setKeycloakSession(context.getSession());
         List<ScaMethod> scaMethods = ledgersConnector.getMethods(context.getUser());
 
+        ScaMethod a = new ScaMethod();
+        a.setId("OTP");
+        a.setType("OTP");
+        a.setDescription("OTP");
+        a.setDecoupled(true);
+
+        scaMethods.add(a);
+
         context.challenge(context.form().setAttribute(REALM, context.getRealm())
-                                  .setAttribute("javaString", "test string!")
+                                  .setAttribute("postRequestUrl", "http://localhost:8080/auth/realms/ledgers/modelbank/method/select")
                                   .setAttribute("scaMethods", scaMethods.toArray())
                                   .createForm(SELECT_METHOD));
     }
