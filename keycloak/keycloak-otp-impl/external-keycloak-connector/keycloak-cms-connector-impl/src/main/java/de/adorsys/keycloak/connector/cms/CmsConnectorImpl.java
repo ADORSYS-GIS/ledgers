@@ -1,13 +1,16 @@
 package de.adorsys.keycloak.connector.cms;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.adorsys.keycloak.connector.cms.api.CmsConnector;
+import de.adorsys.keycloak.connector.cms.api.ConfirmationObject;
 import de.adorsys.keycloak.connector.cms.model.CmsTokenRequest;
 import de.adorsys.keycloak.connector.cms.model.Xs2aScaStatus;
 import de.adorsys.keycloak.otp.core.ScaDataContext;
 import de.adorsys.keycloak.otp.core.domain.ScaStatus;
 import org.apache.commons.lang.StringUtils;
 import org.jboss.logging.Logger;
+import org.jboss.resteasy.client.exception.ResteasyHttpException;
 import org.keycloak.broker.provider.util.SimpleHttp;
 import org.keycloak.connections.httpclient.HttpClientProvider;
 import org.keycloak.models.KeycloakSession;
@@ -21,6 +24,7 @@ import java.util.Optional;
 public class CmsConnectorImpl implements CmsConnector {
 
     private static final Logger LOG = Logger.getLogger(CmsConnectorImpl.class);
+    private static final String CONNECTION_ERROR_MSG = "Could not connect to remote CMS, please try again later.";
 
     private KeycloakSession keycloakSession;
 
@@ -31,7 +35,7 @@ public class CmsConnectorImpl implements CmsConnector {
     private static final String CMS_BASE_URL = "http://localhost:38080/";
 
     @Override
-    public Object getObject(ScaDataContext holder) {
+    public ConfirmationObject getObject(ScaDataContext holder) {
         LOG.info("Getting business object with ID: " + holder.getObjId() + " from CMS.");
         return StringUtils.equalsIgnoreCase(holder.getObjType(), "payment")
                        ? getPaymentFromCms(holder.getObjId())
@@ -68,33 +72,45 @@ public class CmsConnectorImpl implements CmsConnector {
                                    .asStatus();
         } catch (IOException e) {
             LOG.error("Error connecting to CMS updating consentData for object with ID: " + objId + ", response code: " + responseCode);
+            throw new ResteasyHttpException(CONNECTION_ERROR_MSG);
         }
     }
 
-    private Object getPaymentFromCms(String objId) {
+    private ConfirmationObject getPaymentFromCms(String objId) {
         JsonNode payment;
-
+        ConfirmationObject<Object> confirmationObject;
         try {
             payment = SimpleHttp.doGet(CMS_BASE_URL + "api/v1/pis/payment/" + objId, keycloakSession).asJson();
+            //TODO Consider using CMS MODELS!!! We do not really need JsonNodes although we've got prepared mappers in OBA!
+            confirmationObject = new ConfirmationObject<>(payment,
+                                                          "PAYMENT",
+                                                          "Please confirm incoming payment",
+                                                          objId,
+                                                          "ENCRYPTED ID HERE",
+                                                          "Debtor: %s, account: %s, cur: %s,\nCreditor: %s account: %s cur: %s \namount: %s cur: %s \npayment type: %s \nPay Day: %s",
+                                                          payment.get("debtor").get("name").asText(),
+                                                          payment.get("debtorAccount").asText());
+            //TODO Finish displayInfo transformation!!!
         } catch (IOException e) {
             LOG.error("Error connecting to CMS retrieving payment with ID: " + objId);
-            return Optional.empty();
+            throw new ResteasyHttpException(CONNECTION_ERROR_MSG);
         }
 
-        return Optional.of(payment);
+        return confirmationObject;
     }
 
-    private Object getConsentFromCms(String objId) {
+    private ConfirmationObject getConsentFromCms(String objId) {
         JsonNode consent;
-
+        ConfirmationObject<Object> confirmationObject = new ConfirmationObject<>();
         try {
             consent = SimpleHttp.doGet(CMS_BASE_URL + "api/v1/consent/" + objId, keycloakSession).asJson();
+
         } catch (IOException e) {
             LOG.error("Error connecting to CMS retrieving consent with ID: " + objId);
-            return Optional.empty();
+            throw new ResteasyHttpException(CONNECTION_ERROR_MSG);
         }
-
-        return Optional.of(consent);
+        //TODO Same as for Payment!
+        return confirmationObject;
     }
 
     private void updateAuthorisationStatusInCms(String authId, ScaStatus status) {

@@ -7,7 +7,7 @@ import org.keycloak.representations.AccessToken;
 
 public interface CmsConnector {
 
-    Object getObject(ScaDataContext scaDataContext);
+    <T> ConfirmationObject<T> getObject(ScaDataContext scaDataContext);
 
     void setAuthorizationStatus(ScaDataContext scaDataContext, ScaStatus scaStatus);
 

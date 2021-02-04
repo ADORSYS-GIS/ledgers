@@ -1,7 +1,6 @@
 package de.adorsys.keycloak.connector.cms.model;
 
 public enum Xs2aScaStatus {
-
     RECEIVED,
     PSUIDENTIFIED,
     PSUAUTHENTICATED,
@@ -11,5 +10,4 @@ public enum Xs2aScaStatus {
     FAILED,
     EXEMPTED,
     UNCONFIRMED
-
 }

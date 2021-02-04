@@ -2,7 +2,9 @@ package de.adorsys.ledgers.email.code;
 
 import de.adorsys.keycloak.connector.aspsp.LedgersConnectorImpl;
 import de.adorsys.keycloak.connector.aspsp.api.AspspConnector;
+import de.adorsys.keycloak.connector.cms.CmsConnectorImpl;
 import de.adorsys.keycloak.connector.cms.api.CmsConnector;
+import de.adorsys.keycloak.connector.cms.api.ConfirmationObject;
 import de.adorsys.keycloak.otp.core.domain.ScaMethod;
 import de.adorsys.ledgers.email.code.domain.ScaContextHolder;
 import org.apache.commons.collections4.CollectionUtils;
@@ -14,8 +16,7 @@ import org.keycloak.models.UserModel;
 
 import java.util.List;
 
-import static de.adorsys.ledgers.email.code.domain.ScaConstants.REALM;
-import static de.adorsys.ledgers.email.code.domain.ScaConstants.SELECT_METHOD;
+import static de.adorsys.ledgers.email.code.domain.ScaConstants.*;
 
 public class ModelbankAuthenticator implements Authenticator {
 
@@ -31,11 +32,17 @@ public class ModelbankAuthenticator implements Authenticator {
     @Override
     public void authenticate(AuthenticationFlowContext context) {
 
-//        CmsConnector cmsConnector = new CmsConnectorImpl(context.getSession());
-//
-//        ScaContextHolder scaContextHolder = new ScaContextHolder(context.getHttpRequest());
-//        Object object = cmsConnector.getObject(scaContextHolder);
-//        //TODO view add object
+        CmsConnector cmsConnector = new CmsConnectorImpl(context.getSession());
+
+        ScaContextHolder scaContextHolder = new ScaContextHolder(context.getHttpRequest());
+        ConfirmationObject<Object> object = cmsConnector.getObject(scaContextHolder);
+
+        context.challenge(context.form().setAttribute(REALM, context.getRealm())
+                                  //.setAttribute("postRequestUrl", "http://localhost:8080/auth/realms/ledgers/modelbank/method/select")
+                                  .setAttribute("object", object)
+                                  .setAttribute("context", scaContextHolder)
+                                  .createForm(DISPLAY_OBJ));
+
         ledgersConnector.setKeycloakSession(context.getSession());
         List<ScaMethod> scaMethods = ledgersConnector.getMethods(context.getUser());
 
