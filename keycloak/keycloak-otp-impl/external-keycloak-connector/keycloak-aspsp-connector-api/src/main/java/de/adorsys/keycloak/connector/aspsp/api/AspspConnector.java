@@ -1,6 +1,7 @@
 package de.adorsys.keycloak.connector.aspsp.api;
 
 import de.adorsys.keycloak.otp.core.ScaDataContext;
+import de.adorsys.keycloak.otp.core.domain.CodeValidationResult;
 import de.adorsys.keycloak.otp.core.domain.ScaMethod;
 import org.keycloak.models.UserModel;
 
@@ -14,7 +15,7 @@ public interface AspspConnector {
 
     void selectMethod(ScaDataContext scaDataContext, String methodId, String login);
 
-    boolean validateCode(ScaDataContext scaDataContext, String code, String login);
+    CodeValidationResult validateCode(ScaDataContext scaDataContext, String code, String login);
 
     void execute(ScaDataContext scaDataContext, String login);
 }

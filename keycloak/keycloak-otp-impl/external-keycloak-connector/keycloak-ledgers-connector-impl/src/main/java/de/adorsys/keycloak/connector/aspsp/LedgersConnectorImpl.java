@@ -3,11 +3,14 @@ package de.adorsys.keycloak.connector.aspsp;
 import com.fasterxml.jackson.databind.JsonNode;
 import de.adorsys.keycloak.connector.aspsp.api.AspspConnector;
 import de.adorsys.keycloak.otp.core.ScaDataContext;
+import de.adorsys.keycloak.otp.core.domain.CodeValidationResult;
 import de.adorsys.keycloak.otp.core.domain.ScaMethod;
 import de.adorsys.ledgers.middleware.api.domain.sca.OpTypeTO;
+import de.adorsys.ledgers.middleware.api.domain.sca.ScaStatusTO;
 import de.adorsys.ledgers.middleware.api.domain.sca.StartScaOprTO;
 import org.apache.commons.lang.StringUtils;
 import org.jboss.logging.Logger;
+import org.jboss.resteasy.client.exception.ResteasyHttpException;
 import org.keycloak.broker.provider.util.SimpleHttp;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.UserModel;
@@ -15,11 +18,13 @@ import org.keycloak.models.UserModel;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 public class LedgersConnectorImpl implements AspspConnector {
 
     private static final Logger LOG = Logger.getLogger(LedgersConnectorImpl.class);
+    private static final String CONNECTION_ERROR_MSG = "Error occurred during connection to CoreBanking Service";
 
     private KeycloakSession keycloakSession;
 
@@ -53,7 +58,7 @@ public class LedgersConnectorImpl implements AspspConnector {
     }
 
     @Override
-    public boolean validateCode(ScaDataContext scaDataContext, String code, String login) {
+    public CodeValidationResult validateCode(ScaDataContext scaDataContext, String code, String login) {
         return validateCodeInLedgers(scaDataContext, code, login);
     }
 
@@ -70,7 +75,7 @@ public class LedgersConnectorImpl implements AspspConnector {
             response = SimpleHttp.doGet(LEDGERS_BASE_URL + "fapi/methods/" + login, keycloakSession).asJson();
         } catch (IOException e) {
             LOG.error("Error connecting to Ledgers retrieving SCA methods for user: " + login);
-            return null; // TODO:
+            throw new ResteasyHttpException(CONNECTION_ERROR_MSG);
         }
 
         for (JsonNode jsonNode : response) {
@@ -93,6 +98,7 @@ public class LedgersConnectorImpl implements AspspConnector {
                     .asStatus();
         } catch (IOException e) {
             LOG.error("Error connecting to Ledgers initiating payment for user: " + login);
+            throw new ResteasyHttpException(CONNECTION_ERROR_MSG);
         }
     }
 
@@ -103,6 +109,7 @@ public class LedgersConnectorImpl implements AspspConnector {
                     .asStatus();
         } catch (IOException e) {
             LOG.error("Error connecting to Ledgers initiating payment cancellation for user: " + login);
+            throw new ResteasyHttpException(CONNECTION_ERROR_MSG);
         }
     }
 
@@ -113,6 +120,7 @@ public class LedgersConnectorImpl implements AspspConnector {
                     .asStatus();
         } catch (IOException e) {
             LOG.error("Error connecting to Ledgers initiating consent for user: " + login);
+            throw new ResteasyHttpException(CONNECTION_ERROR_MSG);
         }
     }
 
@@ -126,10 +134,11 @@ public class LedgersConnectorImpl implements AspspConnector {
                     .asStatus();
         } catch (IOException e) {
             LOG.error("Error connecting to Ledgers selecting SCA method for user: " + login);
+            throw new ResteasyHttpException(CONNECTION_ERROR_MSG);
         }
     }
 
-    private boolean validateCodeInLedgers(ScaDataContext scaDataContext, String code, String login) {
+    private CodeValidationResult validateCodeInLedgers(ScaDataContext scaDataContext, String code, String login) {
         JsonNode response;
 
         try {
@@ -140,11 +149,13 @@ public class LedgersConnectorImpl implements AspspConnector {
                                .asJson();
         } catch (IOException e) {
             LOG.error("Error connecting to Ledgers validating auth code for user: " + login);
-            return false;
+            return new CodeValidationResult(); //This is a failure case all fileds default to false
         }
 
-        // TODO: other variants? multilevel?
-        return !response.get("scaStatus").asText().equalsIgnoreCase("FAILED");
+        boolean isValid = EnumSet.of(ScaStatusTO.FINALISED, ScaStatusTO.UNCONFIRMED).contains(ScaStatusTO.valueOf(response.get("scaStatus").asText()));
+        boolean mlScaRequired = response.get("multilevelScaRequired").asBoolean();
+
+        return new CodeValidationResult(isValid, mlScaRequired);
     }
 
     private void executePaymentInLedgers(ScaDataContext scaDataContext, String login) {
@@ -155,6 +166,7 @@ public class LedgersConnectorImpl implements AspspConnector {
                     .asStatus();
         } catch (IOException e) {
             LOG.error("Error connecting to Ledgers executing payment for user: " + login);
+            throw new ResteasyHttpException(CONNECTION_ERROR_MSG);
         }
     }
 

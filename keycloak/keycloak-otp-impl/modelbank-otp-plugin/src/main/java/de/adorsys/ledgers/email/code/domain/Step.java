@@ -2,6 +2,7 @@ package de.adorsys.ledgers.email.code.domain;
 
 import de.adorsys.keycloak.connector.aspsp.api.AspspConnector;
 import de.adorsys.keycloak.connector.cms.api.CmsConnector;
+import de.adorsys.keycloak.otp.core.domain.CodeValidationResult;
 import de.adorsys.keycloak.otp.core.domain.ScaMethod;
 import de.adorsys.keycloak.otp.core.domain.ScaStatus;
 import org.keycloak.authentication.AuthenticationFlowContext;
@@ -11,8 +12,9 @@ import org.keycloak.models.UserModel;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
+import static de.adorsys.keycloak.otp.core.domain.ScaStatus.EXEMPTED;
+import static de.adorsys.keycloak.otp.core.domain.ScaStatus.IDENTIFIED;
 import static de.adorsys.ledgers.email.code.domain.ScaConstants.*;
-import static de.adorsys.keycloak.otp.core.domain.ScaStatus.*;
 
 public enum Step {
     CONFIRM_OBJ {
@@ -53,9 +55,13 @@ public enum Step {
         public void apply(ScaContextHolder holder, AuthenticationFlowContext context,
                           CmsConnector cmsConnector, AspspConnector aspspConnector) {
             String code = context.getHttpRequest().getDecodedFormParameters().getFirst("code");
-            boolean isValid = aspspConnector.validateCode(holder, code, context.getUser().getUsername());
-            if (isValid) {
-//                cmsConnector.setAuthorizationStatus(holder, VALIDATED);
+            CodeValidationResult validateCode = aspspConnector.validateCode(holder, code, context.getUser().getUsername());
+            if (validateCode.isValid()) {
+                String msgToDisplayToUser = validateCode.isMultilevelScaRequired()
+                                                    ? "Your authorization was successful, but you do not have enough rights to execute the operation, please ask other owners to confirm the operation."
+                                                    : "Your authorization was successful, you can execute your operation.";
+                //cmsConnector.setAuthorizationStatus(holder, VALIDATED);
+                //pass msg to the view
                 context.challenge(context.form().setAttribute(REALM, context.getRealm()).createForm(REDIRECT_VIEW));
             } else {
                 context.failureChallenge(AuthenticationFlowError.INTERNAL_ERROR,
