@@ -12,6 +12,7 @@ import org.keycloak.broker.provider.util.SimpleHttp;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.UserModel;
 
+import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -116,13 +117,12 @@ public class LedgersConnectorImpl implements AspspConnector {
     }
 
     private void selectMethodInLedgers(ScaDataContext scaDataContext, String methodId, String login) {
-        StartScaOprTO scaOprTO = new StartScaOprTO(scaDataContext.getObjId(), mapOperationType(scaDataContext.getObjType()));
+        StartScaOprTO scaOprTO = new StartScaOprTO(scaDataContext.getAuthId(), mapOperationType(scaDataContext.getObjType()));
 
         try {
-            SimpleHttp.doPost(LEDGERS_BASE_URL + "fapi/sca/select/", keycloakSession)
-                    .param("methodId", methodId)
-                    .param("login", login)
+            SimpleHttp.doPost(LEDGERS_BASE_URL + "fapi/sca/select?methodId=" + methodId + "&login=" + login, keycloakSession)
                     .json(scaOprTO)
+                    .header("Content-Type", MediaType.APPLICATION_JSON)
                     .asStatus();
         } catch (IOException e) {
             LOG.error("Error connecting to Ledgers selecting SCA method for user: " + login);
@@ -159,13 +159,13 @@ public class LedgersConnectorImpl implements AspspConnector {
     }
 
     private OpTypeTO mapOperationType(String objectType) {
-        if (StringUtils.equalsIgnoreCase(objectType, "payment")) {
+        if (objectType.equalsIgnoreCase("payment")) {
             return OpTypeTO.PAYMENT;
         }
-        if (StringUtils.equalsIgnoreCase(objectType, "cancel_payment")) {
+        if (objectType.equalsIgnoreCase("cancel_payment")) {
             return OpTypeTO.CANCEL_PAYMENT;
         }
-        if (StringUtils.equalsIgnoreCase(objectType, "consent")) {
+        if (objectType.equalsIgnoreCase("consent")) {
             return OpTypeTO.CONSENT;
         }
         throw new IllegalArgumentException("Unsupported object type: " + objectType);

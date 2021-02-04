@@ -16,6 +16,12 @@ public class ScaContextHolder implements ScaDataContext {
         this.step = Step.valueOf(request.getDecodedFormParameters().getFirst("step "));
     }
 
+    public ScaContextHolder(String objId, String authId, String objType) {
+        this.objId = objId;
+        this.authId = authId;
+        this.objType = objType;
+    }
+
     @Override
     public String getObjId() {
         return objId;

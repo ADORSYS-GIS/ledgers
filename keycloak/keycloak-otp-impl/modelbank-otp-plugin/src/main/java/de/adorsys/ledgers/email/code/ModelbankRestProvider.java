@@ -1,5 +1,8 @@
 package de.adorsys.ledgers.email.code;
 
+import de.adorsys.keycloak.connector.aspsp.LedgersConnectorImpl;
+import de.adorsys.keycloak.otp.core.ScaDataContext;
+import de.adorsys.ledgers.email.code.domain.ScaContextHolder;
 import org.jboss.resteasy.annotations.cache.NoCache;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.services.resource.RealmResourceProvider;
@@ -28,8 +31,11 @@ public class ModelbankRestProvider implements RealmResourceProvider {
                              @FormParam("authorisationId") String authorisationId,
                              @FormParam("opType") String opType,
                              @FormParam("login") String login) {
-        // TODO: receive the form data and proceed to ledgers - start sca.
-        int a = 0;
+        LedgersConnectorImpl ledgersConnector = new LedgersConnectorImpl();
+        ledgersConnector.setKeycloakSession(session);
+
+        ScaDataContext scaDataContext = new ScaContextHolder(externalId, authorisationId, opType);
+        ledgersConnector.selectMethod(scaDataContext, methodId, login);
     }
 
     @Override
