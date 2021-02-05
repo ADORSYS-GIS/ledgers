@@ -1,4 +1,4 @@
-package de.adorsys.keycloak.connector.cms.api;
+package de.adorsys.keycloak.otp.core.domain;
 
 public class ConfirmationObject<T> {
     private T rawBusinessObject;

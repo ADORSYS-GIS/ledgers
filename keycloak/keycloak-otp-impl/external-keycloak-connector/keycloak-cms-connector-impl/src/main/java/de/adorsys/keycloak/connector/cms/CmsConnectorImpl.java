@@ -1,9 +1,8 @@
 package de.adorsys.keycloak.connector.cms;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import de.adorsys.keycloak.connector.cms.api.CmsConnector;
-import de.adorsys.keycloak.connector.cms.api.ConfirmationObject;
+import de.adorsys.keycloak.otp.core.domain.ConfirmationObject;
 import de.adorsys.keycloak.connector.cms.model.CmsTokenRequest;
 import de.adorsys.keycloak.connector.cms.model.Xs2aScaStatus;
 import de.adorsys.keycloak.otp.core.ScaDataContext;
@@ -19,7 +18,6 @@ import org.keycloak.representations.AccessToken;
 
 import java.io.IOException;
 import java.util.Base64;
-import java.util.Optional;
 
 public class CmsConnectorImpl implements CmsConnector {
 

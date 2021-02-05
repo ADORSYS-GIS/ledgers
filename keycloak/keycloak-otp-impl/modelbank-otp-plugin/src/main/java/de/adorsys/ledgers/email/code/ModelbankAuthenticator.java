@@ -4,7 +4,7 @@ import de.adorsys.keycloak.connector.aspsp.LedgersConnectorImpl;
 import de.adorsys.keycloak.connector.aspsp.api.AspspConnector;
 import de.adorsys.keycloak.connector.cms.CmsConnectorImpl;
 import de.adorsys.keycloak.connector.cms.api.CmsConnector;
-import de.adorsys.keycloak.connector.cms.api.ConfirmationObject;
+import de.adorsys.keycloak.otp.core.domain.ConfirmationObject;
 import de.adorsys.keycloak.otp.core.domain.ScaMethod;
 import de.adorsys.ledgers.email.code.domain.ScaContextHolder;
 import org.apache.commons.collections4.CollectionUtils;

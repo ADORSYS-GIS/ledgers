@@ -30,7 +30,7 @@ public interface FapiRestApi {
 
     @PostMapping("/initiate/cancellation/{login}")
     @Operation(tags = UNPROTECTED_ENDPOINT, summary = "Initiates payment")
-    ResponseEntity<Void> initPayment(@RequestParam("paymentId") String paymentId, @PathVariable("login") String login);
+    ResponseEntity<Void> initCancel(@RequestParam("paymentId") String paymentId, @PathVariable("login") String login);
 
     @PostMapping("/initiate/consent/{login}")
     @Operation(tags = UNPROTECTED_ENDPOINT, summary = "Initiates payment")

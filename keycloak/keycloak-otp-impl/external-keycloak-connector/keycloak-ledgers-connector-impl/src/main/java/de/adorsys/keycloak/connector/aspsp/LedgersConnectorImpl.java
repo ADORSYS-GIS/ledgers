@@ -1,30 +1,36 @@
 package de.adorsys.keycloak.connector.aspsp;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import de.adorsys.keycloak.connector.aspsp.api.AspspConnector;
 import de.adorsys.keycloak.otp.core.ScaDataContext;
 import de.adorsys.keycloak.otp.core.domain.CodeValidationResult;
+import de.adorsys.keycloak.otp.core.domain.ConfirmationObject;
 import de.adorsys.keycloak.otp.core.domain.ScaMethod;
+import de.adorsys.ledgers.middleware.api.domain.payment.PaymentTO;
+import de.adorsys.ledgers.middleware.api.domain.sca.GlobalScaResponseTO;
 import de.adorsys.ledgers.middleware.api.domain.sca.OpTypeTO;
 import de.adorsys.ledgers.middleware.api.domain.sca.ScaStatusTO;
 import de.adorsys.ledgers.middleware.api.domain.sca.StartScaOprTO;
-import org.apache.commons.lang.StringUtils;
+import de.adorsys.ledgers.middleware.api.domain.um.ScaUserDataTO;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.client.exception.ResteasyHttpException;
 import org.keycloak.broker.provider.util.SimpleHttp;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.UserModel;
 
-import javax.ws.rs.core.MediaType;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
+import static org.apache.commons.lang.StringUtils.equalsIgnoreCase;
+//TODO in case of errors consider returning a DEV message to display something on UI!
 public class LedgersConnectorImpl implements AspspConnector {
 
     private static final Logger LOG = Logger.getLogger(LedgersConnectorImpl.class);
+    private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new JavaTimeModule());
     private static final String CONNECTION_ERROR_MSG = "Error occurred during connection to CoreBanking Service";
+    private static final String TEMPLATE_INIT_ERROR_MSG = "Error connecting to Ledgers initiating %s for user: %s";
 
     private KeycloakSession keycloakSession;
 
@@ -40,16 +46,13 @@ public class LedgersConnectorImpl implements AspspConnector {
     }
 
     @Override
-    public void initObj(ScaDataContext scaDataContext, Object object, String login) {
-        if (StringUtils.equalsIgnoreCase(scaDataContext.getObjType(), "payment")) {
-            initiatePaymentInLedgers(object, login);
-            return;
+    public <T> void initObj(ScaDataContext scaDataContext, ConfirmationObject<T> object, String login) {
+        if (equalsIgnoreCase(scaDataContext.getObjType(), "cancel_payment")) {
+            ConfirmationObject<PaymentTO> payment = (ConfirmationObject<PaymentTO>) object;
+            initiatePaymentCancellationInLedgers(payment, login);
+        } else {
+            initiatePmtConsent(object, login);
         }
-        if (StringUtils.equalsIgnoreCase(scaDataContext.getObjType(), "cancel_payment")) {
-            initiatePaymentCancellationInLedgers(object, login);
-            return;
-        }
-        initiateConsentInLedgers(object, login);
     }
 
     @Override
@@ -68,70 +71,49 @@ public class LedgersConnectorImpl implements AspspConnector {
     }
 
     private List<ScaMethod> getMethodsFromLedgers(String login) {
-        List<ScaMethod> methods = new ArrayList<>();
-        JsonNode response;
-
         try {
-            response = SimpleHttp.doGet(LEDGERS_BASE_URL + "fapi/methods/" + login, keycloakSession).asJson();
+            List<ScaUserDataTO> list = SimpleHttp.doGet(LEDGERS_BASE_URL + "fapi/methods/" + login, keycloakSession)
+                                               .asJson(AspspMapper.SCA_DATA_LIST_TYPE);
+            return AspspMapper.mapToScaMethodList(list);
         } catch (IOException e) {
             LOG.error("Error connecting to Ledgers retrieving SCA methods for user: " + login);
             throw new ResteasyHttpException(CONNECTION_ERROR_MSG);
         }
-
-        for (JsonNode jsonNode : response) {
-            ScaMethod scaMethod = new ScaMethod();
-            scaMethod.setId(jsonNode.get("id").asText());
-            scaMethod.setDecoupled(jsonNode.get("decoupled").asBoolean());
-            scaMethod.setType(jsonNode.get("scaMethod").asText());
-            scaMethod.setDescription(jsonNode.get("methodValue").asText());
-
-            methods.add(scaMethod);
-        }
-
-        return methods;
     }
 
-    private void initiatePaymentInLedgers(Object object, String login) {
+    private <T> void initiatePmtConsent(ConfirmationObject<T> object, String login) {
+        OpTypeTO type = AspspMapper.mapOperationType(object.getObjType());
+        String path = type == OpTypeTO.CONSENT ? "consent" : "payment";
         try {
-            SimpleHttp.doPost(LEDGERS_BASE_URL + "fapi/initiate/payment/" + login, keycloakSession)
-                    .json(object)
+            SimpleHttp.doPost(LEDGERS_BASE_URL + "fapi/initiate/" + path + "/" + login, keycloakSession)
+                    .json(object.getRawBusinessObject())
                     .asStatus();
         } catch (IOException e) {
-            LOG.error("Error connecting to Ledgers initiating payment for user: " + login);
+            LOG.error(String.format(TEMPLATE_INIT_ERROR_MSG, path, login));
             throw new ResteasyHttpException(CONNECTION_ERROR_MSG);
         }
     }
 
-    private void initiatePaymentCancellationInLedgers(Object object, String login) {
+    private void initiatePaymentCancellationInLedgers(ConfirmationObject<PaymentTO> object, String login) {
         try {
             SimpleHttp.doPost(LEDGERS_BASE_URL + "fapi/initiate/cancellation/" + login, keycloakSession)
-                    .json(object)
+                    .param("paymentId", object.getId())
                     .asStatus();
         } catch (IOException e) {
-            LOG.error("Error connecting to Ledgers initiating payment cancellation for user: " + login);
-            throw new ResteasyHttpException(CONNECTION_ERROR_MSG);
-        }
-    }
-
-    private void initiateConsentInLedgers(Object object, String login) {
-        try {
-            SimpleHttp.doPost(LEDGERS_BASE_URL + "fapi/initiate/consent/" + login, keycloakSession)
-                    .json(object)
-                    .asStatus();
-        } catch (IOException e) {
-            LOG.error("Error connecting to Ledgers initiating consent for user: " + login);
+            LOG.error(String.format(TEMPLATE_INIT_ERROR_MSG, "cancellation", login));
             throw new ResteasyHttpException(CONNECTION_ERROR_MSG);
         }
     }
 
     private void selectMethodInLedgers(ScaDataContext scaDataContext, String methodId, String login) {
-        StartScaOprTO scaOprTO = new StartScaOprTO(scaDataContext.getAuthId(), mapOperationType(scaDataContext.getObjType()));
+        StartScaOprTO scaOprTO = AspspMapper.mapStartScaOpr(scaDataContext);
 
         try {
-            SimpleHttp.doPost(LEDGERS_BASE_URL + "fapi/sca/select?methodId=" + methodId + "&login=" + login, keycloakSession)
-                    .json(scaOprTO)
-                    .header("Content-Type", MediaType.APPLICATION_JSON)
-                    .asStatus();
+            String json = SimpleHttp.doPost(LEDGERS_BASE_URL + "fapi/sca/select?login=" + login + "&methodId=" + methodId, keycloakSession)
+                                  .json(scaOprTO)
+                                  .asString();
+            GlobalScaResponseTO response = MAPPER.readValue(json, GlobalScaResponseTO.class);
+            response.getPsuMessage(); //TODO Could return PSU message.
         } catch (IOException e) {
             LOG.error("Error connecting to Ledgers selecting SCA method for user: " + login);
             throw new ResteasyHttpException(CONNECTION_ERROR_MSG);
@@ -139,23 +121,24 @@ public class LedgersConnectorImpl implements AspspConnector {
     }
 
     private CodeValidationResult validateCodeInLedgers(ScaDataContext scaDataContext, String code, String login) {
-        JsonNode response;
-
         try {
-            response = SimpleHttp.doPost(LEDGERS_BASE_URL + "fapi/validate", keycloakSession)
-                               .param("authId", scaDataContext.getAuthId())
-                               .param("code", code)
-                               .param("login", login)
-                               .asJson();
+            String json = SimpleHttp.doPost(LEDGERS_BASE_URL + "fapi/validate", keycloakSession)
+                                  .param("authId", scaDataContext.getAuthId())
+                                  .param("code", code)
+                                  .param("login", login)
+                                  .asString();
+
+            GlobalScaResponseTO response = MAPPER.readValue(json, GlobalScaResponseTO.class);
+
+            boolean isValid = EnumSet.of(ScaStatusTO.FINALISED, ScaStatusTO.UNCONFIRMED).contains(response.getScaStatus());
+            boolean mlScaRequired = response.isMultilevelScaRequired();
+
+            return new CodeValidationResult(isValid, mlScaRequired);
         } catch (IOException e) {
             LOG.error("Error connecting to Ledgers validating auth code for user: " + login);
-            return new CodeValidationResult(); //This is a failure case all fileds default to false
+            return new CodeValidationResult(); //This is a failure case all fields default to false
         }
 
-        boolean isValid = EnumSet.of(ScaStatusTO.FINALISED, ScaStatusTO.UNCONFIRMED).contains(ScaStatusTO.valueOf(response.get("scaStatus").asText()));
-        boolean mlScaRequired = response.get("multilevelScaRequired").asBoolean();
-
-        return new CodeValidationResult(isValid, mlScaRequired);
     }
 
     private void executePaymentInLedgers(ScaDataContext scaDataContext, String login) {
@@ -168,19 +151,6 @@ public class LedgersConnectorImpl implements AspspConnector {
             LOG.error("Error connecting to Ledgers executing payment for user: " + login);
             throw new ResteasyHttpException(CONNECTION_ERROR_MSG);
         }
-    }
-
-    private OpTypeTO mapOperationType(String objectType) {
-        if (objectType.equalsIgnoreCase("payment")) {
-            return OpTypeTO.PAYMENT;
-        }
-        if (objectType.equalsIgnoreCase("cancel_payment")) {
-            return OpTypeTO.CANCEL_PAYMENT;
-        }
-        if (objectType.equalsIgnoreCase("consent")) {
-            return OpTypeTO.CONSENT;
-        }
-        throw new IllegalArgumentException("Unsupported object type: " + objectType);
     }
 
     public void setKeycloakSession(KeycloakSession keycloakSession) {

@@ -1,6 +1,7 @@
 package de.adorsys.keycloak.connector.cms.api;
 
 import de.adorsys.keycloak.otp.core.ScaDataContext;
+import de.adorsys.keycloak.otp.core.domain.ConfirmationObject;
 import de.adorsys.keycloak.otp.core.domain.ScaStatus;
 import org.keycloak.models.UserModel;
 import org.keycloak.representations.AccessToken;

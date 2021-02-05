@@ -45,7 +45,7 @@ public class FapiResource implements FapiRestApi {
     }
 
     @Override
-    public ResponseEntity<Void> initPayment(String paymentId, String login) {
+    public ResponseEntity<Void> initCancel(String paymentId, String login) {
         paymentService.initiateCancellation(paymentId, login);
         return ResponseEntity.accepted().build();
     }

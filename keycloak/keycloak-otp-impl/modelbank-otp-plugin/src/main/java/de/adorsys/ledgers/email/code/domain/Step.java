@@ -2,6 +2,7 @@ package de.adorsys.ledgers.email.code.domain;
 
 import de.adorsys.keycloak.connector.aspsp.api.AspspConnector;
 import de.adorsys.keycloak.connector.cms.api.CmsConnector;
+import de.adorsys.keycloak.otp.core.domain.ConfirmationObject;
 import de.adorsys.keycloak.otp.core.domain.CodeValidationResult;
 import de.adorsys.keycloak.otp.core.domain.ScaMethod;
 import de.adorsys.keycloak.otp.core.domain.ScaStatus;
@@ -24,7 +25,7 @@ public enum Step {
             //Get required data
             UserModel user = context.getUser();
             List<ScaMethod> scaMethods = aspspConnector.getMethods(user);
-            Object object = cmsConnector.getObject(holder);
+            ConfirmationObject<Object> object = cmsConnector.getObject(holder);
 
             //UpdateCmsUser and Init Operation in Core
             cmsConnector.updateUserData(user);
