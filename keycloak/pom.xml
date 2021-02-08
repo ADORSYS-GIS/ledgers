@@ -35,7 +35,7 @@
         <module>keycloak-client</module>
         <module>keycloak-token-exchange</module>
         <module>keycloak-modelbank-theme</module>
-        <module>keycloak-otp-impl</module>
+        <module>keycloak-otp</module>
     </modules>
 
 
