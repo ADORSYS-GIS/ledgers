@@ -1,2 +1,3 @@
-de.adorsys.ledgers.email.code.ModelbankAuthenticatorFactory
+de.adorsys.ledgers.email.code.ModelbankDisplayObjectAuthenticatorFactory
+de.adorsys.ledgers.email.code.ModelbankSelectMethodAuthenticatorFactory
 de.adorsys.ledgers.email.code.EmailCodeAuthenticatorFactory

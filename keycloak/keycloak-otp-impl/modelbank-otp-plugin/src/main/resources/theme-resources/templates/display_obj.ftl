@@ -2,8 +2,8 @@
 <@layout.registrationLayout displayInfo=true; section>
     <#if section = "header">
         ${msg("objectConfText")}
-
-        <form id="object-confirmation-form" class="${properties.kcFormClass!}" action="${postRequestUrl}" method="post">
+    <#elseif section = "form">
+        <form id="object-confirmation-form" class="${properties.kcFormClass!}" action="${url.loginAction}" method="post">
             <div class="${properties.kcFormGroupClass!}">
                 <input id="objId"
                        name="objId"
@@ -23,10 +23,10 @@
                        hidden/>
 
                 <div>
-                    <label>${object.description}</label>
+                    <label>"${object.description}"</label>
                 </div>
                 <div>
-                    <textarea disabled>${object.displayInfo}</textarea>
+                    <textarea disabled>"${object.displayInfo}"</textarea>
                 </div>
 
                 <div id="kc-form-buttons" class="${properties.kcFormButtonsClass!}">
@@ -42,5 +42,6 @@
 
             </div>
         </form>
+    <#elseif section = "info" >
     </#if>
 </@layout.registrationLayout>

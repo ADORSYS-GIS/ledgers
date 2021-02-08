@@ -17,10 +17,11 @@ import org.keycloak.models.UserModel;
 import java.util.List;
 
 import static de.adorsys.ledgers.email.code.domain.ScaConstants.*;
+import static de.adorsys.ledgers.email.code.domain.UrlConstants.KEYCLOAK_URL;
 
-public class ModelbankAuthenticator implements Authenticator {
+public class ModelbankDisplayObjectAuthenticator implements Authenticator {
 
-    public ModelbankAuthenticator() {
+    public ModelbankDisplayObjectAuthenticator() {
         this.ledgersConnector = new LedgersConnectorImpl();
     }
 
@@ -34,36 +35,48 @@ public class ModelbankAuthenticator implements Authenticator {
 
         CmsConnector cmsConnector = new CmsConnectorImpl(context.getSession());
 
-        ScaContextHolder scaContextHolder = new ScaContextHolder(context.getHttpRequest());
-        ConfirmationObject<Object> object = cmsConnector.getObject(scaContextHolder);
+//        ScaContextHolder scaContextHolder = new ScaContextHolder(context.getHttpRequest());
+//        ConfirmationObject<Object> object = cmsConnector.getObject(scaContextHolder);
+
+        ConfirmationObject<Object> object = new ConfirmationObject<>();
+        object.setObjType("test payment");
+        object.setDisplayInfo("payment");
+        object.setId("1234567890");
+        object.setDescription("description of the payment");
+
+        ScaContextHolder scaContextHolder = new ScaContextHolder("1234567890", "auth_id", "PAYMENT");
+
+//        context.success();
 
         context.challenge(context.form().setAttribute(REALM, context.getRealm())
-                                  //.setAttribute("postRequestUrl", "http://localhost:8080/auth/realms/ledgers/modelbank/method/select")
+                                  .setAttribute("postRequestUrl", "http://localhost:8080/auth/realms/ledgers/modelbank/object/submit")
                                   .setAttribute("object", object)
                                   .setAttribute("context", scaContextHolder)
                                   .createForm(DISPLAY_OBJ));
 
-        ledgersConnector.setKeycloakSession(context.getSession());
-        List<ScaMethod> scaMethods = ledgersConnector.getMethods(context.getUser());
-
-        ScaMethod a = new ScaMethod();
-        a.setId("OTP");
-        a.setType("OTP");
-        a.setDescription("OTP");
-        a.setDecoupled(true);
-
-        scaMethods.add(a);
-
-        context.challenge(context.form().setAttribute(REALM, context.getRealm())
-                                  .setAttribute("postRequestUrl", "http://localhost:8080/auth/realms/ledgers/modelbank/method/select")
-                                  .setAttribute("scaMethods", scaMethods.toArray())
-                                  .createForm(SELECT_METHOD));
+//        ledgersConnector.setKeycloakSession(context.getSession());
+//        List<ScaMethod> scaMethods = ledgersConnector.getMethods(context.getUser());
+//
+//        ScaMethod a = new ScaMethod();
+//        a.setId("OTP");
+//        a.setType("OTP");
+//        a.setDescription("OTP");
+//        a.setDecoupled(true);
+//
+//        scaMethods.add(a);
+//
+//        context.challenge(context.form().setAttribute(REALM, context.getRealm())
+//                                  .setAttribute("postRequestUrl", KEYCLOAK_URL + "/realms/ledgers/modelbank/method/select")
+//                                  .setAttribute("scaMethods", scaMethods.toArray())
+//                                  .createForm(SELECT_METHOD));
     }
 
     @Override
     public void action(AuthenticationFlowContext context) {
-        ScaContextHolder scaContextHolder = new ScaContextHolder(context.getHttpRequest());
-        scaContextHolder.getStep().apply(scaContextHolder, context, cmsConnector, aspspConnector);
+        context.success();
+        return;
+//        ScaContextHolder scaContextHolder = new ScaContextHolder(context.getHttpRequest());
+//        scaContextHolder.getStep().apply(scaContextHolder, context, cmsConnector, aspspConnector);
     }
 
     @Override

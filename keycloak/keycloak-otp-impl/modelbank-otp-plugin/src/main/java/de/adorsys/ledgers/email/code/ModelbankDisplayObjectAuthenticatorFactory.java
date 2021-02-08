@@ -14,11 +14,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class ModelbankAuthenticatorFactory implements AuthenticatorFactory, ServerInfoAwareProviderFactory {
+public class ModelbankDisplayObjectAuthenticatorFactory implements AuthenticatorFactory, ServerInfoAwareProviderFactory {
 
     @Override
     public String getId() {
-        return "modelbank-code-authenticator";
+        return "modelbank-display-object";
     }
 
     /**
@@ -26,18 +26,18 @@ public class ModelbankAuthenticatorFactory implements AuthenticatorFactory, Serv
      */
     @Override
     public String getDisplayType() {
-        return "Modelbank OTP";
+        return "Modelbank display business object";
     }
 
     @Override
     public String getHelpText() {
-        return "Validates an OTP sent via email to the user.";
+        return "Shows the business object that should be processed.";
     }
 
     @Override
     public String getReferenceCategory() {
         return "otp";
-    }
+    } // TODO:
 
     @Override
     public boolean isConfigurable() {
@@ -69,7 +69,7 @@ public class ModelbankAuthenticatorFactory implements AuthenticatorFactory, Serv
 
     @Override
     public Authenticator create(KeycloakSession session) {
-        return new ModelbankAuthenticator();
+        return new ModelbankDisplayObjectAuthenticator();
     }
 
     @Override
