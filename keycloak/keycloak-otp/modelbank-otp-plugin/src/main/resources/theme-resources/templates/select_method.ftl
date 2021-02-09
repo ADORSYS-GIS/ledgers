@@ -28,9 +28,9 @@
                 <input type="hidden" name="step" value="METHOD_SELECTED">
 
                 <input type="hidden" name="oprId" value="operation_id">
-                <input type="hidden" name="externalId" value="external_id">
-                <input type="hidden" name="authorisationId" value="auth_id">
-                <input type="hidden" name="opType" value="PAYMENT">
+                <input type="hidden" name="objId" value="object_id">
+                <input type="hidden" name="authId" value="auth_id">
+                <input type="hidden" name="objType" value="PAYMENT">
                 <input type="hidden" name="login" value="${auth.attemptedUsername}">
 
             </div>
