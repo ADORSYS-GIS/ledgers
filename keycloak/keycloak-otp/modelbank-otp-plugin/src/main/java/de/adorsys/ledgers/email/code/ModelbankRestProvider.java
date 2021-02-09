@@ -37,20 +37,6 @@ public class ModelbankRestProvider implements RealmResourceProvider {
         ledgersConnector.selectMethod(scaDataContext, methodId, login);
     }
 
-    @POST
-    @Path("/object/submit")
-    @NoCache
-    @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
-    public void submitObject(@FormParam("objId") String objId,
-                             @FormParam("authId") String authId,
-                             @FormParam("objType") String objType,
-                             @FormParam("step") String step) {
-        LedgersConnectorImpl ledgersConnector = new LedgersConnectorImpl();
-        ledgersConnector.setKeycloakSession(session);
-
-    }
-
-
     @Override
     public Object getResource() {
         return this;

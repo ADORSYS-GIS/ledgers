@@ -46,37 +46,16 @@ public class ModelbankDisplayObjectAuthenticator implements Authenticator {
 
         ScaContextHolder scaContextHolder = new ScaContextHolder("1234567890", "auth_id", "PAYMENT");
 
-//        context.success();
-
         context.challenge(context.form().setAttribute(REALM, context.getRealm())
-                                  .setAttribute("postRequestUrl", "http://localhost:8080/auth/realms/ledgers/modelbank/object/submit")
                                   .setAttribute("object", object)
                                   .setAttribute("context", scaContextHolder)
                                   .createForm(DISPLAY_OBJ));
-
-//        ledgersConnector.setKeycloakSession(context.getSession());
-//        List<ScaMethod> scaMethods = ledgersConnector.getMethods(context.getUser());
-//
-//        ScaMethod a = new ScaMethod();
-//        a.setId("OTP");
-//        a.setType("OTP");
-//        a.setDescription("OTP");
-//        a.setDecoupled(true);
-//
-//        scaMethods.add(a);
-//
-//        context.challenge(context.form().setAttribute(REALM, context.getRealm())
-//                                  .setAttribute("postRequestUrl", KEYCLOAK_URL + "/realms/ledgers/modelbank/method/select")
-//                                  .setAttribute("scaMethods", scaMethods.toArray())
-//                                  .createForm(SELECT_METHOD));
     }
 
     @Override
     public void action(AuthenticationFlowContext context) {
+        // Just display the form.
         context.success();
-        return;
-//        ScaContextHolder scaContextHolder = new ScaContextHolder(context.getHttpRequest());
-//        scaContextHolder.getStep().apply(scaContextHolder, context, cmsConnector, aspspConnector);
     }
 
     @Override
