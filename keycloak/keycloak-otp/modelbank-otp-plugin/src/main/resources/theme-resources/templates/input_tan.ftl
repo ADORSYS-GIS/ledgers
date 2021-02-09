@@ -23,6 +23,10 @@
                     <input class="${properties.kcButtonClass!} ${properties.kcButtonPrimaryClass!} ${properties.kcButtonBlockClass!} ${properties.kcButtonLargeClass!}" type="submit" value="${msg("doSubmit")}"/>
                 </div>
             </div>
+
+            <#--				Aditional fields to build POST request with body-->
+            <input type="hidden" name="step" value="CODE_VALIDATION">
+
         </form>
     <#elseif section = "info" >
         ${msg("emailAuthInstruction")}

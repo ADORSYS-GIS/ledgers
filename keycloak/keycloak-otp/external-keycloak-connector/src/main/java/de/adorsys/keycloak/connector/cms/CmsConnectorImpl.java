@@ -26,6 +26,9 @@ public class CmsConnectorImpl implements CmsConnector {
 
     private KeycloakSession keycloakSession;
 
+    public CmsConnectorImpl() {
+    }
+
     public CmsConnectorImpl(KeycloakSession keycloakSession) {
         this.keycloakSession = keycloakSession;
     }
@@ -141,6 +144,11 @@ public class CmsConnectorImpl implements CmsConnector {
             default:
                 throw new IllegalArgumentException("Unsupported SCA status: " + status);
         }
+    }
+
+    @Override
+    public void setKeycloakSession(KeycloakSession keycloakSession) {
+        this.keycloakSession = keycloakSession;
     }
 
 }

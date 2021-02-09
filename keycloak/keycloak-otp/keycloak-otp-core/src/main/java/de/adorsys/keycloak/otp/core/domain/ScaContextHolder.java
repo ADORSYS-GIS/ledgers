@@ -9,10 +9,10 @@ public class ScaContextHolder {
     private Step step;
 
     public ScaContextHolder(HttpRequest request) {
-        this.objId = request.getDecodedFormParameters().getFirst("objId ");
-        this.authId = request.getDecodedFormParameters().getFirst("authId ");
-        this.objType = request.getDecodedFormParameters().getFirst("objType ");
-        this.step = Step.valueOf(request.getDecodedFormParameters().getFirst("step "));
+        this.objId = request.getDecodedFormParameters().getFirst("objId");
+        this.authId = request.getDecodedFormParameters().getFirst("authId");
+        this.objType = request.getDecodedFormParameters().getFirst("objType");
+        this.step = Step.valueOf(request.getDecodedFormParameters().getFirst("step"));
     }
 
     public ScaContextHolder(String objId, String authId, String objType) {

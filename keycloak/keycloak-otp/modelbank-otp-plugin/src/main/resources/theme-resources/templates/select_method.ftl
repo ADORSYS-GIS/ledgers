@@ -3,7 +3,7 @@
     <#if section = "header">
         ${msg("methodsTitleText",realm.displayName)}
     <#elseif section = "form">
-        <form id="select-sca-method-form" class="${properties.kcFormClass!}" action="${postRequestUrl}" method="post">
+        <form id="select-sca-method-form" class="${properties.kcFormClass!}" action="${url.loginAction}" method="post">
             <div class="${properties.kcFormGroupClass!}">
                 <div class="${properties.kcLabelWrapperClass!}">
                     <label for="methods" class="${properties.kcLabelClass!}">${msg("methodsAvailableLabel")}</label>
@@ -25,6 +25,8 @@
                 </div>
 
                 <#--				Aditional fields to build POST request with body-->
+                <input type="hidden" name="step" value="METHOD_SELECTED">
+
                 <input type="hidden" name="oprId" value="operation_id">
                 <input type="hidden" name="externalId" value="external_id">
                 <input type="hidden" name="authorisationId" value="auth_id">

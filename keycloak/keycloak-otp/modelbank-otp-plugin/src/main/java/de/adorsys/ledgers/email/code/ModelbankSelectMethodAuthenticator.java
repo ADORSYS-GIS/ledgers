@@ -1,10 +1,11 @@
 package de.adorsys.ledgers.email.code;
 
 import de.adorsys.keycloak.connector.aspsp.LedgersConnectorImpl;
+import de.adorsys.keycloak.connector.cms.CmsConnectorImpl;
 import de.adorsys.keycloak.otp.core.AspspConnector;
 import de.adorsys.keycloak.otp.core.CmsConnector;
-import de.adorsys.keycloak.otp.core.domain.ScaMethod;
 import de.adorsys.keycloak.otp.core.domain.ScaContextHolder;
+import de.adorsys.keycloak.otp.core.domain.ScaMethod;
 import org.apache.commons.collections4.CollectionUtils;
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.Authenticator;
@@ -16,18 +17,16 @@ import java.util.List;
 
 import static de.adorsys.keycloak.otp.core.domain.ScaConstants.REALM;
 import static de.adorsys.keycloak.otp.core.domain.ScaConstants.SELECT_METHOD;
-import static de.adorsys.keycloak.otp.core.domain.UrlConstants.KEYCLOAK_URL;
 
 public class ModelbankSelectMethodAuthenticator implements Authenticator {
 
     public ModelbankSelectMethodAuthenticator() {
         this.ledgersConnector = new LedgersConnectorImpl();
+        this.cmsConnector = new CmsConnectorImpl();
     }
 
     private AspspConnector ledgersConnector;
-
-    private final CmsConnector cmsConnector = null; //TODO STUB HERE!!!
-    private final AspspConnector aspspConnector = null; //TODO STUB HERE!!!
+    private CmsConnector cmsConnector;
 
     @Override
     public void authenticate(AuthenticationFlowContext context) {
@@ -44,15 +43,18 @@ public class ModelbankSelectMethodAuthenticator implements Authenticator {
         scaMethods.add(a);
 
         context.challenge(context.form().setAttribute(REALM, context.getRealm())
-                                  .setAttribute("postRequestUrl", KEYCLOAK_URL + "/realms/ledgers/modelbank/method/select")
                                   .setAttribute("scaMethods", scaMethods.toArray())
                                   .createForm(SELECT_METHOD));
     }
 
     @Override
     public void action(AuthenticationFlowContext context) {
+        KeycloakSession session = context.getSession();
+        cmsConnector.setKeycloakSession(session);
+        ledgersConnector.setKeycloakSession(session);
+
         ScaContextHolder scaContextHolder = new ScaContextHolder(context.getHttpRequest());
-        scaContextHolder.getStep().apply(scaContextHolder, context, cmsConnector, aspspConnector);
+        scaContextHolder.getStep().apply(scaContextHolder, context, cmsConnector, ledgersConnector);
     }
 
     @Override

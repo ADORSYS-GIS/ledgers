@@ -1,5 +1,6 @@
 package de.adorsys.ledgers.email.code;
 
+import de.adorsys.keycloak.otp.core.domain.ScaContextHolder;
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.AuthenticationFlowError;
 import org.keycloak.authentication.Authenticator;
@@ -53,40 +54,8 @@ public class ModelbankTanAuthenticator implements Authenticator {
 
     @Override
     public void action(AuthenticationFlowContext context) {
-        // TODO:
-        String enteredCode = context.getHttpRequest().getDecodedFormParameters().getFirst("code");
-
-        AuthenticationSessionModel authSession = context.getAuthenticationSession();
-        String code = authSession.getAuthNote("code");
-        String ttl = authSession.getAuthNote("ttl");
-
-        if (code == null || ttl == null) {
-            context.failureChallenge(AuthenticationFlowError.INTERNAL_ERROR,
-                                     context.form().createErrorPage(Response.Status.INTERNAL_SERVER_ERROR));
-            return;
-        }
-
-        boolean isValid = enteredCode.equals(code);
-        if (isValid) {
-            if (Long.parseLong(ttl) < System.currentTimeMillis()) {
-                // expired
-                context.failureChallenge(AuthenticationFlowError.EXPIRED_CODE,
-                                         context.form().setError("emailAuthCodeExpired").createErrorPage(Response.Status.BAD_REQUEST));
-            } else {
-                // valid
-                context.success();
-            }
-        } else {
-            // invalid
-            AuthenticationExecutionModel execution = context.getExecution();
-            if (execution.isRequired()) {
-                context.failureChallenge(AuthenticationFlowError.INVALID_CREDENTIALS,
-                                         context.form().setAttribute("realm", context.getRealm())
-                                                 .setError("emailAuthCodeInvalid").createForm(TPL_CODE));
-            } else if (execution.isConditional() || execution.isAlternative()) {
-                context.attempted();
-            }
-        }
+        ScaContextHolder scaContextHolder = new ScaContextHolder(context.getHttpRequest());
+//        scaContextHolder.getStep().apply(scaContextHolder, context, cmsConnector, aspspConnector);
     }
 
     @Override
