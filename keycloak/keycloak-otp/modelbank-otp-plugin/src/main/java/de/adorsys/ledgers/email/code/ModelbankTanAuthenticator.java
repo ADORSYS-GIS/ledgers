@@ -18,7 +18,7 @@ public class ModelbankTanAuthenticator implements Authenticator {
 
     @Override
     public void authenticate(AuthenticationFlowContext context) {
-        // TODO:
+     /*   // TODO:
         AuthenticatorConfigModel config = context.getAuthenticatorConfig();
         KeycloakSession session = context.getSession();
         UserModel user = context.getUser();
@@ -39,8 +39,6 @@ public class ModelbankTanAuthenticator implements Authenticator {
             String emailAuthText = theme.getMessages(locale).getProperty("emailAuthText");
             String emailText = String.format(emailAuthText, code, Math.floorDiv(ttl, 60));
 
-
-            // TODO: here we send email;
             System.out.println("=================== SENDING THE CODE: " + code + "========================");
 
 
@@ -49,7 +47,7 @@ public class ModelbankTanAuthenticator implements Authenticator {
             context.failureChallenge(AuthenticationFlowError.INTERNAL_ERROR,
                                      context.form().setError("emailAuthEmailNotSent", e.getMessage())
                                              .createErrorPage(Response.Status.INTERNAL_SERVER_ERROR));
-        }
+        }*/ //TODO this has nothing to do with our abstract implementation!!!
     }
 
     @Override

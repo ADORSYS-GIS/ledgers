@@ -30,17 +30,11 @@ public class ModelbankSelectMethodAuthenticator implements Authenticator {
 
     @Override
     public void authenticate(AuthenticationFlowContext context) {
-
         ledgersConnector.setKeycloakSession(context.getSession());
         List<ScaMethod> scaMethods = ledgersConnector.getMethods(context.getUser());
 
-        ScaMethod a = new ScaMethod();
-        a.setId("OTP");
-        a.setType("OTP");
-        a.setDescription("OTP");
-        a.setDecoupled(true);
-
-        scaMethods.add(a);
+        ScaMethod a = getMockedScaMethod();
+        scaMethods.add(a); //TODO this is another MockStub for testing purposes!!!
 
         context.challenge(context.form().setAttribute(REALM, context.getRealm())
                                   .setAttribute("scaMethods", scaMethods.toArray())
@@ -79,5 +73,14 @@ public class ModelbankSelectMethodAuthenticator implements Authenticator {
     @Override
     public void close() {
 
+    }
+
+    private ScaMethod getMockedScaMethod() {
+        ScaMethod a = new ScaMethod();
+        a.setId("OTP");
+        a.setType("OTP");
+        a.setDescription("OTP");
+        a.setDecoupled(true);
+        return a;
     }
 }

@@ -22,29 +22,22 @@ import static de.adorsys.keycloak.otp.core.domain.ScaConstants.REALM;
 public class ModelbankDisplayObjectAuthenticator implements Authenticator {
 
     public ModelbankDisplayObjectAuthenticator() {
-        this.ledgersConnector = new LedgersConnectorImpl();
+        this.aspspConnector = new LedgersConnectorImpl();
+        this.cmsConnector = new CmsConnectorImpl();
     }
 
-    private LedgersConnectorImpl ledgersConnector;
-
-    private final CmsConnector cmsConnector = null; //TODO STUB HERE!!!
-    private final AspspConnector aspspConnector = null; //TODO STUB HERE!!!
+    private final CmsConnector cmsConnector; //TODO STUB HERE!!!
+    private final AspspConnector aspspConnector; //TODO STUB HERE!!!
 
     @Override
     public void authenticate(AuthenticationFlowContext context) {
-
-        CmsConnector cmsConnector = new CmsConnectorImpl(context.getSession());
+        cmsConnector.setKeycloakSession(context.getSession());
 
 //        ScaContextHolder scaContextHolder = new ScaContextHolder(context.getHttpRequest());
 //        ConfirmationObject<Object> object = cmsConnector.getObject(scaContextHolder);
-
-        ConfirmationObject<Object> object = new ConfirmationObject<>();
-        object.setObjType("test payment");
-        object.setDisplayInfo("payment");
-        object.setId("1234567890");
-        object.setDescription("description of the payment");
-
         ScaContextHolder scaContextHolder = new ScaContextHolder("1234567890", "auth_id", "PAYMENT");
+        ConfirmationObject<Object> object = getMockConfirmationObject();
+//TODO -----> Mocked values here until we figure how to pass PAR/RAR token requests <-----
 
         context.challenge(context.form().setAttribute(REALM, context.getRealm())
                                   .setAttribute("object", object)
@@ -65,8 +58,8 @@ public class ModelbankDisplayObjectAuthenticator implements Authenticator {
 
     @Override
     public boolean configuredFor(KeycloakSession keycloakSession, RealmModel realmModel, UserModel userModel) {
-        ledgersConnector.setKeycloakSession(keycloakSession);
-        List<ScaMethod> methodsForUser = ledgersConnector.getMethods(userModel);
+        aspspConnector.setKeycloakSession(keycloakSession);
+        List<ScaMethod> methodsForUser = aspspConnector.getMethods(userModel);
         return CollectionUtils.isNotEmpty(methodsForUser);
         // TODO: think about exempted
 
@@ -80,5 +73,14 @@ public class ModelbankDisplayObjectAuthenticator implements Authenticator {
     @Override
     public void close() {
 
+    }
+
+    private ConfirmationObject<Object> getMockConfirmationObject() {
+        ConfirmationObject<Object> object = new ConfirmationObject<>();
+        object.setObjType("test payment");
+        object.setDisplayInfo("payment");
+        object.setId("1234567890");
+        object.setDescription("description of the payment");
+        return object;
     }
 }
