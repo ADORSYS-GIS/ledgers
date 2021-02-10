@@ -13,6 +13,10 @@ import java.util.List;
 import static de.adorsys.keycloak.otp.core.domain.ScaStatus.EXEMPTED;
 import static de.adorsys.keycloak.otp.core.domain.ScaStatus.IDENTIFIED;
 
+/**
+ * Describes the steps of SCA to complete the whole chain. Each step is represented by separate 'Authentication' in Keycloak admin console.
+ *
+ */
 public enum Step {
     CONFIRM_OBJ {
         @Override
