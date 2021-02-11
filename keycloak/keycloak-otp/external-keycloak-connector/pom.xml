@@ -13,6 +13,7 @@
 
     <properties>
         <ruleset.basedir>../../..</ruleset.basedir>
+        <xs2a.version>9.7</xs2a.version>
     </properties>
 
     <dependencies>
@@ -25,6 +26,11 @@
             <groupId>de.adorsys.ledgers</groupId>
             <artifactId>ledgers-middleware-service-api</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.adorsys.psd2</groupId>
+            <artifactId>consent-core-api</artifactId>
+            <version>${xs2a.version}</version>
         </dependency>
 
         <dependency>

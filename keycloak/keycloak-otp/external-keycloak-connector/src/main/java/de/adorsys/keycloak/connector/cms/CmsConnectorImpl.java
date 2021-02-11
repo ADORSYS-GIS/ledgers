@@ -1,13 +1,15 @@
 package de.adorsys.keycloak.connector.cms;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import de.adorsys.keycloak.connector.cms.model.CmsTokenRequest;
 import de.adorsys.keycloak.connector.cms.model.Xs2aScaStatus;
 import de.adorsys.keycloak.otp.core.CmsConnector;
 import de.adorsys.keycloak.otp.core.domain.ConfirmationObject;
 import de.adorsys.keycloak.otp.core.domain.ScaContextHolder;
 import de.adorsys.keycloak.otp.core.domain.ScaStatus;
-import org.apache.commons.lang.StringUtils;
+import de.adorsys.psd2.consent.api.ais.CmsConsent;
+import de.adorsys.psd2.consent.api.pis.PisCommonPaymentResponse;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.client.exception.ResteasyHttpException;
 import org.keycloak.broker.provider.util.SimpleHttp;
@@ -22,6 +24,8 @@ import java.util.Base64;
 public class CmsConnectorImpl implements CmsConnector {
 
     private static final Logger LOG = Logger.getLogger(CmsConnectorImpl.class);
+    private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new JavaTimeModule());
+
     private static final String CONNECTION_ERROR_MSG = "Could not connect to remote CMS, please try again later.";
 
     private KeycloakSession keycloakSession;
@@ -38,7 +42,7 @@ public class CmsConnectorImpl implements CmsConnector {
     @Override
     public ConfirmationObject getObject(ScaContextHolder holder) {
         LOG.info("Getting business object with ID: " + holder.getObjId() + " from CMS.");
-        return StringUtils.equalsIgnoreCase(holder.getObjType(), "payment")
+        return "payment".equalsIgnoreCase(holder.getObjType())
                        ? getPaymentFromCms(holder.getObjId())
                        : getConsentFromCms(holder.getObjId());
     }
@@ -78,39 +82,49 @@ public class CmsConnectorImpl implements CmsConnector {
     }
 
     private ConfirmationObject getPaymentFromCms(String objId) {
-        JsonNode payment;
+        PisCommonPaymentResponse cmsPayment;
         ConfirmationObject<Object> confirmationObject;
         try {
-            payment = SimpleHttp.doGet(CMS_BASE_URL + "api/v1/pis/payment/" + objId, keycloakSession).asJson();
-            //TODO Consider using CMS MODELS!!! We do not really need JsonNodes although we've got prepared mappers in OBA!
-            confirmationObject = new ConfirmationObject<>(payment,
-                                                          "PAYMENT",
-                                                          "Please confirm incoming payment",
-                                                          objId,
-                                                          "ENCRYPTED ID HERE",
-                                                          "Debtor: %s, account: %s, cur: %s,\nCreditor: %s account: %s cur: %s \namount: %s cur: %s \npayment type: %s \nPay Day: %s",
-                                                          payment.get("debtor").get("name").asText(),
-                                                          payment.get("debtorAccount").asText());
-            //TODO Finish displayInfo transformation!!!
+            String payment = SimpleHttp.doGet(CMS_BASE_URL + "api/v1/pis/common-payments/" + objId, keycloakSession).asString();
+            cmsPayment = MAPPER.readValue(payment, PisCommonPaymentResponse.class);
+
         } catch (IOException e) {
             LOG.error("Error connecting to CMS retrieving payment with ID: " + objId);
             throw new ResteasyHttpException(CONNECTION_ERROR_MSG);
         }
 
+        confirmationObject = new ConfirmationObject<>(cmsPayment,
+                                                      "PAYMENT",
+                                                      "Please confirm incoming payment",
+                                                      objId,
+                                                      cmsPayment.getExternalId(),
+                                                      ""
+        );
+        //TODO Finish displayInfo transformation!!!
+
         return confirmationObject;
     }
 
     private ConfirmationObject getConsentFromCms(String objId) {
-        JsonNode consent;
-        ConfirmationObject<Object> confirmationObject = new ConfirmationObject<>();
+        CmsConsent cmsConsent;
+        ConfirmationObject<Object> confirmationObject;
         try {
-            consent = SimpleHttp.doGet(CMS_BASE_URL + "api/v1/consent/" + objId, keycloakSession).asJson();
-
+            String json = SimpleHttp.doGet(CMS_BASE_URL + "api/v1/consent/" + objId, keycloakSession).asString();
+            cmsConsent = MAPPER.readValue(json, CmsConsent.class);
         } catch (IOException e) {
             LOG.error("Error connecting to CMS retrieving consent with ID: " + objId);
             throw new ResteasyHttpException(CONNECTION_ERROR_MSG);
         }
-        //TODO Same as for Payment!
+
+        confirmationObject = new ConfirmationObject<>(cmsConsent,
+                                                      "CONSENT",
+                                                      "Please confirm incoming consent",
+                                                      objId,
+                                                      cmsConsent.getId(),
+                                                      "Valid until: %s, frequency per day: %s, recurring indicator: %s",
+                                                      String.valueOf(cmsConsent.getValidUntil()),
+                                                      String.valueOf(cmsConsent.getFrequencyPerDay()),
+                                                      String.valueOf(cmsConsent.isRecurringIndicator()));
         return confirmationObject;
     }
 
