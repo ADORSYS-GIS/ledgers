@@ -1,6 +1,8 @@
 package de.adorsys.keycloak.connector.cms;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import de.adorsys.keycloak.connector.cms.model.CmsTokenRequest;
 import de.adorsys.keycloak.connector.cms.model.Xs2aScaStatus;
@@ -8,8 +10,8 @@ import de.adorsys.keycloak.otp.core.CmsConnector;
 import de.adorsys.keycloak.otp.core.domain.ConfirmationObject;
 import de.adorsys.keycloak.otp.core.domain.ScaContextHolder;
 import de.adorsys.keycloak.otp.core.domain.ScaStatus;
+import de.adorsys.ledgers.middleware.api.domain.payment.PaymentTO;
 import de.adorsys.psd2.consent.api.ais.CmsConsent;
-import de.adorsys.psd2.consent.api.pis.PisCommonPaymentResponse;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.client.exception.ResteasyHttpException;
 import org.keycloak.broker.provider.util.SimpleHttp;
@@ -23,8 +25,16 @@ import java.util.Base64;
 
 public class CmsConnectorImpl implements CmsConnector {
 
-    private static final Logger LOG = Logger.getLogger(CmsConnectorImpl.class);
     private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new JavaTimeModule());
+
+    static {
+        SimpleModule module = new SimpleModule();
+        module.addDeserializer(PaymentTO.class, new CmsPaymentDeserializer(MAPPER));
+        MAPPER.registerModule(module);
+        MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    }
+
+    private static final Logger LOG = Logger.getLogger(CmsConnectorImpl.class);
 
     private static final String CONNECTION_ERROR_MSG = "Could not connect to remote CMS, please try again later.";
 
@@ -43,7 +53,7 @@ public class CmsConnectorImpl implements CmsConnector {
     public ConfirmationObject getObject(ScaContextHolder holder) {
         LOG.info("Getting business object with ID: " + holder.getObjId() + " from CMS.");
         return "payment".equalsIgnoreCase(holder.getObjType())
-                       ? getPaymentFromCms(holder.getObjId())
+                       ? getPaymentFromCms(holder)
                        : getConsentFromCms(holder.getObjId());
     }
 
@@ -81,23 +91,23 @@ public class CmsConnectorImpl implements CmsConnector {
         }
     }
 
-    private ConfirmationObject getPaymentFromCms(String objId) {
-        PisCommonPaymentResponse cmsPayment;
+    private ConfirmationObject getPaymentFromCms(ScaContextHolder holder) {
+        PaymentTO payment;
         ConfirmationObject<Object> confirmationObject;
-        try {
-            String payment = SimpleHttp.doGet(CMS_BASE_URL + "api/v1/pis/common-payments/" + objId, keycloakSession).asString();
-            cmsPayment = MAPPER.readValue(payment, PisCommonPaymentResponse.class);
 
+        try {
+            String paymentJson = SimpleHttp.doGet(CMS_BASE_URL + "psu-api/v1/payment/redirect/" + holder.getAuthId(), keycloakSession).asString();
+            payment = MAPPER.readValue(paymentJson, PaymentTO.class);
         } catch (IOException e) {
-            LOG.error("Error connecting to CMS retrieving payment with ID: " + objId);
+            LOG.error("Error connecting to CMS retrieving payment by redirect ID: " + holder.getAuthId());
             throw new ResteasyHttpException(CONNECTION_ERROR_MSG);
         }
 
-        confirmationObject = new ConfirmationObject<>(cmsPayment,
+        confirmationObject = new ConfirmationObject<>(payment,
                                                       "PAYMENT",
                                                       "Please confirm incoming payment",
-                                                      objId,
-                                                      cmsPayment.getExternalId(),
+                                                      payment.getPaymentId(),
+                                                      payment.getPaymentId(),
                                                       ""
         );
         //TODO Finish displayInfo transformation!!!

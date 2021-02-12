@@ -35,7 +35,7 @@ public class ModelbankDisplayObjectAuthenticator implements Authenticator {
 
 //        ScaContextHolder scaContextHolder = new ScaContextHolder(context.getHttpRequest());
 //        ConfirmationObject<Object> object = cmsConnector.getObject(scaContextHolder);
-        ScaContextHolder scaContextHolder = new ScaContextHolder("5XGuEzgXzGjlJqGZSpOXSjVQ4Rs8KCG0UKMZWUzwJrup9iTe8TR-Oeh2M2OQgXJRaVMIP1gFmFZSPqbs-YLHD9WFnjze07vwpAgFM45MlQk=_=_psGLvQpt9Q", "auth_id", "consent");
+        ScaContextHolder scaContextHolder = new ScaContextHolder("", "74aaa0b4-15cf-4e96-8d60-4d51cd17bd8c", "payment");
         ConfirmationObject<Object> object = getMockConfirmationObject();
         cmsConnector.getObject(scaContextHolder);
 //TODO -----> Mocked values here until we figure how to pass PAR/RAR token requests <-----
