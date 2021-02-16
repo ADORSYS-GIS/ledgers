@@ -144,7 +144,7 @@ public class CmsConnectorImpl implements CmsConnector {
         Xs2aScaStatus xs2aScaStatus = mapToXs2aScaStatus(status);
 
         try {
-            responseCode = SimpleHttp.doPut(CMS_BASE_URL + "api/v1/authorisations/" + authId + "/" + xs2aScaStatus, keycloakSession.getProvider(HttpClientProvider.class).getHttpClient())
+            responseCode = SimpleHttp.doPut(CMS_BASE_URL + "api/v1/authorisations/" + authId + "/status/" + xs2aScaStatus, keycloakSession.getProvider(HttpClientProvider.class).getHttpClient())
                                    .asStatus();
         } catch (IOException e) {
             LOG.error("Error connecting to CMS updating authorisation status, auth ID: " + authId + ", response code: " + responseCode);

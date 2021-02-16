@@ -57,8 +57,8 @@ public class LedgersConnectorImpl implements AspspConnector {
     }
 
     @Override
-    public void selectMethod(ScaContextHolder scaDataContext, String methodId, String login) {
-        selectMethodInLedgers(scaDataContext, methodId, login);
+    public String selectMethod(ScaContextHolder scaDataContext, String methodId, String login) {
+        return selectMethodInLedgers(scaDataContext, methodId, login).getPsuMessage();
     }
 
     @Override
@@ -106,15 +106,14 @@ public class LedgersConnectorImpl implements AspspConnector {
         }
     }
 
-    private void selectMethodInLedgers(ScaContextHolder scaDataContext, String methodId, String login) {
+    private GlobalScaResponseTO selectMethodInLedgers(ScaContextHolder scaDataContext, String methodId, String login) {
         StartScaOprTO scaOprTO = AspspMapper.mapStartScaOpr(scaDataContext);
 
         try {
             String json = SimpleHttp.doPost(LEDGERS_BASE_URL + "fapi/sca/select?login=" + login + "&methodId=" + methodId, keycloakSession)
                                   .json(scaOprTO)
                                   .asString();
-            GlobalScaResponseTO response = MAPPER.readValue(json, GlobalScaResponseTO.class);
-            response.getPsuMessage(); //TODO Could return PSU message.
+            return MAPPER.readValue(json, GlobalScaResponseTO.class);
         } catch (IOException e) {
             LOG.error("Error connecting to Ledgers selecting SCA method for user: " + login);
             throw new ResteasyHttpException(CONNECTION_ERROR_MSG);

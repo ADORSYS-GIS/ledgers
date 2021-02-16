@@ -15,7 +15,7 @@ public interface AspspConnector {
 
     <T> void initObj(ScaContextHolder scaDataContext, ConfirmationObject<T> object, String login);
 
-    void selectMethod(ScaContextHolder scaDataContext, String methodId, String login);
+    String selectMethod(ScaContextHolder scaDataContext, String methodId, String login);
 
     CodeValidationResult validateCode(ScaContextHolder scaDataContext, String code, String login);
 

@@ -46,8 +46,8 @@ public enum Step {
             String methodId = context.getHttpRequest().getDecodedFormParameters().getFirst("methodId");
 
             //StartSca and SelectMethod, update Cms with status
-            aspspConnector.selectMethod(holder, methodId, context.getUser().getUsername());
-            cmsConnector.setAuthorizationStatus(holder, ScaStatus.METHOD_SELECTED);
+            String psuMessage = aspspConnector.selectMethod(holder, methodId, context.getUser().getUsername());
+//            cmsConnector.setAuthorizationStatus(holder, ScaStatus.METHOD_SELECTED);
             context.challenge(context.form().setAttribute(ScaConstants.REALM, context.getRealm()).createForm(ScaConstants.CODE_INPUT));
         }
     },

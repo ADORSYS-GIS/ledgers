@@ -28,8 +28,8 @@
                 <input type="hidden" name="step" value="METHOD_SELECTED">
 
                 <input type="hidden" name="oprId" value="operation_id">
-                <input type="hidden" name="objId" value="object_id">
-                <input type="hidden" name="authId" value="auth_id">
+                <input type="hidden" name="objId" value="DfvSw5qmRNomkRNh3tJEgQ">
+                <input type="hidden" name="authId" value="9458a613-fc27-49dd-a59d-6700b78a0a5a">
                 <input type="hidden" name="objType" value="PAYMENT">
                 <input type="hidden" name="login" value="${auth.attemptedUsername}">
 
