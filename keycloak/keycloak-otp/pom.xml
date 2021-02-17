@@ -18,9 +18,10 @@
     </properties>
 
     <modules>
-        <module>keycloak-otp-core</module>
+        <module>otp-plugin-core</module>
+        <module>otp-plugin-base</module>
+        <module>modelbank-otp-plugin-connector</module>
         <module>modelbank-otp-plugin</module>
-        <module>external-keycloak-connector</module>
     </modules>
 
 </project>

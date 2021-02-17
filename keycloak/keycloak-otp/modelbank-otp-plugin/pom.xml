@@ -19,39 +19,15 @@
     <dependencies>
         <dependency>
             <groupId>de.adorsys.ledgers</groupId>
-            <artifactId>keycloak-otp-core</artifactId>
+            <artifactId>otp-plugin-base</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency> <!--TEMPORARY-->
+        <dependency>
             <groupId>de.adorsys.ledgers</groupId>
-            <artifactId>external-keycloak-connector</artifactId>
+            <artifactId>modelbank-otp-plugin-connector</artifactId>
             <version>${project.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.keycloak</groupId>
-            <artifactId>keycloak-server-spi-private</artifactId>
-            <version>${keycloak-adapter-bom.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.keycloak</groupId>
-            <artifactId>keycloak-core</artifactId>
-            <version>${keycloak-adapter-bom.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.keycloak</groupId>
-            <artifactId>keycloak-server-spi</artifactId>
-            <version>${keycloak-adapter-bom.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.keycloak</groupId>
-            <artifactId>keycloak-services</artifactId>
-            <version>${keycloak-adapter-bom.version}</version>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
 
     <build>
