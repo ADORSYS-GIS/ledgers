@@ -1,12 +1,15 @@
 package de.adorsys.keycloak.connector.cms.impl;
 
-import de.adorsys.keycloak.otp.core.CmsConnectorProviderFactory;
 import de.adorsys.keycloak.otp.core.CmsConnector;
+import de.adorsys.keycloak.otp.core.CmsConnectorProviderFactory;
 import org.keycloak.Config;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
+import org.keycloak.provider.ServerInfoAwareProviderFactory;
 
-public class CmsConnectorProviderFactoryImpl implements CmsConnectorProviderFactory {
+import java.util.Map;
+
+public class CmsConnectorProviderFactoryImpl implements CmsConnectorProviderFactory, ServerInfoAwareProviderFactory {
     @Override
     public CmsConnector create(KeycloakSession keycloakSession) {
         return new CmsConnectorImpl(keycloakSession);
@@ -29,6 +32,11 @@ public class CmsConnectorProviderFactoryImpl implements CmsConnectorProviderFact
 
     @Override
     public String getId() {
-        return "cmsConnectorImpl";
+        return "cms-connector-impl";
+    }
+
+    @Override
+    public Map<String, String> getOperationalInfo() {
+        return null;
     }
 }

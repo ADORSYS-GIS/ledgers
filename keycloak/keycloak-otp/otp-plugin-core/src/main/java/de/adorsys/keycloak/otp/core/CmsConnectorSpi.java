@@ -7,12 +7,12 @@ import org.keycloak.provider.Spi;
 public class CmsConnectorSpi implements Spi {
     @Override
     public boolean isInternal() {
-        return false;
+        return true;
     }
 
     @Override
     public String getName() {
-        return "cmsConnector";
+        return "cms-connector";
     }
 
     @Override

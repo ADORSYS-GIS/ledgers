@@ -4,15 +4,15 @@ import org.keycloak.provider.Provider;
 import org.keycloak.provider.ProviderFactory;
 import org.keycloak.provider.Spi;
 
-public class LedgersConnectorSpi implements Spi {
+public class AspspConnectorSpi implements Spi {
     @Override
     public boolean isInternal() {
-        return false;
+        return true;
     }
 
     @Override
     public String getName() {
-        return "ledgersConnector";
+        return "aspsp-connector";
     }
 
     @Override

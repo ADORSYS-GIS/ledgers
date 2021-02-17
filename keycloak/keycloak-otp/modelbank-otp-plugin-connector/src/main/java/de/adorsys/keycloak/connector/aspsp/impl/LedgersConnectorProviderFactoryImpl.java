@@ -1,12 +1,15 @@
 package de.adorsys.keycloak.connector.aspsp.impl;
 
-import de.adorsys.keycloak.otp.core.LedgersConnectorProviderFactory;
 import de.adorsys.keycloak.otp.core.AspspConnector;
+import de.adorsys.keycloak.otp.core.LedgersConnectorProviderFactory;
 import org.keycloak.Config;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
+import org.keycloak.provider.ServerInfoAwareProviderFactory;
 
-public class LedgersConnectorProviderFactoryImpl implements LedgersConnectorProviderFactory {
+import java.util.Map;
+
+public class LedgersConnectorProviderFactoryImpl implements LedgersConnectorProviderFactory, ServerInfoAwareProviderFactory {
     @Override
     public AspspConnector create(KeycloakSession keycloakSession) {
         return new LedgersConnectorImpl(keycloakSession);
@@ -29,6 +32,11 @@ public class LedgersConnectorProviderFactoryImpl implements LedgersConnectorProv
 
     @Override
     public String getId() {
-        return "ledgersConnectorImpl";
+        return "ledgers-connector-impl";
+    }
+
+    @Override
+    public Map<String, String> getOperationalInfo() {
+        return null;
     }
 }

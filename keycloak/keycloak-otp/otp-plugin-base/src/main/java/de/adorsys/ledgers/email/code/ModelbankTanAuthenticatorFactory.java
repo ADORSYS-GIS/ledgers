@@ -86,7 +86,7 @@ public class ModelbankTanAuthenticatorFactory implements AuthenticatorFactory, S
 
     @Override
     public Map<String, String> getOperationalInfo() {
-        return Collections.singletonMap("Version", "demo");
+        return null;
     }
 
 }

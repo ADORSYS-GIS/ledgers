@@ -1,2 +1,2 @@
 de.adorsys.keycloak.otp.core.CmsConnectorSpi
-de.adorsys.keycloak.otp.core.LedgersConnectorSpi
+de.adorsys.keycloak.otp.core.AspspConnectorSpi

@@ -81,7 +81,7 @@ public class ModelbankDisplayObjectAuthenticatorFactory implements Authenticator
 
     @Override
     public Map<String, String> getOperationalInfo() {
-        return Collections.singletonMap("Version", "demo");
+        return null;
     }
 
 }
