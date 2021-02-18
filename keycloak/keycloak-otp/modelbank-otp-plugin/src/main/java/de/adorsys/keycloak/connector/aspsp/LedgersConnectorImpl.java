@@ -1,8 +1,7 @@
-package de.adorsys.keycloak.connector.aspsp.impl;
+package de.adorsys.keycloak.connector.aspsp;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import de.adorsys.keycloak.connector.aspsp.AspspMapper;
 import de.adorsys.keycloak.otp.core.AspspConnector;
 import de.adorsys.keycloak.otp.core.domain.CodeValidationResult;
 import de.adorsys.keycloak.otp.core.domain.ConfirmationObject;
@@ -35,7 +34,7 @@ public class LedgersConnectorImpl implements AspspConnector {
     private static final String TEMPLATE_INIT_ERROR_MSG = "Error connecting to Ledgers initiating %s for user: %s";
     private static final String LEDGERS_BASE_URL = "http://localhost:8088/";
 
-    private KeycloakSession keycloakSession;
+    private final KeycloakSession keycloakSession;
 
     public LedgersConnectorImpl(KeycloakSession keycloakSession) {
         this.keycloakSession = keycloakSession;
@@ -151,10 +150,5 @@ public class LedgersConnectorImpl implements AspspConnector {
             LOG.error("Error connecting to Ledgers executing payment for user: " + login);
             throw new ResteasyHttpException(CONNECTION_ERROR_MSG);
         }
-    }
-
-    @Override
-    public void close() {
-        // Nothing to do.
     }
 }

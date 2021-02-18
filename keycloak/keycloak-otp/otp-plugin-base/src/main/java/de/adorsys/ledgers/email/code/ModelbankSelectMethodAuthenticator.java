@@ -2,6 +2,7 @@ package de.adorsys.ledgers.email.code;
 
 import de.adorsys.keycloak.otp.core.AspspConnector;
 import de.adorsys.keycloak.otp.core.CmsConnector;
+import de.adorsys.keycloak.otp.core.ModelbankConnectorHolder;
 import de.adorsys.keycloak.otp.core.domain.ScaContextHolder;
 import de.adorsys.keycloak.otp.core.domain.ScaMethod;
 import org.apache.commons.collections4.CollectionUtils;
@@ -10,6 +11,7 @@ import org.keycloak.authentication.Authenticator;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserModel;
+import org.keycloak.services.resource.RealmResourceProvider;
 
 import java.util.List;
 
@@ -22,8 +24,10 @@ public class ModelbankSelectMethodAuthenticator implements Authenticator {
     private final AspspConnector aspspConnector;
 
     public ModelbankSelectMethodAuthenticator(KeycloakSession session) {
-        this.aspspConnector = session.getProvider(AspspConnector.class);
-        this.cmsConnector = session.getProvider(CmsConnector.class);
+        RealmResourceProvider provider = session.getProvider(RealmResourceProvider.class, ModelbankConnectorHolder.PROVIDER_ID);
+        //todo: exception if no provider
+        this.aspspConnector = ((ModelbankConnectorHolder)provider.getResource()).getAspspConnector();
+        this.cmsConnector = ((ModelbankConnectorHolder)provider.getResource()).getCmsConnector();
     }
 
     @Override

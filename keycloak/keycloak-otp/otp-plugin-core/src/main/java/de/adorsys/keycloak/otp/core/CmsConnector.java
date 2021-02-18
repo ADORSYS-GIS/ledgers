@@ -4,10 +4,9 @@ import de.adorsys.keycloak.otp.core.domain.ConfirmationObject;
 import de.adorsys.keycloak.otp.core.domain.ScaContextHolder;
 import de.adorsys.keycloak.otp.core.domain.ScaStatus;
 import org.keycloak.models.UserModel;
-import org.keycloak.provider.Provider;
 import org.keycloak.representations.AccessToken;
 
-public interface CmsConnector extends Provider {
+public interface CmsConnector {
 
     <T> ConfirmationObject<T> getObject(ScaContextHolder scaDataContext);
 

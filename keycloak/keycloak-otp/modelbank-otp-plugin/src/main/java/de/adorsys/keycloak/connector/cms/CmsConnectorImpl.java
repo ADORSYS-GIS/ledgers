@@ -1,10 +1,9 @@
-package de.adorsys.keycloak.connector.cms.impl;
+package de.adorsys.keycloak.connector.cms;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import de.adorsys.keycloak.connector.cms.CmsPaymentDeserializer;
 import de.adorsys.keycloak.connector.cms.model.CmsTokenRequest;
 import de.adorsys.keycloak.connector.cms.model.Xs2aScaStatus;
 import de.adorsys.keycloak.otp.core.CmsConnector;
@@ -40,7 +39,7 @@ public class CmsConnectorImpl implements CmsConnector {
     private static final String CONNECTION_ERROR_MSG = "Could not connect to remote CMS, please try again later.";
     private static final String CMS_BASE_URL = "http://localhost:38080/";
 
-    private KeycloakSession keycloakSession;
+    private final KeycloakSession keycloakSession;
 
     public CmsConnectorImpl(KeycloakSession keycloakSession) {
         this.keycloakSession = keycloakSession;
@@ -165,10 +164,5 @@ public class CmsConnectorImpl implements CmsConnector {
             default:
                 throw new IllegalArgumentException("Unsupported SCA status: " + status);
         }
-    }
-
-    @Override
-    public void close() {
-        // Nothing to do.
     }
 }
