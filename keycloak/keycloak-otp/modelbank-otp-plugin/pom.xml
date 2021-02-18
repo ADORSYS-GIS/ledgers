@@ -14,6 +14,7 @@
 
     <properties>
         <ruleset.basedir>../../..</ruleset.basedir>
+        <xs2a.version>9.7</xs2a.version>
     </properties>
 
     <dependencies>
@@ -24,10 +25,45 @@
         </dependency>
         <dependency>
             <groupId>de.adorsys.ledgers</groupId>
-            <artifactId>modelbank-otp-plugin-connector</artifactId>
+            <artifactId>otp-plugin-core</artifactId>
             <version>${project.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>de.adorsys.ledgers</groupId>
+            <artifactId>ledgers-middleware-service-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.adorsys.psd2</groupId>
+            <artifactId>consent-core-api</artifactId>
+            <version>${xs2a.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-server-spi-private</artifactId>
+            <version>${keycloak-adapter-bom.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-core</artifactId>
+            <version>${keycloak-adapter-bom.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-server-spi</artifactId>
+            <version>${keycloak-adapter-bom.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-services</artifactId>
+            <version>${keycloak-adapter-bom.version}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>

@@ -20,7 +20,6 @@
     <modules>
         <module>otp-plugin-core</module>
         <module>otp-plugin-base</module>
-        <module>modelbank-otp-plugin-connector</module>
         <module>modelbank-otp-plugin</module>
     </modules>
 
