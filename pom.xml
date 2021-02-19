@@ -29,7 +29,8 @@
         <module>ledgers-security</module>
 		<module>ledgers-jaxb-api</module>
 		<module>keycloak</module>
-	</modules>
+        <module>keycloak-par</module>
+    </modules>
 
 	<packaging>pom</packaging>
 

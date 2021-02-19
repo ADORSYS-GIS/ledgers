@@ -36,6 +36,7 @@
         <module>keycloak-token-exchange</module>
         <module>keycloak-modelbank-theme</module>
         <module>keycloak-otp</module>
+        <module>keycloak-par</module>
     </modules>
 
 
