@@ -23,8 +23,6 @@ import java.io.IOException;
 import java.util.EnumSet;
 import java.util.List;
 
-import static org.apache.commons.lang.StringUtils.equalsIgnoreCase;
-
 //TODO in case of errors consider returning a DEV message to display something on UI!
 public class LedgersConnectorImpl implements AspspConnector {
 
@@ -47,7 +45,7 @@ public class LedgersConnectorImpl implements AspspConnector {
 
     @Override
     public <T> void initObj(ScaContextHolder scaDataContext, ConfirmationObject<T> object, String login) {
-        if (equalsIgnoreCase(scaDataContext.getObjType(), "cancel_payment")) {
+        if ("cancel_payment".equalsIgnoreCase(scaDataContext.getObjType())) {
             ConfirmationObject<PaymentTO> payment = (ConfirmationObject<PaymentTO>) object;
             initiatePaymentCancellationInLedgers(payment, login);
         } else {

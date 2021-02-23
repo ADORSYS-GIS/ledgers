@@ -104,7 +104,8 @@ public class CmsConnectorImpl implements CmsConnector {
                                                       "Please confirm incoming payment",
                                                       payment.getPaymentId(),
                                                       payment.getPaymentId(),
-                                                      ""
+                                                      "Debtor account: %s",
+                                                      payment.getDebtorAccount().getIban()
         );
         //TODO Finish displayInfo transformation!!!
 
@@ -141,6 +142,7 @@ public class CmsConnectorImpl implements CmsConnector {
 
         try {
             responseCode = SimpleHttp.doPut(CMS_BASE_URL + "api/v1/authorisations/" + authId + "/status/" + xs2aScaStatus, keycloakSession.getProvider(HttpClientProvider.class).getHttpClient())
+                                   .json(new Object())
                                    .asStatus();
         } catch (IOException e) {
             LOG.error("Error connecting to CMS updating authorisation status, auth ID: " + authId + ", response code: " + responseCode);

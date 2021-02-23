@@ -27,6 +27,11 @@
             <#--				Aditional fields to build POST request with body-->
             <input type="hidden" name="step" value="CODE_VALIDATION">
 
+            <input type="hidden" name="objId" value="${context.objId}">
+            <input type="hidden" name="authId" value="${context.authId}">
+            <input type="hidden" name="objType" value="${context.objType}">
+            <input type="hidden" name="login" value="${auth.attemptedUsername}">
+
         </form>
     <#elseif section = "info" >
         ${msg("inputTanInstruction")}

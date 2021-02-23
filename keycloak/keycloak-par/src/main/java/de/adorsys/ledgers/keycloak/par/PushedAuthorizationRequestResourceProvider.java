@@ -1,5 +1,6 @@
 package de.adorsys.ledgers.keycloak.par;
 
+import de.adorsys.ledgers.keycloak.par.model.ParResponse;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.annotations.cache.NoCache;
 import org.keycloak.models.KeycloakSession;
@@ -11,6 +12,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Base64;
 
 public class PushedAuthorizationRequestResourceProvider implements RealmResourceProvider {
 
@@ -26,12 +28,20 @@ public class PushedAuthorizationRequestResourceProvider implements RealmResource
     @Path("/par")
     @NoCache
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
-    public Response selectMethod(@FormParam("objectId") String objectId,
-                                 @FormParam("redirectId") String redirectId) {
-        LOG.info("Received PAR request, object ID: " + objectId + ", redirect ID: " + redirectId);
-        int a = 0;
+    public Response handlePar(@FormParam("objectId") String objectId,
+                              @FormParam("redirectId") String redirectId,
+                              @FormParam("objectType") String objectType) {
+        LOG.info("Received PAR request, object ID: " + objectId + ", redirect ID: " + redirectId
+                         + ", object type: " + objectType);
+        String grantId = Base64.getEncoder().encodeToString(String.format("%s,%s,%s", objectId, redirectId, objectType).getBytes());
 
-        return Response.ok("111", MediaType.APPLICATION_JSON_TYPE).build();
+        // Temporary solution - storing encoded custom parameters inside the realm attribute,
+        session.getContext().getRealm().setAttribute("grantId", grantId);
+
+        String redirectUri = session.getContext().getAuthServerUrl().toASCIIString();
+        ParResponse response = new ParResponse(grantId, redirectUri);
+
+        return Response.ok(response, MediaType.APPLICATION_JSON_TYPE).build();
     }
 
 

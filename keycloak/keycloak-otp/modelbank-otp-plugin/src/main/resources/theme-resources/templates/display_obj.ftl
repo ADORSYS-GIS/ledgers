@@ -7,7 +7,7 @@
             <div class="${properties.kcFormGroupClass!}">
                 <input id="objId"
                        name="objId"
-                       value="${context.objId}"
+                       value="${object.id}"
                        hidden/>
                 <input id="authId"
                        name="authId"

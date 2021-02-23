@@ -15,7 +15,6 @@ import static de.adorsys.keycloak.otp.core.domain.ScaStatus.IDENTIFIED;
 
 /**
  * Describes the steps of SCA to complete the whole chain. Each step is represented by separate 'Authentication' in Keycloak admin console.
- *
  */
 public enum Step {
     CONFIRM_OBJ {
@@ -25,18 +24,34 @@ public enum Step {
             //Get required data
             UserModel user = context.getUser();
             List<ScaMethod> scaMethods = aspspConnector.getMethods(user);
-            ConfirmationObject<Object> object = cmsConnector.getObject(holder);
+            ConfirmationObject<Object> confirmationObject = cmsConnector.getObject(holder);
 
             //UpdateCmsUser and Init Operation in Core
             cmsConnector.updateUserData(user);
-            aspspConnector.initObj(holder, object, user.getUsername());
+            aspspConnector.initObj(holder, confirmationObject, user.getUsername());
 
             //Pick corresponding ScaStatus and View to display
             ScaStatus status = scaMethods.isEmpty() ? EXEMPTED : IDENTIFIED;
             String viewToDisplay = scaMethods.isEmpty() ? ScaConstants.REDIRECT_VIEW : ScaConstants.SELECT_METHOD;
             cmsConnector.setAuthorizationStatus(holder, status);
-            //TODO add methods to view
-            context.challenge(context.form().setAttribute(ScaConstants.REALM, context.getRealm()).createForm(viewToDisplay));
+
+            if (ScaConstants.SELECT_METHOD.equals(viewToDisplay)) {
+                holder.setObjId(confirmationObject.getId());
+
+                ScaMethod a = getMockedScaMethod();
+                scaMethods.add(a); //TODO this is another MockStub for testing purposes!!!
+
+                context.challenge(context.form()
+                                          .setAttribute(ScaConstants.REALM, context.getRealm())
+                                          .setAttribute("scaMethods", scaMethods.toArray())
+                                          .setAttribute("context", holder)
+                                          .createForm(viewToDisplay));
+            } else {
+                context.challenge(context.form()
+                                          .setAttribute(ScaConstants.REALM, context.getRealm())
+                                          .createForm(viewToDisplay));
+            }
+
         }
     },
     METHOD_SELECTED {
@@ -45,10 +60,13 @@ public enum Step {
                           CmsConnector cmsConnector, AspspConnector aspspConnector) {
             String methodId = context.getHttpRequest().getDecodedFormParameters().getFirst("methodId");
 
-            //StartSca and SelectMethod, update Cms with status
+            // StartSca and SelectMethod, update Cms with status
             String psuMessage = aspspConnector.selectMethod(holder, methodId, context.getUser().getUsername());
 //            cmsConnector.setAuthorizationStatus(holder, ScaStatus.METHOD_SELECTED);
-            context.challenge(context.form().setAttribute(ScaConstants.REALM, context.getRealm()).createForm(ScaConstants.CODE_INPUT));
+            context.challenge(context.form()
+                                      .setAttribute(ScaConstants.REALM, context.getRealm())
+                                      .setAttribute("context", holder)
+                                      .createForm(ScaConstants.CODE_INPUT));
         }
     },
     CODE_VALIDATION {
@@ -63,7 +81,9 @@ public enum Step {
                                                     : "Your authorization was successful, you can execute your operation.";
                 //cmsConnector.setAuthorizationStatus(holder, VALIDATED);
                 //pass msg to the view
-                context.challenge(context.form().setAttribute(ScaConstants.REALM, context.getRealm()).createForm(ScaConstants.REDIRECT_VIEW));
+                context.challenge(context.form()
+                                          .setAttribute(ScaConstants.REALM, context.getRealm())
+                                          .createForm(ScaConstants.REDIRECT_VIEW));
             } else {
                 context.failureChallenge(AuthenticationFlowError.INTERNAL_ERROR,
                                          context.form().createErrorPage(Response.Status.INTERNAL_SERVER_ERROR));
@@ -92,4 +112,14 @@ public enum Step {
 
     public abstract void apply(ScaContextHolder holder, AuthenticationFlowContext context,
                                CmsConnector cmsConnector, AspspConnector aspspConnector);
+
+    ScaMethod getMockedScaMethod() {
+        ScaMethod a = new ScaMethod();
+        a.setId("OTP");
+        a.setType("OTP");
+        a.setDescription("OTP");
+        a.setDecoupled(true);
+        return a;
+    }
+
 }

@@ -14,6 +14,8 @@ import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserModel;
 import org.keycloak.services.resource.RealmResourceProvider;
 
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 import static de.adorsys.keycloak.otp.core.domain.ScaConstants.DISPLAY_OBJ;
@@ -26,19 +28,30 @@ public class ModelbankDisplayObjectAuthenticator implements Authenticator {
 
     public ModelbankDisplayObjectAuthenticator(KeycloakSession session) {
         RealmResourceProvider provider = session.getProvider(RealmResourceProvider.class, ModelbankConnectorHolder.PROVIDER_ID);
-       //todo: exception if no provider
-        this.aspspConnector = ((ModelbankConnectorHolder)provider.getResource()).getAspspConnector();
-        this.cmsConnector = ((ModelbankConnectorHolder)provider.getResource()).getCmsConnector();
+        //todo: exception if no provider
+        this.aspspConnector = ((ModelbankConnectorHolder) provider.getResource()).getAspspConnector();
+        this.cmsConnector = ((ModelbankConnectorHolder) provider.getResource()).getCmsConnector();
     }
 
     @Override
     public void authenticate(AuthenticationFlowContext context) {
-//        ScaContextHolder scaContextHolder = new ScaContextHolder(context.getHttpRequest());
-//        ConfirmationObject<Object> object = cmsConnector.getObject(scaContextHolder);
-        ScaContextHolder scaContextHolder = new ScaContextHolder("", "ffb8512d-0c96-40c1-884c-c0526292d716", "payment");
-        ConfirmationObject<Object> object = getMockConfirmationObject();
-        cmsConnector.getObject(scaContextHolder);
-//TODO -----> Mocked values here until we figure how to pass PAR/RAR token requests <-----
+
+        // Loading encoded custom parameters as "grand ID" from realm:
+        String grantId = context.getRealm().getAttribute("grantId");
+
+        String decodedGrantId = new String(Base64.getDecoder().decode(grantId));
+        List<String> parameters = Arrays.asList(decodedGrantId.split(","));
+
+        if (parameters.isEmpty()) {
+            throw new RuntimeException("No parameters were added during PAR processing, flow is broken.");
+        }
+
+        String businessObjectId = parameters.get(0);
+        String authId = parameters.get(1);
+        String objectType = parameters.get(2);
+
+        ScaContextHolder scaContextHolder = new ScaContextHolder(businessObjectId, authId, objectType);
+        ConfirmationObject<Object> object = cmsConnector.getObject(scaContextHolder);
 
         context.challenge(context.form().setAttribute(REALM, context.getRealm())
                                   .setAttribute("object", object)
@@ -48,8 +61,8 @@ public class ModelbankDisplayObjectAuthenticator implements Authenticator {
 
     @Override
     public void action(AuthenticationFlowContext context) {
-        // Just display the form.
-        context.success();
+        ScaContextHolder scaContextHolder = new ScaContextHolder(context.getHttpRequest());
+        scaContextHolder.getStep().apply(scaContextHolder, context, cmsConnector, aspspConnector);
     }
 
     @Override

@@ -3,6 +3,7 @@ package de.adorsys.ledgers.email.code;
 import de.adorsys.keycloak.otp.core.AspspConnector;
 import de.adorsys.keycloak.otp.core.CmsConnector;
 import de.adorsys.keycloak.otp.core.ModelbankConnectorHolder;
+import de.adorsys.keycloak.otp.core.domain.ConfirmationObject;
 import de.adorsys.keycloak.otp.core.domain.ScaContextHolder;
 import de.adorsys.keycloak.otp.core.domain.ScaMethod;
 import org.apache.commons.collections4.CollectionUtils;
@@ -13,6 +14,8 @@ import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserModel;
 import org.keycloak.services.resource.RealmResourceProvider;
 
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 import static de.adorsys.keycloak.otp.core.domain.ScaConstants.REALM;
@@ -34,11 +37,30 @@ public class ModelbankSelectMethodAuthenticator implements Authenticator {
     public void authenticate(AuthenticationFlowContext context) {
         List<ScaMethod> scaMethods = aspspConnector.getMethods(context.getUser());
 
+        // Loading encoded custom parameters as "grand ID" from realm:
+        String grantId = context.getRealm().getAttribute("grantId");
+
+        String decodedGrantId = new String(Base64.getDecoder().decode(grantId));
+        List<String> parameters = Arrays.asList(decodedGrantId.split(","));
+
+        if (parameters.isEmpty()) {
+            throw new RuntimeException("No parameters were added during PAR processing, flow is broken.");
+        }
+
+        String businessObjectId = parameters.get(0);
+        String authId = parameters.get(1);
+        String objectType = parameters.get(2);
+
+        ScaContextHolder scaContextHolder = new ScaContextHolder(businessObjectId, authId, objectType);
+        ConfirmationObject<Object> object = cmsConnector.getObject(scaContextHolder);
+        scaContextHolder.setObjId(object.getId());
+
         ScaMethod a = getMockedScaMethod();
         scaMethods.add(a); //TODO this is another MockStub for testing purposes!!!
 
         context.challenge(context.form().setAttribute(REALM, context.getRealm())
                                   .setAttribute("scaMethods", scaMethods.toArray())
+                                  .setAttribute("context", scaContextHolder)
                                   .createForm(SELECT_METHOD));
     }
 

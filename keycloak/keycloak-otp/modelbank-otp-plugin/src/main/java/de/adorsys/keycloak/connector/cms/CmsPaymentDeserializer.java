@@ -12,6 +12,7 @@ import de.adorsys.ledgers.middleware.api.domain.payment.PaymentTypeTO;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -28,6 +29,9 @@ public class CmsPaymentDeserializer extends StdDeserializer<PaymentTO> {
     public PaymentTO deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
         JsonNode node = p.getCodec().readTree(p);
         PaymentTO result = mapper.convertValue(node.get("payment"), PluginPaymentTO.class);
+
+        PaymentTargetTO singleTarget = mapper.convertValue(node.get("payment"), PaymentTargetTO.class);
+        result.setTargets(Collections.singletonList(singleTarget));
 
         if (result.getPaymentType() == PaymentTypeTO.BULK) {
             JsonNode paymentsNode = node.get("payment").get("payments");
