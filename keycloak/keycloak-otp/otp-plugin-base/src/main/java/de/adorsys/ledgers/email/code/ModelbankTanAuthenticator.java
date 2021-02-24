@@ -11,8 +11,6 @@ import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserModel;
 import org.keycloak.services.resource.RealmResourceProvider;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 public class ModelbankTanAuthenticator implements Authenticator {
 
     private final CmsConnector cmsConnector;
@@ -21,8 +19,8 @@ public class ModelbankTanAuthenticator implements Authenticator {
     public ModelbankTanAuthenticator(KeycloakSession session) {
         RealmResourceProvider provider = session.getProvider(RealmResourceProvider.class, ModelbankConnectorHolder.PROVIDER_ID);
         //todo: exception if no provider
-        this.aspspConnector = ((ModelbankConnectorHolder)provider.getResource()).getAspspConnector();
-        this.cmsConnector = ((ModelbankConnectorHolder)provider.getResource()).getCmsConnector();
+        this.aspspConnector = ((ModelbankConnectorHolder) provider.getResource()).getAspspConnector();
+        this.cmsConnector = ((ModelbankConnectorHolder) provider.getResource()).getCmsConnector();
     }
 
     @Override
@@ -52,11 +50,4 @@ public class ModelbankTanAuthenticator implements Authenticator {
     @Override
     public void close() {
     }
-
-    private String generateAuthCode(int length) {
-        double maxValue = Math.pow(10.0, length);
-        int randomNumber = ThreadLocalRandom.current().nextInt((int) maxValue);
-        return String.format("%0" + length + "d", randomNumber);
-    }
-
 }

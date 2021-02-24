@@ -11,6 +11,7 @@ import de.adorsys.keycloak.otp.core.domain.ConfirmationObject;
 import de.adorsys.keycloak.otp.core.domain.ScaContextHolder;
 import de.adorsys.keycloak.otp.core.domain.ScaStatus;
 import de.adorsys.ledgers.middleware.api.domain.payment.PaymentTO;
+import de.adorsys.ledgers.middleware.api.domain.payment.PaymentTypeTO;
 import de.adorsys.psd2.consent.api.ais.CmsConsent;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.client.exception.ResteasyHttpException;
@@ -101,15 +102,35 @@ public class CmsConnectorImpl implements CmsConnector {
 
         confirmationObject = new ConfirmationObject<>(payment,
                                                       "PAYMENT",
-                                                      "Please confirm incoming payment",
+                                                      "Please confirm incoming payment:",
                                                       payment.getPaymentId(),
                                                       payment.getPaymentId(),
-                                                      "Debtor account: %s",
-                                                      payment.getDebtorAccount().getIban()
+                                                      buildPaymentDisplayInfo(payment),
+                                                      buildPaymentDisplayInfoParams(payment)
         );
-        //TODO Finish displayInfo transformation!!!
 
         return confirmationObject;
+    }
+
+    private String[] buildPaymentDisplayInfoParams(PaymentTO payment) {
+
+        if (payment.getPaymentType() == PaymentTypeTO.SINGLE) {
+            return new String[]{payment.getDebtorAccount().getIban(),
+                    payment.getTargets().get(0).getInstructedAmount().getAmount().toPlainString(),
+                    payment.getTargets().get(0).getInstructedAmount().getCurrency().getCurrencyCode()
+            };
+        }
+
+        return new String[]{payment.getDebtorAccount().getIban()};
+    }
+
+    private String buildPaymentDisplayInfo(PaymentTO payment) {
+        String displayInfo = "Debtor account: %s";
+        if (payment.getPaymentType() == PaymentTypeTO.SINGLE) {
+            displayInfo = displayInfo.concat(", amount: %s, currency: %s");
+        }
+
+        return displayInfo;
     }
 
     private ConfirmationObject getConsentFromCms(String objId) {
@@ -125,7 +146,7 @@ public class CmsConnectorImpl implements CmsConnector {
 
         confirmationObject = new ConfirmationObject<>(cmsConsent,
                                                       "CONSENT",
-                                                      "Please confirm incoming consent",
+                                                      "Please confirm incoming consent:",
                                                       objId,
                                                       cmsConsent.getId(),
                                                       "Valid until: %s, frequency per day: %s, recurring indicator: %s",

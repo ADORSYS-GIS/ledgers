@@ -13,9 +13,8 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserModel;
 import org.keycloak.services.resource.RealmResourceProvider;
+import util.ParUtil;
 
-import java.util.Arrays;
-import java.util.Base64;
 import java.util.List;
 
 import static de.adorsys.keycloak.otp.core.domain.ScaConstants.DISPLAY_OBJ;
@@ -36,21 +35,9 @@ public class ModelbankDisplayObjectAuthenticator implements Authenticator {
     @Override
     public void authenticate(AuthenticationFlowContext context) {
 
-        // Loading encoded custom parameters as "grand ID" from realm:
-        String grantId = context.getRealm().getAttribute("grantId");
+        PushedAuthorizationRequest par = ParUtil.getParFromContext(context);
 
-        String decodedGrantId = new String(Base64.getDecoder().decode(grantId));
-        List<String> parameters = Arrays.asList(decodedGrantId.split(","));
-
-        if (parameters.isEmpty()) {
-            throw new RuntimeException("No parameters were added during PAR processing, flow is broken.");
-        }
-
-        String businessObjectId = parameters.get(0);
-        String authId = parameters.get(1);
-        String objectType = parameters.get(2);
-
-        ScaContextHolder scaContextHolder = new ScaContextHolder(businessObjectId, authId, objectType);
+        ScaContextHolder scaContextHolder = new ScaContextHolder(par.getBusinessObjectId(), par.getAuthorizationId(), par.getObjectType());
         ConfirmationObject<Object> object = cmsConnector.getObject(scaContextHolder);
 
         context.challenge(context.form().setAttribute(REALM, context.getRealm())
