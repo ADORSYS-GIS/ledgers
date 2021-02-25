@@ -10,8 +10,9 @@ import java.util.List;
 public class ParUtil {
 
     public static PushedAuthorizationRequest getParFromContext(AuthenticationFlowContext context) {
-        // Loading encoded custom parameters as "grand ID" from realm:
-        String grantId = context.getRealm().getAttribute("grantId");
+        // Loading encoded custom parameters as "grand ID" from realm for the current user:
+        String username = context.getUser().getUsername();
+        String grantId = context.getRealm().getAttribute("grantId," + username);
 
         String decodedGrantId = new String(Base64.getDecoder().decode(grantId));
         List<String> parameters = Arrays.asList(decodedGrantId.split(","));

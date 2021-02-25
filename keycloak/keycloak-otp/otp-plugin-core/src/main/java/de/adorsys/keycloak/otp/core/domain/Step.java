@@ -80,13 +80,15 @@ public enum Step {
                                                     ? "Your authorization was successful, but you do not have enough rights to execute the operation, please ask other owners to confirm the operation."
                                                     : "Your authorization was successful, you can execute your operation.";
                 //cmsConnector.setAuthorizationStatus(holder, VALIDATED);
-                //pass msg to the view
                 context.challenge(context.form()
                                           .setAttribute(ScaConstants.REALM, context.getRealm())
-                                          .createForm(ScaConstants.REDIRECT_VIEW));
+                                          .setAttribute("msgToUser", msgToDisplayToUser)
+                                          .setAttribute("context", holder)
+                                          .createForm(ScaConstants.SUCCESS_VIEW));
             } else {
                 context.failureChallenge(AuthenticationFlowError.INTERNAL_ERROR,
-                                         context.form().createErrorPage(Response.Status.INTERNAL_SERVER_ERROR));
+                                         context.form()
+                                                 .createForm(ScaConstants.FAILURE_VIEW));
             }
         }
     },

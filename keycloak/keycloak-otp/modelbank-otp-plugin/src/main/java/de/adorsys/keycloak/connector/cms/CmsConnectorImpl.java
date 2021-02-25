@@ -22,7 +22,9 @@ import org.keycloak.models.UserModel;
 import org.keycloak.representations.AccessToken;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 public class CmsConnectorImpl implements CmsConnector {
 
@@ -90,7 +92,6 @@ public class CmsConnectorImpl implements CmsConnector {
 
     private ConfirmationObject getPaymentFromCms(ScaContextHolder holder) {
         PaymentTO payment;
-        ConfirmationObject<Object> confirmationObject;
 
         try {
             String paymentJson = SimpleHttp.doGet(CMS_BASE_URL + "psu-api/v1/payment/redirect/" + holder.getAuthId(), keycloakSession).asString();
@@ -100,16 +101,14 @@ public class CmsConnectorImpl implements CmsConnector {
             throw new ResteasyHttpException(CONNECTION_ERROR_MSG);
         }
 
-        confirmationObject = new ConfirmationObject<>(payment,
-                                                      "PAYMENT",
-                                                      "Please confirm incoming payment:",
-                                                      payment.getPaymentId(),
-                                                      payment.getPaymentId(),
-                                                      buildPaymentDisplayInfo(payment),
-                                                      buildPaymentDisplayInfoParams(payment)
+        return new ConfirmationObject<Object>(payment,
+                                              "PAYMENT",
+                                              "Please confirm incoming payment:",
+                                              payment.getPaymentId(),
+                                              payment.getPaymentId(),
+                                              buildPaymentDisplayInfo(payment),
+                                              buildPaymentDisplayInfoParams(payment)
         );
-
-        return confirmationObject;
     }
 
     private String[] buildPaymentDisplayInfoParams(PaymentTO payment) {
@@ -121,13 +120,31 @@ public class CmsConnectorImpl implements CmsConnector {
             };
         }
 
+        if (payment.getPaymentType() == PaymentTypeTO.BULK) {
+            List<String> params = new ArrayList<>();
+            params.add(payment.getDebtorAccount().getIban());
+
+            for (int i = 0; i < payment.getTargets().size(); i++) {
+                params.add(payment.getTargets().get(i).getCreditorAccount().getIban());
+            }
+
+            return params.toArray(new String[0]);
+        }
+
         return new String[]{payment.getDebtorAccount().getIban()};
     }
 
     private String buildPaymentDisplayInfo(PaymentTO payment) {
         String displayInfo = "Debtor account: %s";
+
         if (payment.getPaymentType() == PaymentTypeTO.SINGLE) {
             displayInfo = displayInfo.concat(", amount: %s, currency: %s");
+        }
+
+        if (payment.getPaymentType() == PaymentTypeTO.BULK) {
+            for (int i = 1; i <= payment.getTargets().size(); i++) {
+                displayInfo = displayInfo.concat(", creditor " + i + " account: %s");
+            }
         }
 
         return displayInfo;
@@ -135,7 +152,7 @@ public class CmsConnectorImpl implements CmsConnector {
 
     private ConfirmationObject getConsentFromCms(String objId) {
         CmsConsent cmsConsent;
-        ConfirmationObject<Object> confirmationObject;
+
         try {
             String json = SimpleHttp.doGet(CMS_BASE_URL + "api/v1/consent/" + objId, keycloakSession).asString();
             cmsConsent = MAPPER.readValue(json, CmsConsent.class);
@@ -144,16 +161,15 @@ public class CmsConnectorImpl implements CmsConnector {
             throw new ResteasyHttpException(CONNECTION_ERROR_MSG);
         }
 
-        confirmationObject = new ConfirmationObject<>(cmsConsent,
-                                                      "CONSENT",
-                                                      "Please confirm incoming consent:",
-                                                      objId,
-                                                      cmsConsent.getId(),
-                                                      "Valid until: %s, frequency per day: %s, recurring indicator: %s",
-                                                      String.valueOf(cmsConsent.getValidUntil()),
-                                                      String.valueOf(cmsConsent.getFrequencyPerDay()),
-                                                      String.valueOf(cmsConsent.isRecurringIndicator()));
-        return confirmationObject;
+        return new ConfirmationObject<>(cmsConsent,
+                                        "CONSENT",
+                                        "Please confirm incoming consent:",
+                                        objId,
+                                        cmsConsent.getId(),
+                                        "Valid until: %s, frequency per day: %s, recurring indicator: %s",
+                                        String.valueOf(cmsConsent.getValidUntil()),
+                                        String.valueOf(cmsConsent.getFrequencyPerDay()),
+                                        String.valueOf(cmsConsent.isRecurringIndicator()));
     }
 
     private void updateAuthorisationStatusInCms(String authId, ScaStatus status) {

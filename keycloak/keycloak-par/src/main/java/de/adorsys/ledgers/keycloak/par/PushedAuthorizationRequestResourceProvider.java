@@ -30,13 +30,14 @@ public class PushedAuthorizationRequestResourceProvider implements RealmResource
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
     public Response handlePar(@FormParam("objectId") String objectId,
                               @FormParam("redirectId") String redirectId,
-                              @FormParam("objectType") String objectType) {
+                              @FormParam("objectType") String objectType,
+                              @FormParam("username") String username) {
         LOG.info("Received PAR request, object ID: " + objectId + ", redirect ID: " + redirectId
-                         + ", object type: " + objectType);
+                         + ", object type: " + objectType + ", username: " + username);
         String grantId = Base64.getEncoder().encodeToString(String.format("%s,%s,%s", objectId, redirectId, objectType).getBytes());
 
         // Temporary solution - storing encoded custom parameters inside the realm attribute,
-        session.getContext().getRealm().setAttribute("grantId", grantId);
+        session.getContext().getRealm().setAttribute("grantId," + username, grantId);
 
         String redirectUri = session.getContext().getAuthServerUrl().toASCIIString();
         ParResponse response = new ParResponse(grantId, redirectUri);
