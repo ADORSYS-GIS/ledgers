@@ -7,7 +7,6 @@ import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.AuthenticationFlowError;
 import org.keycloak.models.UserModel;
 
-import javax.ws.rs.core.Response;
 import java.util.List;
 
 import static de.adorsys.keycloak.otp.core.domain.ScaStatus.EXEMPTED;
@@ -38,9 +37,6 @@ public enum Step {
             if (ScaConstants.SELECT_METHOD.equals(viewToDisplay)) {
                 holder.setObjId(confirmationObject.getId());
 
-                ScaMethod a = getMockedScaMethod();
-                scaMethods.add(a); //TODO this is another MockStub for testing purposes!!!
-
                 context.challenge(context.form()
                                           .setAttribute(ScaConstants.REALM, context.getRealm())
                                           .setAttribute("scaMethods", scaMethods.toArray())
@@ -60,9 +56,9 @@ public enum Step {
                           CmsConnector cmsConnector, AspspConnector aspspConnector) {
             String methodId = context.getHttpRequest().getDecodedFormParameters().getFirst("methodId");
 
-            // StartSca and SelectMethod, update Cms with status
+            // StartSca and SelectMethod, update CMS with status
             String psuMessage = aspspConnector.selectMethod(holder, methodId, context.getUser().getUsername());
-//            cmsConnector.setAuthorizationStatus(holder, ScaStatus.METHOD_SELECTED);
+            cmsConnector.setAuthorizationStatus(holder, ScaStatus.METHOD_SELECTED);
             context.challenge(context.form()
                                       .setAttribute(ScaConstants.REALM, context.getRealm())
                                       .setAttribute("context", holder)
@@ -78,50 +74,32 @@ public enum Step {
             if (validateCode.isValid()) {
                 String msgToDisplayToUser = validateCode.isMultilevelScaRequired()
                                                     ? "Your authorization was successful, but you do not have enough rights to execute the operation, please ask other owners to confirm the operation."
-                                                    : "Your authorization was successful, you can execute your operation.";
-                //cmsConnector.setAuthorizationStatus(holder, VALIDATED);
+                                                    : "Your authorization was successful, you are going to be redirected to TPP.";
+
+                cmsConnector.setAuthorizationStatus(holder, ScaStatus.FINALIZED);
+
+                // TODO: obtain real session code from keycloak.
+                String sessionCode = "1234525245";
+
+                String redirectUrl = "https://www.google.com/?code=" + sessionCode;
+
                 context.challenge(context.form()
                                           .setAttribute(ScaConstants.REALM, context.getRealm())
                                           .setAttribute("msgToUser", msgToDisplayToUser)
+                                          .setAttribute("redirectUrl", redirectUrl)
                                           .setAttribute("context", holder)
                                           .createForm(ScaConstants.SUCCESS_VIEW));
             } else {
+
+                // TODO: should we set FAILED status? Should we count wrong TAN attempts?
                 context.failureChallenge(AuthenticationFlowError.INTERNAL_ERROR,
                                          context.form()
                                                  .createForm(ScaConstants.FAILURE_VIEW));
             }
         }
-    },
-    REJECTED {
-        @Override
-        public void apply(ScaContextHolder holder, AuthenticationFlowContext context,
-                          CmsConnector cmsConnector, AspspConnector aspspConnector) {
-            context.failureChallenge(AuthenticationFlowError.INTERNAL_ERROR,
-                                     context.form().createErrorPage(Response.Status.INTERNAL_SERVER_ERROR));
-        }
-    },
-    FINALIZED {
-        @Override
-        public void apply(ScaContextHolder holder, AuthenticationFlowContext context,
-                          CmsConnector cmsConnector, AspspConnector aspspConnector) {
-            aspspConnector.execute(holder, context.getUser().getUsername());
-            cmsConnector.setAuthorizationStatus(holder, ScaStatus.FINALIZED);
-            //TODO should update CMS.consentData with token!!! How???)) Replace this 'null' with token.
-            cmsConnector.pushToken(holder.getObjId(), null);
-            context.success();
-        }
     };
 
     public abstract void apply(ScaContextHolder holder, AuthenticationFlowContext context,
                                CmsConnector cmsConnector, AspspConnector aspspConnector);
-
-    ScaMethod getMockedScaMethod() {
-        ScaMethod a = new ScaMethod();
-        a.setId("OTP");
-        a.setType("OTP");
-        a.setDescription("OTP");
-        a.setDecoupled(true);
-        return a;
-    }
 
 }

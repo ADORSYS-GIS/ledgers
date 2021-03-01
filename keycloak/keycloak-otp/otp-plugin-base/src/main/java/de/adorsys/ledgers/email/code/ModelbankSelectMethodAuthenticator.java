@@ -3,7 +3,6 @@ package de.adorsys.ledgers.email.code;
 import de.adorsys.keycloak.otp.core.AspspConnector;
 import de.adorsys.keycloak.otp.core.CmsConnector;
 import de.adorsys.keycloak.otp.core.ModelbankConnectorHolder;
-import de.adorsys.keycloak.otp.core.domain.ConfirmationObject;
 import de.adorsys.keycloak.otp.core.domain.ScaContextHolder;
 import de.adorsys.keycloak.otp.core.domain.ScaMethod;
 import org.apache.commons.collections4.CollectionUtils;
@@ -13,12 +12,8 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserModel;
 import org.keycloak.services.resource.RealmResourceProvider;
-import util.ParUtil;
 
 import java.util.List;
-
-import static de.adorsys.keycloak.otp.core.domain.ScaConstants.REALM;
-import static de.adorsys.keycloak.otp.core.domain.ScaConstants.SELECT_METHOD;
 
 public class ModelbankSelectMethodAuthenticator implements Authenticator {
 
@@ -34,21 +29,6 @@ public class ModelbankSelectMethodAuthenticator implements Authenticator {
 
     @Override
     public void authenticate(AuthenticationFlowContext context) {
-        List<ScaMethod> scaMethods = aspspConnector.getMethods(context.getUser());
-
-        PushedAuthorizationRequest par = ParUtil.getParFromContext(context);
-
-        ScaContextHolder scaContextHolder = new ScaContextHolder(par.getBusinessObjectId(), par.getAuthorizationId(), par.getObjectType());
-        ConfirmationObject<Object> object = cmsConnector.getObject(scaContextHolder);
-        scaContextHolder.setObjId(object.getId());
-
-        ScaMethod a = getMockedScaMethod();
-        scaMethods.add(a); //TODO this is another MockStub for testing purposes!!!
-
-        context.challenge(context.form().setAttribute(REALM, context.getRealm())
-                                  .setAttribute("scaMethods", scaMethods.toArray())
-                                  .setAttribute("context", scaContextHolder)
-                                  .createForm(SELECT_METHOD));
     }
 
     @Override
@@ -78,14 +58,5 @@ public class ModelbankSelectMethodAuthenticator implements Authenticator {
     @Override
     public void close() {
 
-    }
-
-    private ScaMethod getMockedScaMethod() {
-        ScaMethod a = new ScaMethod();
-        a.setId("OTP");
-        a.setType("OTP");
-        a.setDescription("OTP");
-        a.setDecoupled(true);
-        return a;
     }
 }

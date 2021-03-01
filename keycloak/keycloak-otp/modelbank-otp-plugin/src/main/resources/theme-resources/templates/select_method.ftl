@@ -13,7 +13,7 @@
                     <ul>
                         <#list scaMethods as method>
                             <input type="radio" name="methodId" value="${method.id}">
-                            <label for="${method.type}">${method.type}</label>
+                            <label for="${method.type}">${method.type} (${method.description})</label>
                             <br>
                         </#list>
                     </ul>
