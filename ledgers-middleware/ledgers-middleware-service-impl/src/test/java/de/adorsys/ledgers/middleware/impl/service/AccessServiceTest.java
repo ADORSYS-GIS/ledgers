@@ -27,7 +27,9 @@ import java.util.Collections;
 import java.util.Currency;
 import java.util.List;
 
-import static de.adorsys.ledgers.middleware.api.domain.Constants.*;
+import static de.adorsys.ledgers.middleware.api.domain.Constants.SCOPE_FULL_ACCESS;
+import static de.adorsys.ledgers.middleware.api.domain.Constants.SCOPE_PARTIAL_ACCESS;
+import static de.adorsys.ledgers.middleware.api.domain.Constants.SCOPE_SCA;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -179,6 +181,6 @@ class AccessServiceTest {
     }
 
     private DepositAccountBO getDepostAccountBO() {
-        return new DepositAccountBO(ACCOUNT_ID, IBAN, null, null, null, null, EUR, "name", "product", AccountTypeBO.CACC, null, null, AccountUsageBO.PRIV, "details", false, false, "branch", CREATED, BigDecimal.ZERO);
+        return new DepositAccountBO(ACCOUNT_ID, IBAN, null, null, null, null, EUR, "name", "displayName","product", AccountTypeBO.CACC, null, null, AccountUsageBO.PRIV, "details", false, false, "branch", CREATED, BigDecimal.ZERO);
     }
 }
