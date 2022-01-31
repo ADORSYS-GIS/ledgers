@@ -92,7 +92,7 @@ public interface PaymentMapper {
         try {
             return objectMapper.writeValueAsBytes(Collections.singletonList(value));
         } catch (JsonProcessingException e) {
-            return new byte[0];
+            return null;
         }
     }
 }

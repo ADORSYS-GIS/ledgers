@@ -33,9 +33,7 @@ import java.util.Collections;
 import java.util.Currency;
 import java.util.List;
 
-import static de.adorsys.ledgers.middleware.api.domain.payment.PaymentTypeTO.BULK;
-import static de.adorsys.ledgers.middleware.api.domain.payment.PaymentTypeTO.PERIODIC;
-import static de.adorsys.ledgers.middleware.api.domain.payment.PaymentTypeTO.SINGLE;
+import static de.adorsys.ledgers.middleware.api.domain.payment.PaymentTypeTO.*;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

@@ -27,13 +27,10 @@ import java.util.Collections;
 import java.util.Currency;
 import java.util.List;
 
-import static de.adorsys.ledgers.middleware.api.domain.Constants.SCOPE_FULL_ACCESS;
-import static de.adorsys.ledgers.middleware.api.domain.Constants.SCOPE_PARTIAL_ACCESS;
-import static de.adorsys.ledgers.middleware.api.domain.Constants.SCOPE_SCA;
+import static de.adorsys.ledgers.middleware.api.domain.Constants.*;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)

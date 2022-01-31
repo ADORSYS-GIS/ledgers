@@ -32,9 +32,7 @@ import java.util.stream.Collectors;
 
 import static de.adorsys.ledgers.deposit.api.domain.BalanceTypeBO.CLOSING_BOOKED;
 import static de.adorsys.ledgers.deposit.api.domain.BalanceTypeBO.INTERIM_AVAILABLE;
-import static de.adorsys.ledgers.util.exception.DepositErrorCode.DEPOSIT_ACCOUNT_EXISTS;
-import static de.adorsys.ledgers.util.exception.DepositErrorCode.DEPOSIT_ACCOUNT_NOT_FOUND;
-import static de.adorsys.ledgers.util.exception.DepositErrorCode.UNSUPPORTED_CREDIT_LIMIT;
+import static de.adorsys.ledgers.util.exception.DepositErrorCode.*;
 import static java.lang.String.format;
 
 @Slf4j

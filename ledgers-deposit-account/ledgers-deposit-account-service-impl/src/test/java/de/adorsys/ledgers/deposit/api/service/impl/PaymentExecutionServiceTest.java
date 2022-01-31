@@ -32,9 +32,7 @@ import java.util.stream.Stream;
 import static de.adorsys.ledgers.deposit.api.domain.PaymentTypeBO.SINGLE;
 import static de.adorsys.ledgers.deposit.api.domain.TransactionStatusBO.ACSP;
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
