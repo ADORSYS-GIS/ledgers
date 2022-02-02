@@ -91,8 +91,8 @@ public interface PaymentMapper {
     default byte[] convertStringToRemittanceInformationUnstructuredByteArray(String value, ObjectMapper objectMapper) {
         try {
             return objectMapper.writeValueAsBytes(Collections.singletonList(value));
-        } catch (JsonProcessingException e) {
-            return null;
+        } catch (JsonProcessingException ex) {
+            throw new IllegalStateException(ex);
         }
     }
 }
