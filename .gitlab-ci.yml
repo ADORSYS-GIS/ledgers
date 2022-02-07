@@ -32,7 +32,7 @@ variables: &variables
   DOCKER_IMAGE_NAME_LEDGERS_KEYCLOAK: "ledgers-keycloak"
   DOCKER_IMAGE_NAME_KEYCLOAK_AND_LEDGERS_PLUGIN: "keycloak-and-ledgers-plugin"
   DOCKERHUB_NAMESPACE: "adorsys"
-  
+
   ############################
   # Private Openshift ENV #
   ############################
@@ -385,4 +385,3 @@ Push to DockerHub (Master):
     DOCKERHUB_REGISTRY: gitlab-registry.adorsys.de
     DOCKERHUB_NAMESPACE: "adorsys/xs2a/ledgers"
   <<: *push_dockerhub_images_private
-
