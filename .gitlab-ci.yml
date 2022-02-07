@@ -385,3 +385,4 @@ Push to DockerHub (Master):
     DOCKERHUB_REGISTRY: gitlab-registry.adorsys.de
     DOCKERHUB_NAMESPACE: "adorsys/xs2a/ledgers"
   <<: *push_dockerhub_images_private
+
