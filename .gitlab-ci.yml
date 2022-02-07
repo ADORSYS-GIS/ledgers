@@ -291,6 +291,8 @@ Deploy Image to Openshift (adorsys-modelbank-dev):
     url: ~
   variables:
     DOCKER_TAG: develop
+    DOCKERHUB_REGISTRY: gitlab-registry.adorsys.de
+    DOCKERHUB_NAMESPACE: "adorsys/xs2a/ledgers"
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_ADORSYS_MODELBANK_DEV}
   <<: *push_docker_openshift
 
@@ -306,6 +308,8 @@ Deploy Keycloak to Openshift (adorsys-modelbank-dev):
     url: ~
   variables:
     DOCKER_TAG: develop
+    DOCKERHUB_REGISTRY: gitlab-registry.adorsys.de
+    DOCKERHUB_NAMESPACE: "adorsys/xs2a/ledgers"
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_ADORSYS_MODELBANK_DEV}
   <<: *push_docker_keycloak_with_ledgers_plugin
 
