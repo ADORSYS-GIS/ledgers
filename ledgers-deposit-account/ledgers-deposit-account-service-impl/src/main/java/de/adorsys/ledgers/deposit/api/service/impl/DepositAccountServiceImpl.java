@@ -234,7 +234,7 @@ public class DepositAccountServiceImpl extends AbstractServiceImpl implements De
     }
 
     private TransactionDetailsBO enrichAdditionalInformation(TransactionDetailsBO transactionDetailsBO) {
-        String additionalInfo = format(ADDITIONAL_INFO_MESSAGE, transactionDetailsBO.getDebtorName(), transactionDetailsBO.getCreditorName(), transactionDetailsBO.getValueDate());
+        String additionalInfo = format(ADDITIONAL_INFO_MESSAGE, transactionDetailsBO.getCreditorName(), transactionDetailsBO.getDebtorName(), transactionDetailsBO.getValueDate());
         transactionDetailsBO.setAdditionalInformation(additionalInfo);
         return transactionDetailsBO;
     }
