@@ -19,7 +19,7 @@ package de.adorsys.ledgers.deposit.db.domain;
 import lombok.Data;
 import lombok.ToString;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 
 @Data

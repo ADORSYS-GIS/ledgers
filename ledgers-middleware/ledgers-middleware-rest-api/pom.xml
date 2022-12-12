@@ -6,7 +6,7 @@
 		<groupId>de.adorsys.ledgers</groupId>
 		<artifactId>ledgers-middleware</artifactId>
 		<version>4.20-SNAPSHOT</version>
-		<relativePath>..</relativePath>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 
 	<artifactId>ledgers-middleware-rest-api</artifactId>
@@ -70,7 +70,13 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
-    </dependencies>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+
+	</dependencies>
 
 	<build>
 		<plugins>

@@ -43,7 +43,7 @@ public class KeycloakTokenServiceImpl implements KeycloakTokenService {
         formParams.add("client_id", clientId);
         formParams.add("client_secret", clientSecret);
         ResponseEntity<Map<String, ?>> resp = keycloakTokenRestClient.login(formParams);
-        HttpStatus statusCode = resp.getStatusCode();
+        HttpStatus statusCode = (HttpStatus) resp.getStatusCode();
         if (HttpStatus.OK != statusCode) {
             log.error("Could not obtain token by user credentials [{}]", username); //todo: throw specific exception
         }
@@ -69,7 +69,7 @@ public class KeycloakTokenServiceImpl implements KeycloakTokenService {
         formParams.add("client_id", clientId);
         formParams.add("client_secret", clientSecret);
         ResponseEntity<AccessToken> resp = keycloakTokenRestClient.validate(formParams);
-        HttpStatus statusCode = resp.getStatusCode();
+        HttpStatus statusCode = (HttpStatus) resp.getStatusCode();
         if (HttpStatus.OK != statusCode) {
             log.error("Could not validate token"); //todo: throw specific exception
         }
@@ -90,7 +90,7 @@ public class KeycloakTokenServiceImpl implements KeycloakTokenService {
         formParams.add("client_secret", clientSecret);
         formParams.add("refresh_token", refreshToken);
         ResponseEntity<Map<String, ?>> resp = keycloakTokenRestClient.login(formParams);
-        HttpStatus statusCode = resp.getStatusCode();
+        HttpStatus statusCode = (HttpStatus) resp.getStatusCode();
         if (HttpStatus.OK != statusCode) {
             log.error("Could not obtain token by refresh token  [{}]", refreshToken);
             throw new AccessDeniedException("Invalid Refresh token");

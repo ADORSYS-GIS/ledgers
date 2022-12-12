@@ -21,14 +21,7 @@ import lombok.Data;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Data

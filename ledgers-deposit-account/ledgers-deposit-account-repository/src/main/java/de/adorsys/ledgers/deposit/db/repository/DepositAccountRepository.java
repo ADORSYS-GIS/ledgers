@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.Collection;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-public interface DepositAccountRepository extends PagingAndSortingRepository<DepositAccount, String> {
+public interface DepositAccountRepository extends PagingAndSortingRepository<DepositAccount, String>, CrudRepository<DepositAccount, String> {
     List<DepositAccount> findByBranch(String branch);
 
     Page<DepositAccount> findByBranchAndIbanContaining(String branch, String queryParam, Pageable pageable);

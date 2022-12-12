@@ -20,7 +20,7 @@ import lombok.Data;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters.LocalDateTimeConverter;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.EnumSet;
 
