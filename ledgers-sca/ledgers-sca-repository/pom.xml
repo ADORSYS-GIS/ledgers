@@ -4,8 +4,8 @@
 	<parent>
 		<groupId>de.adorsys.ledgers</groupId>
 		<artifactId>ledgers-sca</artifactId>
-		<version>4.19</version>
-		<relativePath>..</relativePath>
+		<version>4.20</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 
 	<artifactId>ledgers-sca-repository</artifactId>

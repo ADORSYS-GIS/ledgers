@@ -4,8 +4,8 @@
 	<parent>
 		<groupId>de.adorsys.ledgers</groupId>
 		<artifactId>ledgers-postings</artifactId>
-		<version>4.19</version>
-		<relativePath>..</relativePath>
+		<version>4.20</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>ledgers-postings-rest-server</artifactId>
 	
