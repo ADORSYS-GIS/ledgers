@@ -1,3 +1,8 @@
+<!--
+  ~ Copyright (c) 2018-2023 adorsys GmbH and Co. KG
+  ~ All rights are reserved.
+  -->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -5,7 +10,7 @@
 	<parent>
 		<groupId>de.adorsys.ledgers</groupId>
 		<artifactId>ledgers-middleware</artifactId>
-		<version>4.20</version>
+		<version>4.21</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
@@ -37,6 +42,7 @@
 			<artifactId>ledgers-utils</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+
 		<!-- spring dependencies -->
 
 		<dependency>
@@ -51,14 +57,8 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- Sprinfox and swagger UI -->
-
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-ui</artifactId>
-		</dependency>
-
 		<!-- Test dependencies -->
+
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
@@ -66,6 +66,12 @@
 		</dependency>
 
 		<!-- Other dependencies -->
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
