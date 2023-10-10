@@ -36,7 +36,7 @@ variables: &variables
   # Build variables         #
   ###########################
 
-  BUILD_JAVA_VERSION: "system@1.11"
+  BUILD_JAVA_VERSION: "system@1.17"
   JAVA_TOOL_OPTIONS: "-XX:+UnlockExperimentalVMOptions -XX:MaxRAM=3G -XX:MaxRAMFraction=3"
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
 
@@ -94,7 +94,7 @@ variables: &variables
 #-------------------------------------------------------------------
 
 Lint (Docker compose):
-  image: maven:3.6-jdk-11-slim
+  image: maven:3.6.3-openjdk-17-slim
   stage: "Lint"
   except:
     - schedules
@@ -156,7 +156,7 @@ Lint (Dockerfiles):
 
 
 Lint (PMD check):
-  image: maven:3.6-jdk-11-slim
+  image: maven:3.6.3-openjdk-17-slim
   stage: "Lint"
   except:
     - schedules
@@ -181,6 +181,8 @@ Lint (PMD check):
 
 Build Java (Ledgers):
   stage: "Compile"
+  tags:
+    - aws
   except:
     - schedules
   <<: *build_java
@@ -231,6 +233,8 @@ Test (Javadoc Check):
 
 Test (Unit Tests):
   stage: "Test"
+  tags:
+    - aws
   except:
     - schedules
   script:
@@ -324,13 +328,15 @@ Release artifacts to private repo (tags):
 Clone to github:
   stage: "Clone to github"
   <<: *sync_changes_github
-  image: alpine/git:latest
+  image:
+    name: alpine/git:latest
+    entrypoint: [ "" ]
   only:
     - develop
-    - /^release-4\..*/
+    - /^release-5\..*/
   except:
     - schedules
   variables:
     GITHUB_USERNAME: adorsys
     GITHUB_REPOSITORY: adorsys/ledgers
-    GITHUB_PROJECT_CLONE_VERSION: "4"
+    GITHUB_PROJECT_CLONE_VERSION: "5"
