@@ -143,7 +143,7 @@ public class AccountAccessMethodSecurityExpressionRoot extends SecurityExpressio
 
     //-- -- --//
     private AccessTokenTO getAccessTokenTO() {
-        RefreshableKeycloakSecurityContext credentials = (RefreshableKeycloakSecurityContext) authentication.getCredentials();
+        RefreshableKeycloakSecurityContext credentials = (RefreshableKeycloakSecurityContext) getAuthentication().getCredentials();
         return authMapper.toAccessToken(credentials);
     }
 
@@ -158,7 +158,7 @@ public class AccountAccessMethodSecurityExpressionRoot extends SecurityExpressio
     }
 
     private Set<String> getScopes() {
-        RefreshableKeycloakSecurityContext credentials = (RefreshableKeycloakSecurityContext) authentication.getCredentials();
+        RefreshableKeycloakSecurityContext credentials = (RefreshableKeycloakSecurityContext) getAuthentication().getCredentials();
         return new HashSet<>(Arrays.asList(credentials.getToken()
                                                    .getScope()
                                                    .split(" ")));

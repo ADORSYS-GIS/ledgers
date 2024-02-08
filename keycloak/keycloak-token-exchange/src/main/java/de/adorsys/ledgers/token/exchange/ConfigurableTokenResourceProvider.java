@@ -6,17 +6,16 @@
 package de.adorsys.ledgers.token.exchange;
 
 import org.jboss.logging.Logger;
-import org.jboss.resteasy.spi.HttpRequest;
 import org.keycloak.TokenVerifier;
 import org.keycloak.common.VerificationException;
 import org.keycloak.crypto.SignatureProvider;
 import org.keycloak.crypto.SignatureVerifierContext;
 import org.keycloak.events.EventBuilder;
+import org.keycloak.http.HttpRequest;
 import org.keycloak.models.*;
 import org.keycloak.protocol.oidc.TokenManager;
 import org.keycloak.representations.AccessToken;
 import org.keycloak.representations.AccessTokenResponse;
-import org.keycloak.services.ErrorResponse;
 import org.keycloak.services.Urls;
 import org.keycloak.services.managers.AppAuthManager;
 import org.keycloak.services.managers.AuthenticationManager;
@@ -33,7 +32,6 @@ import javax.ws.rs.core.Response;
 import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
-import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static org.keycloak.services.resources.Cors.ACCESS_CONTROL_ALLOW_METHODS;
 import static org.keycloak.services.resources.Cors.ACCESS_CONTROL_ALLOW_ORIGIN;
 import static org.keycloak.services.util.DefaultClientSessionContext.fromClientSessionScopeParameter;
@@ -67,21 +65,29 @@ public class ConfigurableTokenResourceProvider implements RealmResourceProvider 
 
     @OPTIONS
     public Response preflight(@Context HttpRequest request) {
-        return Cors.add(request, Response.ok()).auth().preflight().allowedMethods("POST", "OPTIONS").build();
+        KeycloakContext context = session.getContext();
+        return Cors.add(context.getHttpRequest(), Response.ok())
+                       .auth()
+                       .preflight()
+                       .allowedMethods("POST", "OPTIONS")
+                       .build();
     }
 
     @POST
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    public Response createToken(TokenConfiguration tokenConfiguration, @Context HttpRequest request) {
+    public Response createToken(TokenConfiguration tokenConfiguration) {
         try {
+            KeycloakContext context = session.getContext();
+            HttpRequest request = context.getHttpRequest();
+
             AccessToken accessToken = validateTokenAndUpdateSession(request);
             UserSessionModel userSession = this.findSession();
             AccessTokenResponse response = this.createAccessToken(userSession, accessToken, tokenConfiguration);
             return this.buildCorsResponse(request, response);
         } catch (ConfigurableTokenException e) {
             LOG.error("An error occurred when fetching an access token", e);
-            return ErrorResponse.error(e.getMessage(), BAD_REQUEST);
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
 
@@ -123,7 +129,7 @@ public class ConfigurableTokenResourceProvider implements RealmResourceProvider 
         }
     }
 
-    private String readAccessTokenFrom(HttpRequest request) throws ConfigurableTokenException {
+    private String readAccessTokenFrom(@Context HttpRequest request) throws ConfigurableTokenException {
         String authorization = request.getHttpHeaders().getHeaderString(AUTHORIZATION);
         if (authorization == null || !authorization.startsWith("Bearer ")) {
             LOG.warn("Keycloak-ConfigurableToken: no authorization header with bearer token");
