@@ -162,7 +162,7 @@
         <nimbus-jose-jwt.version>7.9</nimbus-jose-jwt.version>
         <liquibase.version>4.9.0</liquibase.version>
         <subethasmtp.version>3.1.7</subethasmtp.version>
-        <jackson.version>2.15.0</jackson.version>
+        <jackson.version>2.15.3</jackson.version>
         <lombok.version>1.18.8</lombok.version>
         <jasypt.version>1.9.3</jasypt.version>
 
