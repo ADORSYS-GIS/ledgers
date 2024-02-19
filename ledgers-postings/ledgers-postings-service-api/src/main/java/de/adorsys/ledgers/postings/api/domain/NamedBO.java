@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2023 adorsys GmbH and Co. KG
+ * Copyright (c) 2018-2024 adorsys GmbH and Co. KG
  * All rights are reserved.
  */
 
@@ -31,14 +31,11 @@ public abstract class NamedBO {
 
     private LocalDateTime created;
 
-    //	todo: seems this property should be moved from base class
     private String userDetails;
 
-    //	todo: seems this property should be moved from base class
     /*The short description of this entity*/
     private String shortDesc;
 
-    //	todo: seems this property should be moved from base class
     /*The long description of this entity*/
     private String longDesc;
 

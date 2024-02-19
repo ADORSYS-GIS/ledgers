@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2023 adorsys GmbH and Co. KG
+ * Copyright (c) 2018-2024 adorsys GmbH and Co. KG
  * All rights are reserved.
  */
 
@@ -68,7 +68,7 @@ class ScaUserDataServiceImplTest {
     @Test
     void findByEmail_scaNotFound() {
         // Given
-        when(scaUserDataRepository.findByMethodValue(any())).thenReturn(Collections.EMPTY_LIST);
+        when(scaUserDataRepository.findByMethodValue(any())).thenReturn(Collections.emptyList());
 
         // Then
         assertThrows(ScaModuleException.class, () -> scaUserDataService.findByEmail(EMAIL));

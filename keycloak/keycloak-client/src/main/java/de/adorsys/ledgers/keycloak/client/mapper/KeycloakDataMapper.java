@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2023 adorsys GmbH and Co. KG
+ * Copyright (c) 2018-2024 adorsys GmbH and Co. KG
  * All rights are reserved.
  */
 
@@ -32,7 +32,6 @@ public interface KeycloakDataMapper {
     }
 
     default UserRepresentation toUpdateUserPresentation(UserRepresentation userRepresentation, KeycloakUser user) {
-        //NOSONAR TODO: add fields to update if needed
         userRepresentation.setUsername(user.getLogin());
         userRepresentation.setFirstName(user.getFirstName());
         userRepresentation.setLastName(user.getLastName());

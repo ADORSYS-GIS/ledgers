@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2023 adorsys GmbH and Co. KG
+ * Copyright (c) 2018-2024 adorsys GmbH and Co. KG
  * All rights are reserved.
  */
 
@@ -14,7 +14,7 @@ public enum AccountStatusTO {
     DELETED("deleted"),
     BLOCKED("blocked");
 
-    private final static Map<String, AccountStatusTO> container = new HashMap<>();
+    private static final Map<String, AccountStatusTO> container = new HashMap<>();
 
     static {
         for (AccountStatusTO accountStatus : values()) {
@@ -22,7 +22,7 @@ public enum AccountStatusTO {
         }
     }
 
-    private String value;
+    private final String value;
 
     AccountStatusTO(String value) {
         this.value = value;

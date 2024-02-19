@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2023 adorsys GmbH and Co. KG
+ * Copyright (c) 2018-2024 adorsys GmbH and Co. KG
  * All rights are reserved.
  */
 
@@ -155,7 +155,7 @@ public class AccountAccessSecurityFilter extends SecurityExpressionAdapter {
 
     private Set<String> getScopes() {
         Jwt credentials = (Jwt) getAuthentication().getCredentials();
-        return new HashSet(Arrays.asList(credentials.getClaimAsString("scope").split(" ")));
+        return new HashSet<>(Arrays.asList(credentials.getClaimAsString("scope").split(" ")));
     }
 
     private boolean isEnabledAccountIban(String iban) {

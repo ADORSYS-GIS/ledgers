@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2023 adorsys GmbH and Co. KG
+ * Copyright (c) 2018-2024 adorsys GmbH and Co. KG
  * All rights are reserved.
  */
 
@@ -76,6 +76,4 @@ class PushOTPSenderTest {
         scaMessage.setMessage(SUBJECT);
         return scaMessage;
     }
-
-
 }

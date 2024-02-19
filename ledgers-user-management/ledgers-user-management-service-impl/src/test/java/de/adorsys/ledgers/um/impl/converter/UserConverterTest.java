@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2023 adorsys GmbH and Co. KG
+ * Copyright (c) 2018-2024 adorsys GmbH and Co. KG
  * All rights are reserved.
  */
 
@@ -206,7 +206,6 @@ public class UserConverterTest {
         return scaUserData;
     }
 
-    //todo: @spe replace by json source file
     private UserBO buildUserBO() {
         UserBO bo = new UserBO();
         bo.setId(USER_ID);
@@ -216,7 +215,6 @@ public class UserConverterTest {
         return bo;
     }
 
-    //todo: @spe replace by json source file
     private UserEntity buildUserPO() {
         UserEntity entity = new UserEntity();
         entity.setId(USER_ID);

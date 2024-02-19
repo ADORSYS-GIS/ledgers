@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2023 adorsys GmbH and Co. KG
+ * Copyright (c) 2018-2024 adorsys GmbH and Co. KG
  * All rights are reserved.
  */
 
@@ -38,7 +38,7 @@ class MockbankInitDataTest {
         Optional<AccountAccessTO> result = mockbankInitData.getAccountAccess("DE32760700240271232100", "g.manager");
         Assertions.assertFalse(result.isEmpty());
         AccountAccessTO accountAccessTO = result.get();
-        Assertions.assertEquals(accountAccessTO.getScaWeight(), 90);
+        Assertions.assertEquals(90, accountAccessTO.getScaWeight());
         Assertions.assertEquals(accountAccessTO.getCurrency(), Currency.getInstance("EUR"));
     }
 

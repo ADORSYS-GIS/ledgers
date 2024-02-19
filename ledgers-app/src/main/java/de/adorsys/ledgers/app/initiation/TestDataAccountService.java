@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2023 adorsys GmbH and Co. KG
+ * Copyright (c) 2018-2024 adorsys GmbH and Co. KG
  * All rights are reserved.
  */
 
@@ -58,12 +58,9 @@ public class TestDataAccountService {
             } finally {
                 DepositAccountDetailsBO account = depositAccountService.getAccountDetailsByIbanAndCurrency(details.getIban(), details.getCurrency(), LocalDateTime.now(), true);
                 mockbankInitData.getUserIdByIban(details.getIban(), userId)
-                        .forEach(id -> {
-                            mockbankInitData.getAccountAccess(details.getIban(), id)
-                                    .ifPresent(accountAccessTO -> {
-                                        updateAccountAccess(accountAccessTO, scaInfoTO, account, id);
-                                    });
-                        });
+                        .forEach(id -> mockbankInitData.getAccountAccess(details.getIban(), id)
+                                               .ifPresent(accountAccessTO -> updateAccountAccess(accountAccessTO, scaInfoTO, account, id))
+                        );
                 updateBalanceIfRequired(details, account);
             }
         }
