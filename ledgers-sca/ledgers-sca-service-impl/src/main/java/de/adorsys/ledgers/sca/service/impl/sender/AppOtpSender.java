@@ -31,7 +31,7 @@ public class AppOtpSender implements SCASender<AppScaMessage> {
     @Override
     public boolean send(AppScaMessage message) {
         try {
-            HttpMethod method = Optional.ofNullable(HttpMethod.resolve(message.getSocketServiceHttpMethod()))
+            HttpMethod method = Optional.of(HttpMethod.valueOf(message.getSocketServiceHttpMethod()))
                                         .orElseThrow(() -> ScaModuleException.buildScaSenderException("Could not parse SocketServiceHttpMethod"));
             HttpEntity<AppScaMessage> httpEntity = new HttpEntity<>(message);
             ResponseEntity<Void> exchange = template.exchange(message.getSocketServicePath(), method, httpEntity, Void.class);
