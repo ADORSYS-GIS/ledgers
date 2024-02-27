@@ -30,7 +30,9 @@ import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @EnableScheduling
 @SpringBootApplication
@@ -60,8 +62,11 @@ public class LedgersApplication implements ApplicationListener<ApplicationReadyE
     @Override
     public void onApplicationEvent(@NotNull ApplicationReadyEvent event) {
         bankInitService.init();
-        if (Arrays.asList(this.env.getActiveProfiles()).contains("develop")
-                    || Arrays.asList(this.env.getActiveProfiles()).contains("sandbox")) {
+        List<String> profilesApplyTestData = new ArrayList<>();
+        profilesApplyTestData.add("develop");
+        profilesApplyTestData.add("sandbox");
+
+        if (Arrays.stream(this.env.getActiveProfiles()).anyMatch(profilesApplyTestData::contains)) {
             bankInitService.uploadTestData();
         }
     }

@@ -49,6 +49,7 @@ public class Payment {
      * Is used for regular payments when User is eager to have them executed at certain time (not before)
      */
     //@Convert(converter = LocalTimeConverter.class)
+    @Column(columnDefinition = "TIME")
     private LocalTime requestedExecutionTime;
 
     @Enumerated(EnumType.STRING)
