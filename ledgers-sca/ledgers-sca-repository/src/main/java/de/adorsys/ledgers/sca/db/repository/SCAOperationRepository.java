@@ -22,4 +22,7 @@ public interface SCAOperationRepository extends CrudRepository<SCAOperationEntit
     List<SCAOperationEntity> findByOpIdAndOpType(String opId, OpType opType);
 
     Optional<SCAOperationEntity> findByIdAndScaStatus(String authorisationId, ScaStatus scaStatus);
+
+    @Override
+    <S extends SCAOperationEntity> S save(S entity);
 }

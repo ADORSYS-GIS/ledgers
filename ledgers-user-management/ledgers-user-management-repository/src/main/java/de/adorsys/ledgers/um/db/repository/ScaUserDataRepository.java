@@ -14,4 +14,6 @@ public interface ScaUserDataRepository extends CrudRepository<ScaUserDataEntity,
 
     List<ScaUserDataEntity> findByMethodValue(String email);
 
+    @Override
+    <S extends ScaUserDataEntity> S save(S entity);
 }
