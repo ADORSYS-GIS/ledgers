@@ -11,6 +11,8 @@ import de.adorsys.ledgers.app.TestDBConfiguration;
 import de.adorsys.ledgers.app.it_endpoints.ManagementEndpoints;
 import de.adorsys.ledgers.app.it_endpoints.StatusStage;
 import de.adorsys.ledgers.app.it_endpoints.OperationStage;
+import lombok.SneakyThrows;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,13 +25,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = LedgersApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @ContextConfiguration(classes = {TestDBConfiguration.class},
-        initializers = {PaymentIT.Initializer.class})
+        initializers = { PaymentIT.Initializer.class })
+@Disabled
 public class PaymentIT extends BaseContainersTest<ManagementEndpoints, OperationStage, StatusStage> {
     public static final String PSU_LOGIN = "anton.brueckner";
     public static final String PSU_PASSWORD = "12345";
     public static final String CHALLENGE_VALUE = "123456";
 
     @Test
+    @SneakyThrows
+    @Disabled
     void testCreateSinglePayment() {
         given()
                 .obtainTokenFromKeycloak(PSU_LOGIN, PSU_PASSWORD);

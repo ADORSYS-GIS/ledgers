@@ -29,10 +29,8 @@ public class OperationStage extends BaseStage<OperationStage> {
 
     @ScenarioState
     private String operationId;
-
     @ScenarioState
     private String authorisationId;
-
     @ScenarioState
     private String operationObjectId;
     @ScenarioState
