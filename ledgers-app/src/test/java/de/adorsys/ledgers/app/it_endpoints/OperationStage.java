@@ -20,7 +20,7 @@ import java.util.UUID;
 import static de.adorsys.ledgers.app.BaseContainersTest.resource;
 
 @JGivenStage
-public class WhenStage extends BaseStage<WhenStage> {
+public class OperationStage extends BaseStage<OperationStage> {
     public static final String OP_PAYMENT = "/operation/payment";
     public static final String SCA_AUTHORISATIONS_METHOD = "/sca/authorisations/{authorisationId}/scaMethods/{scaMethodId}";
     public static final String SCA_START = "/sca/start";
@@ -39,7 +39,7 @@ public class WhenStage extends BaseStage<WhenStage> {
     private String bearerToken;
 
     @SneakyThrows
-    public WhenStage createSinglePayment(String paymentBodyRes, String ibanFrom) {
+    public OperationStage createSinglePayment(String paymentBodyRes, String ibanFrom) {
         var resp = RestAssured.given()
                            .header(HttpHeaders.AUTHORIZATION, bearerToken)
                            .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -58,7 +58,7 @@ public class WhenStage extends BaseStage<WhenStage> {
         return self();
     }
 
-    public WhenStage scaStart(String scaBodyRes) {
+    public OperationStage scaStart(String scaBodyRes) {
         this.authorisationId = UUID.randomUUID().toString();
         var resp = RestAssured.given()
                            .header(HttpHeaders.AUTHORIZATION, bearerToken)
@@ -74,7 +74,7 @@ public class WhenStage extends BaseStage<WhenStage> {
         return self();
     }
 
-    public WhenStage listScaMethods() {
+    public OperationStage listScaMethods() {
         var resp = RestAssured.given()
                            .header(HttpHeaders.AUTHORIZATION, bearerToken)
                            .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -88,7 +88,7 @@ public class WhenStage extends BaseStage<WhenStage> {
         return self();
     }
 
-    public WhenStage selectScaMethod(String methodName) {
+    public OperationStage selectScaMethod(String methodName) {
         var methodId = response.path("scaMethods.findAll { o -> o.scaMethod == '" + methodName + "' }[0].id");
         var resp = RestAssured.given()
                            .header(HttpHeaders.AUTHORIZATION, bearerToken)
@@ -103,7 +103,7 @@ public class WhenStage extends BaseStage<WhenStage> {
         return self();
     }
 
-    public WhenStage reportChallengeValue(String challengeValue) {
+    public OperationStage reportChallengeValue(String challengeValue) {
         var resp = RestAssured.given()
                            .header(HttpHeaders.AUTHORIZATION, bearerToken)
                            .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -120,7 +120,7 @@ public class WhenStage extends BaseStage<WhenStage> {
         return self();
     }
 
-    public WhenStage getStatus() {
+    public OperationStage getStatus() {
         var resp = RestAssured.given()
                            .header(HttpHeaders.AUTHORIZATION, bearerToken)
                            .contentType(MediaType.APPLICATION_JSON_VALUE)

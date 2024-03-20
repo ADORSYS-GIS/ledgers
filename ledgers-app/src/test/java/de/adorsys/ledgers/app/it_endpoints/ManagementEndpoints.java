@@ -9,7 +9,7 @@ import org.springframework.http.MediaType;
 import java.util.Map;
 
 @JGivenStage
-public class GivenStage extends BaseStage<GivenStage> {
+public class ManagementEndpoints extends BaseStage<ManagementEndpoints> {
 
     @Autowired
     private KeycloakClientConfig clientConfig;

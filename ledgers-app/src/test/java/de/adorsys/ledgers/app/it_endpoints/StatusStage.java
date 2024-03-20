@@ -10,11 +10,10 @@ import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 
 @JGivenStage
-public class ThanStage extends BaseStage<ThanStage> {
+public class StatusStage extends BaseStage<StatusStage> {
 
     public static final String PAYMENTS = "/payments/{paymentId}";
     public static final String AUTHORISATION_OPERATION = "/sca/authorisations/{authorisationId}/authCode";
-
     private static final String FINALISED_STATUS = "FINALISED";
 
     @Autowired
@@ -26,7 +25,7 @@ public class ThanStage extends BaseStage<ThanStage> {
     @ScenarioState
     private String operationObjectId;
 
-    public ThanStage paymentStatus() {
+    public StatusStage paymentStatus() {
         var resp = RestAssured.given()
                        .header(HttpHeaders.AUTHORIZATION, bearerToken)
                        .contentType(MediaType.APPLICATION_JSON_VALUE)
