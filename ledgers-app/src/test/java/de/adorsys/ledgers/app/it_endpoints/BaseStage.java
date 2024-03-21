@@ -4,6 +4,7 @@ import com.tngtech.jgiven.Stage;
 import com.tngtech.jgiven.annotation.ScenarioState;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import org.jetbrains.annotations.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.function.Consumer;
@@ -50,5 +51,15 @@ public class BaseStage<SELF extends Stage<?>> extends Stage<SELF> {
     public SELF pathListStr(String path, Consumer<List<String>> pathConsumer) {
         path(path, pathConsumer);
         return self();
+    }
+
+    @NotNull
+    protected static String getAccessToken(ExtractableResponse<Response> resp) {
+        return "Bearer " + resp.path("access_token");
+    }
+
+    @NotNull
+    protected static String getBearerToken(ExtractableResponse<Response> resp) {
+        return "Bearer " + resp.path("bearerToken.access_token");
     }
 }

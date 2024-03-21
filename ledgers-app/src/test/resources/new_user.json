@@ -1,0 +1,22 @@
+{
+  "login": "%LOGIN%",
+  "email": "%EMAIL%",
+  "pin": "12345",
+  "scaUserData": [
+    {
+      "id": "8as9d8as8d8asd7as80",
+      "scaMethod": "SMTP_OTP",
+      "methodValue": "%EMAIL%",
+      "usesStaticTan": true,
+      "staticTan": "123456",
+      "decoupled": false,
+      "valid": false
+    }
+  ],
+  "userRoles": [
+    "CUSTOMER"
+  ],
+  "branch": null,
+  "blocked": false,
+  "systemBlocked": false
+}
