@@ -132,9 +132,4 @@ public class OperationStage extends BaseStage<OperationStage> {
         this.operationId = resp.path("operationObjectId");
         return self();
     }
-
-    @NotNull
-    private static String getBearerToken(ExtractableResponse<Response> resp) {
-        return "Bearer " + resp.path("bearerToken.access_token");
-    }
 }

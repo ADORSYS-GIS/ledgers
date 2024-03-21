@@ -4,10 +4,7 @@ import com.tngtech.jgiven.annotation.ScenarioState;
 import com.tngtech.jgiven.integration.spring.JGivenStage;
 import de.adorsys.ledgers.keycloak.client.config.KeycloakClientConfig;
 import io.restassured.RestAssured;
-import io.restassured.response.ExtractableResponse;
-import io.restassured.response.Response;
 import lombok.Getter;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,7 +16,10 @@ import static de.adorsys.ledgers.app.BaseContainersTest.resource;
 @JGivenStage
 public class ManagementEndpoints extends BaseStage<ManagementEndpoints> {
 
-    public static final String USERS_RESOURCE = "/staff-access/users";
+    public static final String USERS_RESOURCE = "/admin/user";
+    public static final String ACCOUNTS_RESOURCE = "/staff-access/accounts";
+    public static final String ACCOUNT_BY_IBAN = "/staff-access/accounts/acc/acc";
+    public static final String DEPOSIT_CASH_RESOURCE = "/staff-access/accounts/{accountId}/cash";
     public static final String KEYCLOAK_TOKEN_PATH = "/realms/ledgers/protocol/openid-connect/token";
 
     @Autowired
@@ -35,7 +35,10 @@ public class ManagementEndpoints extends BaseStage<ManagementEndpoints> {
     @ScenarioState
     private String userId;
 
-    public void obtainTokenFromKeycloak(String psuLogin, String psuPassword) {
+    @ScenarioState
+    private String accountId;
+
+    public ManagementEndpoints obtainTokenFromKeycloak(String psuLogin, String psuPassword) {
         var resp = RestAssured.given()
                            .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                            .formParams(Map.of(
@@ -54,9 +57,10 @@ public class ManagementEndpoints extends BaseStage<ManagementEndpoints> {
 
         this.response = resp;
         this.bearerToken = getAccessToken(resp);
+        return self();
     }
 
-    public void createNewUser(String resourceName, String login, String email) {
+    public ManagementEndpoints createNewUser(String resourceName, String login, String email) {
         var resp = RestAssured.given()
                            .header(AUTHORIZATION, this.bearerToken)
                            .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -71,13 +75,56 @@ public class ManagementEndpoints extends BaseStage<ManagementEndpoints> {
         this.userId = resp.path("id");
 
         recordUserId(login);
-
         this.response = resp;
+        return self();
     }
 
-    @NotNull
-    protected static String getAccessToken(ExtractableResponse<Response> resp) {
-        return "Bearer " + resp.path("access_token");
+    public ManagementEndpoints createNewAccountForUser(String accountBodyResource, String iban) {
+        var resp = RestAssured.given()
+                           .header(AUTHORIZATION, this.bearerToken)
+                           .contentType(MediaType.APPLICATION_JSON_VALUE)
+                           .body(resource(accountBodyResource, Map.of("IBAN", iban)))
+                           .queryParams("userId", userId)
+                           .when()
+                           .post(ACCOUNTS_RESOURCE)
+                           .then()
+                           .statusCode(HttpStatus.OK.value())
+                           .and()
+                           .extract();
+        this.response = resp;
+        return self();
+    }
+
+    public ManagementEndpoints accountByIban(String iban) {
+        var resp = RestAssured.given()
+                           .header(AUTHORIZATION, this.bearerToken)
+                           .contentType(MediaType.APPLICATION_JSON_VALUE)
+                           .queryParams(Map.of("ibanParam", iban))
+                           .when()
+                           .get(ACCOUNT_BY_IBAN)
+                           .then()
+                           .statusCode(HttpStatus.OK.value())
+                           .and()
+                           .extract();
+        this.response = resp;
+        this.accountId = resp.path("id[0]");
+        return self();
+    }
+
+    public ManagementEndpoints depositCash(String amountResource, String amount) {
+        var resp = RestAssured.given()
+                           .header(AUTHORIZATION, this.bearerToken)
+                           .contentType(MediaType.APPLICATION_JSON_VALUE)
+                           .body(resource(amountResource).replaceAll("%AMOUNT%", amount))
+                           .when()
+                           .post(DEPOSIT_CASH_RESOURCE, accountId)
+                           .then()
+                           .statusCode(HttpStatus.ACCEPTED.value())
+                           .and()
+                           .extract();
+
+        this.response = resp;
+        return self();
     }
 
     private void recordUserId(String login) {
