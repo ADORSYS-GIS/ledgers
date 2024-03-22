@@ -8,10 +8,9 @@ package de.adorsys.ledgers.app.integration;
 import de.adorsys.ledgers.app.BaseContainersTest;
 import de.adorsys.ledgers.app.LedgersApplication;
 import de.adorsys.ledgers.app.TestDBConfiguration;
-import de.adorsys.ledgers.app.it_endpoints.ManagementEndpoints;
+import de.adorsys.ledgers.app.it_endpoints.ManagementStage;
 import de.adorsys.ledgers.app.it_endpoints.StatusStage;
 import de.adorsys.ledgers.app.it_endpoints.OperationStage;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(classes = LedgersApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @ContextConfiguration(classes = {TestDBConfiguration.class},
         initializers = { PaymentIT.Initializer.class })
-public class PaymentIT extends BaseContainersTest<ManagementEndpoints, OperationStage, StatusStage> {
+public class PaymentIT extends BaseContainersTest<ManagementStage, OperationStage, StatusStage> {
     public static final String PSU_LOGIN = "anton.brueckner";
     public static final String PSU_LOGIN_NEW = "newuser12345";
     public static final String PSU_EMAIL_NEW = "newuser12345@mail.de";
