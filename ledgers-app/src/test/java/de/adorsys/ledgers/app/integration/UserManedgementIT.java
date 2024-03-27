@@ -10,7 +10,6 @@ import de.adorsys.ledgers.app.LedgersApplication;
 import de.adorsys.ledgers.app.TestDBConfiguration;
 import de.adorsys.ledgers.app.it_endpoints.DataManagementEndpoints;
 import de.adorsys.ledgers.app.it_endpoints.ManagementStage;
-import de.adorsys.ledgers.app.it_endpoints.StatusStage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,9 +25,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(classes = LedgersApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @ContextConfiguration(classes = {TestDBConfiguration.class},
         initializers = { PaymentIT.Initializer.class })
-public class UserManedgementIT extends BaseContainersTest<ManagementStage, DataManagementEndpoints, DataManagementEndpoints> {
+public class UserManedgementIT extends BaseContainersTest<ManagementStage, DataManagementEndpoints, ManagementStage> {
     public static final String ADMIN = "admin";
     public static final String ADMIN_PASSWORD = "admin123";
+    public static final String TPP_LOGIN_NEW = "newtpp";
+    public static final String TPP_EMAIL_NEW = "newtpp@mail.de";
+    public static final String TPP_PASSWORD = "11111";
+    public static final String BRANCH = "UA_735297";
+    public static final String CUSTOMER_LOGIN = "newcutomer";
+    public static final String CUSTOMER_EMAIL = "newcutomer@mail.de";
+    public static final String NEW_IBAN = "UA379326228389769852388931161";
 
     @Test
     void deleteUserAsAdmin() {
@@ -37,5 +43,24 @@ public class UserManedgementIT extends BaseContainersTest<ManagementStage, DataM
         when().deleteUser();
         then().getAllUsers()
                 .path("login", (List<String> logins) -> assertThat(logins).doesNotContain(PSU_LOGIN));
+    }
+
+    @Test
+    void addNewStaffUserAndDepositCash() {
+        var amount = "10000.00";
+        given()
+                .obtainTokenFromKeycloak(ADMIN, ADMIN_PASSWORD)
+                .createNewTppAsAdmin(TPP_LOGIN_NEW, TPP_EMAIL_NEW, BRANCH)
+                .obtainTokenFromKeycloak(TPP_LOGIN_NEW, TPP_PASSWORD)
+                .createNewUserAsStaff(CUSTOMER_LOGIN, CUSTOMER_EMAIL, BRANCH)
+                .createNewAccountForUser("new_account.json", NEW_IBAN)
+                .accountByIban(NEW_IBAN);
+
+        when()
+                .depositCash("deposit_amount.json", amount);
+
+        then()
+                .getAccountDetails()
+                .path("balances.amount.amount[0]", am -> assertThat(am.toString()).isEqualTo(amount));
     }
 }

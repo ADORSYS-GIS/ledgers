@@ -1,0 +1,13 @@
+{
+  "id": "%ID%",
+  "login": "%LOGIN%",
+  "email": "%EMAIL%",
+  "pin": "11111",
+  "scaUserData": [],
+  "userRoles": [
+    "STAFF"
+  ],
+  "branch": "%ID%",
+  "blocked": false,
+  "systemBlocked": false
+}

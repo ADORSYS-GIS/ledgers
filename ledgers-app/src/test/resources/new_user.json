@@ -4,7 +4,7 @@
   "pin": "12345",
   "scaUserData": [
     {
-      "id": "8as9d8as8d8asd7as80",
+      "id": "%SCA_ID%",
       "scaMethod": "SMTP_OTP",
       "methodValue": "%EMAIL%",
       "usesStaticTan": true,
@@ -16,7 +16,7 @@
   "userRoles": [
     "CUSTOMER"
   ],
-  "branch": null,
+  "branch": "%BRANCH%",
   "blocked": false,
   "systemBlocked": false
 }

@@ -55,7 +55,7 @@ public class PaymentIT extends BaseContainersTest<ManagementStage, OperationStag
         String newIban = "DE62500105174439235992";
         given()
                 .obtainTokenFromKeycloak(ADMIN_LOGIN, ADMIN_PASSWORD)
-                .createNewUser("new_user.json", PSU_LOGIN_NEW, PSU_EMAIL_NEW)
+                .createNewUserAsAdmin(PSU_LOGIN_NEW, PSU_EMAIL_NEW, "")
                 .createNewAccountForUser("new_account.json", newIban)
                 .accountByIban(newIban)
                 .depositCash("deposit_amount.json", "100000")
