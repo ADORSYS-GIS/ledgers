@@ -27,6 +27,7 @@ public class ManagementStage extends BaseStage<ManagementStage> {
     public static final String DEPOSIT_CASH_RESOURCE = "/staff-access/accounts/{accountId}/cash";
     public static final String KEYCLOAK_TOKEN_PATH = "/realms/ledgers/protocol/openid-connect/token";
     public static String ALL_USERS = "/admin/users/all";
+    public static String CHANGE_STATUS = "admin/status";
 
     @Autowired
     private KeycloakClientConfig clientConfig;
@@ -120,6 +121,22 @@ public class ManagementStage extends BaseStage<ManagementStage> {
 
         this.response = resp;
         this.userId = this.response.path("findAll { o -> o.login.equals(\"anton.brueckner\") }[0].id");
+        return self();
+    }
+
+    public ManagementStage changeStatusUser() {
+        var resp = RestAssured.given()
+                           .header(AUTHORIZATION, this.bearerToken)
+                           .contentType(MediaType.APPLICATION_JSON_VALUE)
+                           .queryParams("userId", userId)
+                           .when()
+                           .post(CHANGE_STATUS)
+                           .then()
+                           .statusCode(HttpStatus.OK.value())
+                           .and()
+                           .extract();
+
+        this.response = resp;
         return self();
     }
 
