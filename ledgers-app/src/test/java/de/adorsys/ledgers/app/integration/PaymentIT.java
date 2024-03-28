@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import static de.adorsys.ledgers.app.integration.UserManedgementIT.ADMIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles({"testcontainers-it", "sandbox"})
@@ -71,5 +72,22 @@ public class PaymentIT extends BaseContainersTest<ManagementStage, OperationStag
 
         then()
                 .paymentStatus().pathStr("transactionStatus", status -> assertThat(status).isEqualTo("ACCP"));
+    }
+
+    @Test
+    void blockUserAndFailedPayment() {
+        given()
+                .obtainTokenFromKeycloak(ADMIN, ADMIN_PASSWORD)
+                .getUserIdByLogin(PSU_LOGIN)
+                .changeStatusUser()
+                .getAllUsers()
+                .path("findAll { o -> o.login.equals(\"" + PSU_LOGIN + "\") }[0].blocked", blocked -> assertThat(blocked).isEqualTo(true))
+                .obtainTokenFromKeycloak(PSU_LOGIN, PSU_PASSWORD);
+
+        when()
+                .failedSinglePayment("payment.json", "DE80760700240271232400");
+
+        then()
+                .pathStr("devMessage", message -> assertThat(message).isEqualTo("Access Denied! You're trying to access resources you have no permission for."));
     }
 }

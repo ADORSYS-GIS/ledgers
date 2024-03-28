@@ -56,6 +56,24 @@ public class OperationStage extends BaseStage<OperationStage> {
         return self();
     }
 
+    @SneakyThrows
+    public OperationStage failedSinglePayment(String paymentBodyRes, String ibanFrom) {
+        var resp = RestAssured.given()
+                           .header(HttpHeaders.AUTHORIZATION, bearerToken)
+                           .contentType(MediaType.APPLICATION_JSON_VALUE)
+                           .body(resource(paymentBodyRes, Map.of("ID", UUID.randomUUID().toString(), "PAYMENT_IBAN", ibanFrom)))
+                           .queryParams("paymentType", "SINGLE")
+                           .when()
+                           .post(OP_PAYMENT)
+                           .then()
+                           .statusCode(HttpStatus.UNAUTHORIZED.value())
+                           .and()
+                           .extract();
+
+        this.response = resp;
+        return self();
+    }
+
     public OperationStage scaStart(String scaBodyRes) {
         this.authorisationId = UUID.randomUUID().toString();
         var resp = RestAssured.given()
