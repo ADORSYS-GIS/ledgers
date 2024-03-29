@@ -8,7 +8,6 @@ package de.adorsys.ledgers.app.integration;
 import de.adorsys.ledgers.app.BaseContainersTest;
 import de.adorsys.ledgers.app.LedgersApplication;
 import de.adorsys.ledgers.app.TestDBConfiguration;
-import de.adorsys.ledgers.app.it_endpoints.DataManagementEndpoints;
 import de.adorsys.ledgers.app.it_endpoints.ManagementStage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(classes = LedgersApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @ContextConfiguration(classes = {TestDBConfiguration.class},
         initializers = { PaymentIT.Initializer.class })
-public class UserManedgementIT extends BaseContainersTest<ManagementStage, DataManagementEndpoints, ManagementStage> {
+public class UserManedgementIT extends BaseContainersTest<ManagementStage, ManagementStage, ManagementStage> {
     public static final String ADMIN = "admin";
     public static final String ADMIN_PASSWORD = "admin123";
     public static final String TPP_LOGIN_NEW = "newtpp";
@@ -47,10 +46,9 @@ public class UserManedgementIT extends BaseContainersTest<ManagementStage, DataM
 
     @Test
     void addNewStaffUserAndDepositCash() {
+        addNewTpp();
         var amount = "10000.00";
         given()
-                .obtainTokenFromKeycloak(ADMIN, ADMIN_PASSWORD)
-                .createNewTppAsAdmin(TPP_LOGIN_NEW, TPP_EMAIL_NEW, BRANCH)
                 .obtainTokenFromKeycloak(TPP_LOGIN_NEW, TPP_PASSWORD)
                 .createNewUserAsStaff(CUSTOMER_LOGIN, CUSTOMER_EMAIL, BRANCH)
                 .createNewAccountForUser("new_account.json", NEW_IBAN)
@@ -63,4 +61,28 @@ public class UserManedgementIT extends BaseContainersTest<ManagementStage, DataM
                 .getAccountDetails()
                 .path("balances.amount.amount[0]", am -> assertThat(am.toString()).isEqualTo(amount));
     }
+
+
+    @Test
+    void testTppUpdatesHimself() {
+        addNewTpp();
+        String newUserLogin = "newtpplogin";
+        given()
+                .obtainTokenFromKeycloak(TPP_LOGIN_NEW, TPP_PASSWORD)
+                .getUserIdByLogin(TPP_LOGIN_NEW)
+                .modify("update_tpp_user.json", newUserLogin, TPP_EMAIL_NEW, BRANCH);
+        when()
+                .obtainTokenFromKeycloak(newUserLogin, TPP_PASSWORD);
+//                .listCustomersLoginsInLedgers()
+//                .body((List<String> users) -> assertThat(users).contains(newUserLogin).doesNotContain(UA_1_TPP));
+        then()
+                .readUserFromDb(newUserLogin);
+    }
+
+    private void addNewTpp() {
+        given()
+                .obtainTokenFromKeycloak(ADMIN, ADMIN_PASSWORD)
+                .createNewTppAsAdmin(TPP_LOGIN_NEW, TPP_EMAIL_NEW, BRANCH);
+    }
+
 }
