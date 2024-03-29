@@ -4,23 +4,27 @@ import com.tngtech.jgiven.annotation.ScenarioState;
 import com.tngtech.jgiven.integration.spring.JGivenStage;
 import de.adorsys.ledgers.keycloak.client.config.KeycloakClientConfig;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.ColumnMapRowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static de.adorsys.ledgers.app.BaseContainersTest.resource;
 
 @JGivenStage
 public class ManagementStage extends BaseStage<ManagementStage> {
 
+    public static String DELETE_USER = "/staff-access/data/user/{userId}";
     public static final String USERS_RESOURCE_ADMIN = "/admin/user";
     public static final String USERS_RESOURCE_STAFF = "staff-access/users";
-    public static final String USERS_BY_LOGIN = "/admin/users/all";
+    public static final String GET_ALL_USERS = "/admin/users/all";
     public static final String ACCOUNTS_RESOURCE = "/staff-access/accounts";
     public static final String ACCOUNT_BY_IBAN = "/staff-access/accounts/acc/acc";
     public static final String ACCOUNT_DETAIL = "/staff-access/accounts/{accountId}";
@@ -28,22 +32,26 @@ public class ManagementStage extends BaseStage<ManagementStage> {
     public static final String KEYCLOAK_TOKEN_PATH = "/realms/ledgers/protocol/openid-connect/token";
     public static String ALL_USERS = "/admin/users/all";
     public static String CHANGE_STATUS = "admin/status";
+    public static final String MODIFY = "/staff-access/users/modify";
+
+    @Autowired
+    private NamedParameterJdbcOperations jdbcOperations;
 
     @Autowired
     private KeycloakClientConfig clientConfig;
 
+    @ScenarioState
+    protected String bearerToken;
+
+    @ScenarioState
+    protected String userId;
+
+    @ScenarioState
+    protected String accountId;
+
     @Getter
     @ScenarioState
-    private Map<String, String> createdUserIdsByLogin;
-
-    @ScenarioState
-    private String bearerToken;
-
-    @ScenarioState
-    private String userId;
-
-    @ScenarioState
-    private String accountId;
+    private Map<String, Object> userEntity;
 
     public ManagementStage obtainTokenFromKeycloak(String psuLogin, String psuPassword) {
         var resp = RestAssured.given()
@@ -67,6 +75,22 @@ public class ManagementStage extends BaseStage<ManagementStage> {
         return self();
     }
 
+    public ManagementStage modify(String resourceName, String newLogin, String email, String branch) {
+        var resp = RestAssured.given()
+                           .header(AUTHORIZATION, this.bearerToken)
+                           .header(HttpHeaders.AUTHORIZATION, bearerToken)
+                           .contentType(ContentType.JSON)
+                           .queryParams("branch", branch)
+                           .body(resource(resourceName, Map.of("USER_ID", userId, "LOGIN", newLogin, "EMAIL", email)))
+                           .when()
+                           .post(MODIFY)
+                           .then()
+                           .statusCode(HttpStatus.OK.value())
+                           .extract();
+        this.response = resp;
+        return self();
+    }
+
     public ManagementStage getAllUsers() {
         var resp = RestAssured.given()
                            .header(HttpHeaders.AUTHORIZATION, bearerToken)
@@ -81,6 +105,19 @@ public class ManagementStage extends BaseStage<ManagementStage> {
         return self();
     }
 
+    public ManagementStage deleteUser() {
+        var resp = RestAssured.given()
+                           .header(HttpHeaders.AUTHORIZATION, bearerToken)
+                           .when()
+                           .delete(DELETE_USER, userId)
+                           .then()
+                           .statusCode(HttpStatus.OK.value())
+                           .and()
+                           .extract();
+
+        this.response = resp;
+        return self();
+    }
 
     public ManagementStage createNewUserAsAdmin(String login, String email, String branch) {
         return createNewUser(USERS_RESOURCE_ADMIN, login, email, branch);
@@ -104,23 +141,25 @@ public class ManagementStage extends BaseStage<ManagementStage> {
 
         this.response = resp;
         this.userId = resp.path("id");
-        recordUserId(login);
         return self();
     }
 
     public ManagementStage getUserIdByLogin(String login) {
+        var oldToken = bearerToken;
+        obtainTokenFromKeycloak("admin", "admin123");
         var resp = RestAssured.given()
                           .header(AUTHORIZATION, this.bearerToken)
                           .contentType(MediaType.APPLICATION_JSON_VALUE)
                           .when()
-                          .get(USERS_BY_LOGIN)
+                          .get(GET_ALL_USERS)
                           .then()
                           .statusCode(HttpStatus.OK.value())
                           .and()
                           .extract();
 
         this.response = resp;
-        this.userId = this.response.path("findAll { o -> o.login.equals(\"anton.brueckner\") }[0].id");
+        this.userId = this.response.path("findAll { o -> o.login.equals(\""+ login +"\") }[0].id");
+        this.bearerToken = oldToken;
         return self();
     }
 
@@ -202,6 +241,17 @@ public class ManagementStage extends BaseStage<ManagementStage> {
         return self();
     }
 
+    public ManagementStage readUserFromDb(String userLogin) {
+        var query = "SELECT * FROM public.users WHERE login = :userLogin";
+        this.userEntity = jdbcOperations.queryForObject(
+                query,
+                Map.of("userLogin", userLogin),
+                new ColumnMapRowMapper()
+        );
+        assertThat(userEntity).isNotNull();
+        return self();
+    }
+
     private ManagementStage createNewUser(String endpoint, String login, String email, String branch) {
         var resp = RestAssured.given()
                            .header(AUTHORIZATION, this.bearerToken)
@@ -216,14 +266,6 @@ public class ManagementStage extends BaseStage<ManagementStage> {
 
         this.response = resp;
         this.userId = resp.path("id");
-        recordUserId(login);
         return self();
-    }
-
-    private void recordUserId(String login) {
-        if (null == createdUserIdsByLogin) {
-            createdUserIdsByLogin = new ConcurrentHashMap<>();
-        }
-        createdUserIdsByLogin.put(login, userId);
     }
 }
