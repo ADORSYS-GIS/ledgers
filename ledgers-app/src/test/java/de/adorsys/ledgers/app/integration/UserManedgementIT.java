@@ -12,6 +12,7 @@ import de.adorsys.ledgers.app.it_endpoints.ManagementStage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -24,6 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(classes = LedgersApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @ContextConfiguration(classes = {TestDBConfiguration.class},
         initializers = { PaymentIT.Initializer.class })
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class UserManedgementIT extends BaseContainersTest<ManagementStage, ManagementStage, ManagementStage> {
     public static final String ADMIN = "admin";
     public static final String ADMIN_PASSWORD = "admin123";
@@ -73,8 +75,6 @@ public class UserManedgementIT extends BaseContainersTest<ManagementStage, Manag
                 .modify("update_tpp_user.json", newUserLogin, TPP_EMAIL_NEW, BRANCH);
         when()
                 .obtainTokenFromKeycloak(newUserLogin, TPP_PASSWORD);
-//                .listCustomersLoginsInLedgers()
-//                .body((List<String> users) -> assertThat(users).contains(newUserLogin).doesNotContain(UA_1_TPP));
         then()
                 .readUserFromDb(newUserLogin);
     }
