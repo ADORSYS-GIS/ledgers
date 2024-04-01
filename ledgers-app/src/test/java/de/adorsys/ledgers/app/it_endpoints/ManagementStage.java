@@ -12,8 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.ColumnMapRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Consumer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static de.adorsys.ledgers.app.BaseContainersTest.resource;
@@ -34,6 +36,7 @@ public class ManagementStage extends BaseStage<ManagementStage> {
     public static String ALL_USERS = "/admin/users/all";
     public static String CHANGE_STATUS = "admin/status";
     public static final String MODIFY = "/staff-access/users/modify";
+    public static final String MODIFY_SELF = "/users/me";
 
     @Autowired
     private NamedParameterJdbcOperations jdbcOperations;
@@ -258,6 +261,22 @@ public class ManagementStage extends BaseStage<ManagementStage> {
         return self();
     }
 
+    public ManagementStage updateSelfTpp(String branchId, String newLogin, String newEmail) {
+        var resp = RestAssured.given()
+                           .header(AUTHORIZATION, this.bearerToken)
+                           .contentType(MediaType.APPLICATION_JSON_VALUE)
+                           .body(resource("update_tpp_user.json", Map.of("USER_ID", branchId, "LOGIN", newLogin,"EMAIL", newEmail)))
+                           .when()
+                           .put(MODIFY_SELF)
+                           .then()
+                           .statusCode(HttpStatus.ACCEPTED.value())
+                           .and()
+                           .extract();
+
+        this.response = resp;
+        return self();
+    }
+
     public ManagementStage readUserFromDb(String userLogin) {
         var query = "SELECT * FROM public.users WHERE login = :userLogin";
         this.userEntity = jdbcOperations.queryForObject(
@@ -266,6 +285,11 @@ public class ManagementStage extends BaseStage<ManagementStage> {
                 new ColumnMapRowMapper()
         );
         assertThat(userEntity).isNotNull();
+        return self();
+    }
+
+    public ManagementStage verifyUserEntity(Consumer<Map<String, Object>> entityConsumer) {
+        entityConsumer.accept(this.userEntity);
         return self();
     }
 

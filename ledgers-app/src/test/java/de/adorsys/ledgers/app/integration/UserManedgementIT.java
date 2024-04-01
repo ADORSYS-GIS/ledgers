@@ -17,6 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.List;
+import java.util.Map;
 import static de.adorsys.ledgers.app.integration.PaymentIT.PSU_LOGIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -64,7 +65,6 @@ public class UserManedgementIT extends BaseContainersTest<ManagementStage, Manag
                 .path("balances.amount.amount[0]", am -> assertThat(am.toString()).isEqualTo(amount));
     }
 
-
     @Test
     void testTppUpdatesHimself() {
         addNewTpp();
@@ -86,6 +86,23 @@ public class UserManedgementIT extends BaseContainersTest<ManagementStage, Manag
         when().obtainTokenFromKeycloak(ADMIN, ADMIN_PASSWORD);
         then().changePasswordBranch(BRANCH, newPassword)
                 .obtainTokenFromKeycloak(TPP_LOGIN_NEW, newPassword);
+    }
+
+    @Test
+    void testUpdateSelf() {
+        String newTppLogin = "new-tpp-login";
+        String newTppEmail = "new-tpp-email@mail.ua";
+        addNewTpp();
+        given().obtainTokenFromKeycloak(TPP_LOGIN_NEW, TPP_PASSWORD);
+        when().updateSelfTpp(BRANCH, newTppLogin, newTppEmail);
+        then().obtainTokenFromKeycloak(newTppLogin, TPP_PASSWORD)
+                .readUserFromDb(newTppLogin)
+                .verifyUserEntity(user -> {
+                    assertThat(user.get("user_id")).isEqualTo(BRANCH);
+                    assertThat(user.get("branch")).isEqualTo(BRANCH);
+                    assertThat(user.get("email")).isEqualTo(newTppEmail);
+                    assertThat(user.get("login")).isEqualTo(newTppLogin);
+                });
     }
 
     private void addNewTpp() {
