@@ -29,6 +29,7 @@ public class ManagementStage extends BaseStage<ManagementStage> {
     public static final String ACCOUNT_BY_IBAN = "/staff-access/accounts/acc/acc";
     public static final String ACCOUNT_DETAIL = "/staff-access/accounts/{accountId}";
     public static final String DEPOSIT_CASH_RESOURCE = "/staff-access/accounts/{accountId}/cash";
+    public static final String UPDATE_PASSWORD_BRANCH = "/admin/password";
     public static final String KEYCLOAK_TOKEN_PATH = "/realms/ledgers/protocol/openid-connect/token";
     public static String ALL_USERS = "/admin/users/all";
     public static String CHANGE_STATUS = "admin/status";
@@ -232,6 +233,22 @@ public class ManagementStage extends BaseStage<ManagementStage> {
                            .body(resource(amountResource).replaceAll("%AMOUNT%", amount))
                            .when()
                            .post(DEPOSIT_CASH_RESOURCE, accountId)
+                           .then()
+                           .statusCode(HttpStatus.ACCEPTED.value())
+                           .and()
+                           .extract();
+
+        this.response = resp;
+        return self();
+    }
+
+    public ManagementStage changePasswordBranch(String branch, String newPassword) {
+        var resp = RestAssured.given()
+                           .header(AUTHORIZATION, this.bearerToken)
+                           .contentType(MediaType.APPLICATION_JSON_VALUE)
+                           .queryParams("branchId", branch, "password", newPassword)
+                           .when()
+                           .put(UPDATE_PASSWORD_BRANCH)
                            .then()
                            .statusCode(HttpStatus.ACCEPTED.value())
                            .and()

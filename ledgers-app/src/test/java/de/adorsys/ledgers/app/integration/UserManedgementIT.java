@@ -79,6 +79,15 @@ public class UserManedgementIT extends BaseContainersTest<ManagementStage, Manag
                 .readUserFromDb(newUserLogin);
     }
 
+    @Test
+    void testUpdatePassword() {
+        addNewTpp();
+        String newPassword = "hello";
+        when().obtainTokenFromKeycloak(ADMIN, ADMIN_PASSWORD);
+        then().changePasswordBranch(BRANCH, newPassword)
+                .obtainTokenFromKeycloak(TPP_LOGIN_NEW, newPassword);
+    }
+
     private void addNewTpp() {
         given()
                 .obtainTokenFromKeycloak(ADMIN, ADMIN_PASSWORD)
