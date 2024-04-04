@@ -18,7 +18,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import static de.adorsys.ledgers.app.integration.UserManedgementIT.ADMIN;
+import static de.adorsys.ledgers.app.integration.UserManagementIT.ADMIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles({"testcontainers-it", "sandbox"})

@@ -25,8 +25,8 @@ public class BaseStage<SELF extends Stage<?>> extends Stage<SELF> {
         return self();
     }
 
-    public SELF pathInt(String path, Consumer<Integer> pathConsumer) {
-        pathConsumer.accept(this.response.path(path));
+    public <T> SELF body(Consumer<T> bodyConsumer) {
+        bodyConsumer.accept(this.response.body().path(""));
         return self();
     }
 

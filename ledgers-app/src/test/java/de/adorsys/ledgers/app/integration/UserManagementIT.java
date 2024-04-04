@@ -17,7 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.List;
-import java.util.Map;
+
 import static de.adorsys.ledgers.app.integration.PaymentIT.PSU_LOGIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ContextConfiguration(classes = {TestDBConfiguration.class},
         initializers = { PaymentIT.Initializer.class })
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class UserManedgementIT extends BaseContainersTest<ManagementStage, ManagementStage, ManagementStage> {
+public class UserManagementIT extends BaseContainersTest<ManagementStage, ManagementStage, ManagementStage> {
     public static final String ADMIN = "admin";
     public static final String ADMIN_PASSWORD = "admin123";
     public static final String TPP_LOGIN_NEW = "newtpp";
@@ -103,6 +103,15 @@ public class UserManedgementIT extends BaseContainersTest<ManagementStage, Manag
                     assertThat(user.get("email")).isEqualTo(newTppEmail);
                     assertThat(user.get("login")).isEqualTo(newTppLogin);
                 });
+    }
+
+    @Test
+    void testUploadData() {
+        addNewTpp();
+        given().obtainTokenFromKeycloak(TPP_LOGIN_NEW, "11111");
+        when().uploadData("file_upload/users-accounts-balances-payments-upload.yml");
+        then().listCustomersLogins()
+                .body((List<String> usersLogin) -> assertThat(usersLogin).contains("newtpp","user-one","user-two"));
     }
 
     private void addNewTpp() {

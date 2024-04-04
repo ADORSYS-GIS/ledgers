@@ -1,0 +1,83 @@
+---
+users:
+  - id: "001"
+    login: "user-one"
+    email: "user-one@mail.de"
+    pin: "12345"
+    scaUserData:
+      - scaMethod: "SMTP_OTP"
+        methodValue: "user-one@mail.de"
+        usesStaticTan: true
+        staticTan: "123456"
+    accountAccesses:
+      - iban: "NL36ABNA2764204256"
+        accessType: "OWNER"
+        scaWeight: 100
+        currency: "EUR"
+    userRoles:
+      - "CUSTOMER"
+  - id: "002"
+    login: "user-two"
+    email: "user-two@mail.de"
+    pin: "12345"
+    scaUserData:
+      - scaMethod: "SMTP_OTP"
+        methodValue: "user-two@mail.de"
+        usesStaticTan: true
+        staticTan: "123456"
+    accountAccesses:
+      - iban: "NL12VTHE9923293841"
+        accessType: "OWNER"
+        scaWeight: 100
+        currency: "EUR"
+    userRoles:
+      - "CUSTOMER"
+balances:
+  NL36ABNA2764204256:
+    amount:
+      currency: "EUR"
+      amount: 100000.00
+    iban: NL36ABNA2764204256
+  NL12VTHE9923293841:
+    amount:
+      currency: "EUR"
+      amount: 200000.00
+    iban: NL12VTHE9923293841
+payments:
+  - paymentId: PAYMENT-ID-12345678
+    paymentType: SINGLE
+    paymentProduct: "instant-sepa-credit-transfers"
+    requestedExecutionDate: 2100-12-12
+    requestedExecutionTime: 12:00:00
+    debtorAccount:
+      {
+        iban: NL36ABNA2764204256,
+        currency: EUR
+      }
+    transactionStatus: RCVD
+    targets:
+      - {
+        paymentId: myPaymentId,
+        endToEndIdentification: IDENTIFIER BY TPP,
+        instructedAmount:
+          {
+            currency: EUR,
+            amount: 999.99
+          },
+        creditorAccount:
+          {
+            iban: NL36ABNA2764204256,
+            currency: EUR
+          },
+        creditorAgent: AGENT NAME,
+        creditorName: CREDITORS NAME,
+        creditorAddress:
+          {
+            street: Buhaker str,
+            buildingNumber: 123,
+            city: Nurnberg,
+            postalCode: 04310,
+            country: Germany
+          },
+        remittanceInformationUnstructuredArray: ['Some payment info']
+      }

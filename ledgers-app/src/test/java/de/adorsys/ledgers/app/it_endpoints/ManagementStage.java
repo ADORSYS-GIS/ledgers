@@ -1,17 +1,23 @@
 package de.adorsys.ledgers.app.it_endpoints;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.tngtech.jgiven.annotation.ScenarioState;
 import com.tngtech.jgiven.integration.spring.JGivenStage;
 import de.adorsys.ledgers.keycloak.client.config.KeycloakClientConfig;
+import de.adorsys.ledgers.middleware.api.domain.um.UploadedDataTO;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import lombok.Getter;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.ColumnMapRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -23,6 +29,7 @@ import static de.adorsys.ledgers.app.BaseContainersTest.resource;
 @JGivenStage
 public class ManagementStage extends BaseStage<ManagementStage> {
 
+    public static final String UPLOAD_DATA = "/staff-access/data/upload";
     public static String DELETE_USER = "/staff-access/data/user/{userId}";
     public static final String USERS_RESOURCE_ADMIN = "/admin/user";
     public static final String USERS_RESOURCE_STAFF = "staff-access/users";
@@ -37,6 +44,8 @@ public class ManagementStage extends BaseStage<ManagementStage> {
     public static String CHANGE_STATUS = "admin/status";
     public static final String MODIFY = "/staff-access/users/modify";
     public static final String MODIFY_SELF = "/users/me";
+    public static final String CUSTOMERS_RESOURCE_LOGIN = "/staff-access/users/logins";
+
 
     @Autowired
     private NamedParameterJdbcOperations jdbcOperations;
@@ -95,6 +104,19 @@ public class ManagementStage extends BaseStage<ManagementStage> {
         return self();
     }
 
+    public ManagementStage listCustomersLogins() {
+        var resp = RestAssured.given()
+                .header(AUTHORIZATION, this.bearerToken)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .get(CUSTOMERS_RESOURCE_LOGIN)
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .extract();
+        this.response = resp;
+        return self();
+    }
+
     public ManagementStage getAllUsers() {
         var resp = RestAssured.given()
                            .header(HttpHeaders.AUTHORIZATION, bearerToken)
@@ -120,6 +142,25 @@ public class ManagementStage extends BaseStage<ManagementStage> {
                            .extract();
 
         this.response = resp;
+        return self();
+    }
+
+    @SneakyThrows
+    public ManagementStage uploadData(String resourceName) {
+        var toUpload = new ObjectMapper(new YAMLFactory()).readValue(resource(resourceName, Collections.emptyMap()), UploadedDataTO.class);
+
+        var resp = RestAssured.given()
+                .header(AUTHORIZATION, this.bearerToken)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(new ObjectMapper().writeValueAsString(toUpload))
+                .when()
+                .post(UPLOAD_DATA)
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .and()
+                .extract();
+        this.response = resp;
+
         return self();
     }
 
