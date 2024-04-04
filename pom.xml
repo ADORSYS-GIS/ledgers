@@ -618,6 +618,7 @@
                 <version>${maven-failsafe-plugin.version}</version>
                 <configuration>
                     <skip>${skipITs}</skip>
+                    <classesDirectory>${project.build.outputDirectory}</classesDirectory>
                 </configuration>
                 <executions>
                     <execution>
