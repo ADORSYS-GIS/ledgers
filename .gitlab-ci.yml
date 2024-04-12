@@ -241,7 +241,7 @@ Test (Unit Tests):
   script:
     - jabba use $BUILD_JAVA_VERSION
     - java -XX:+PrintFlagsFinal -version | grep -Ei "maxheapsize|maxram"
-    - mvn --fail-at-end clean install
+    - mvn --fail-at-end -DskipITs clean install
   artifacts:
     paths:
       - "**/target/surefire-reports/*"
