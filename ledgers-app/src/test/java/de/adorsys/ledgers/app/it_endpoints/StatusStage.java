@@ -3,11 +3,17 @@ package de.adorsys.ledgers.app.it_endpoints;
 import com.tngtech.jgiven.annotation.ScenarioState;
 import com.tngtech.jgiven.integration.spring.JGivenStage;
 import io.restassured.RestAssured;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.ColumnMapRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @JGivenStage
 public class StatusStage extends BaseStage<StatusStage> {
@@ -16,11 +22,16 @@ public class StatusStage extends BaseStage<StatusStage> {
     public static final String AUTHORISATION_OPERATION = "/sca/authorisations/{authorisationId}/authCode";
     private static final String FINALISED_STATUS = "FINALISED";
 
+
     @Autowired
     private NamedParameterJdbcOperations jdbcOperations;
 
     @ScenarioState
     private String bearerToken;
+
+    @Getter
+    @ScenarioState
+    private Map<String, Object> paymentEntity;
 
     @ScenarioState
     private String operationObjectId;
@@ -38,4 +49,16 @@ public class StatusStage extends BaseStage<StatusStage> {
         this.response = resp;
         return self();
     }
+    public StatusStage readUserFromDb() {
+        var query = "SELECT * FROM public.payment WHERE payment_id = :paymentId";
+
+        this.paymentEntity = jdbcOperations.queryForObject(
+                query,
+                Map.of("paymentId", this.operationObjectId),
+                new ColumnMapRowMapper()
+        );
+        assertThat(paymentEntity).isNotNull();
+        return self();
+    }
+
 }
