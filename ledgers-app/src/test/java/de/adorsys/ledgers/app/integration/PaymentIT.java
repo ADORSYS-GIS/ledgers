@@ -129,8 +129,8 @@ public class PaymentIT extends BaseContainersTest<ManagementStage, OperationStag
                 .obtainTokenFromKeycloak(PSU_LOGIN, PSU_PASSWORD);
 
         when()
-                .failedSinglePayment("payment.json", "DE80760700240271232400");
-//                .failedBulkPayment("bulk_payment.json", "DE80760700240271232400");
+                .failedSinglePayment("payment.json", "DE80760700240271232400")
+                .failedBulkPayment("bulk_payment.json", "DE80760700240271232400");
 
         then()
                 .pathStr("devMessage", message -> assertThat(message).isEqualTo("Access Denied! You're trying to access resources you have no permission for."));

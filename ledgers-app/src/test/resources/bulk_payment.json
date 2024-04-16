@@ -3,7 +3,7 @@
   "batchBookingPreferred": null,
   "requestedExecutionDate": null,
   "requestedExecutionTime": null,
-  "paymentType": "Bulk",
+  "paymentType": "BULK",
   "paymentProduct": "sepa-credit-transfers",
   "startDate": null,
   "endDate": null,
