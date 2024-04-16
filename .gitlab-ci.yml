@@ -241,7 +241,23 @@ Test (Unit Tests):
   script:
     - jabba use $BUILD_JAVA_VERSION
     - java -XX:+PrintFlagsFinal -version | grep -Ei "maxheapsize|maxram"
-    - mvn --fail-at-end clean install
+    - mvn --fail-at-end -DskipITs clean install
+  artifacts:
+    paths:
+      - "**/target/surefire-reports/*"
+    name: "$CI_PROJECT_NAME-${CI_BUILD_REF_NAME#*v}-*"
+    expire_in: "10 day"
+
+Test (Integration Tests):
+  stage: "Test"
+  tags:
+    - aws
+  except:
+    - schedules
+  script:
+    - jabba use $BUILD_JAVA_VERSION
+    - java -XX:+PrintFlagsFinal -version | grep -Ei "maxheapsize|maxram"
+    - mvn --fail-at-end -DskipUTs clean install
   artifacts:
     paths:
       - "**/target/surefire-reports/*"
