@@ -33,7 +33,7 @@ public class PaymentIT extends BaseContainersTest<ManagementStage, OperationStag
     public static final String PSU_EMAIL_NEW = "newuser12345@mail.de";
     public static final String PSU_PASSWORD = "12345";
     public static final String CHALLENGE_VALUE = "123456";
-    public static final String ADMIN_LOGIN  = "admin";
+    public static final String ADMIN_LOGIN = "admin";
     public static final String ADMIN_PASSWORD = "admin123";
 
     @Test
@@ -43,6 +43,24 @@ public class PaymentIT extends BaseContainersTest<ManagementStage, OperationStag
 
         when()
                 .createSinglePayment("payment.json", "DE80760700240271232400")
+                .scaStart("sca_start_payment.json")
+                .listScaMethods()
+                .selectScaMethod("SMTP_OTP")
+                .reportChallengeValue(CHALLENGE_VALUE)
+                .getStatus().pathStr("scaStatus", stat -> assertThat(stat).isEqualTo("finalised"));
+
+        then()
+                .paymentStatus().pathStr("transactionStatus", status -> assertThat(status).isEqualTo("ACCP"));
+    }
+
+
+    @Test
+    void testCreateBulkPayment() {
+        given()
+                .obtainTokenFromKeycloak(PSU_LOGIN, PSU_PASSWORD);
+
+        when()
+                .createBulkPayment("bulk_payment.json", "DE80760700240271232400")
                 .scaStart("sca_start_payment.json")
                 .listScaMethods()
                 .selectScaMethod("SMTP_OTP")
@@ -77,6 +95,30 @@ public class PaymentIT extends BaseContainersTest<ManagementStage, OperationStag
     }
 
     @Test
+    void testCreateNewUserAndCreateBulkPayment() {
+        String newIban = "DE62500105174439235992";
+        given()
+                .obtainTokenFromKeycloak(ADMIN_LOGIN, ADMIN_PASSWORD)
+                .createNewUserAsAdmin(PSU_LOGIN_NEW, PSU_EMAIL_NEW, "")
+                .createNewAccountForUser("new_account.json", newIban)
+                .accountByIban(newIban)
+                .depositCash("deposit_amount.json", "10000")
+                .obtainTokenFromKeycloak(PSU_LOGIN_NEW, PSU_PASSWORD);
+
+        when()
+                .createBulkPayment("bulk_payment.json", newIban)
+                .scaStart("sca_start_payment.json")
+                .listScaMethods()
+                .selectScaMethod("SMTP_OTP")
+                .reportChallengeValue(CHALLENGE_VALUE)
+                .getStatus().pathStr("scaStatus", stat -> assertThat(stat).isEqualTo("finalised"));
+
+        then()
+                .paymentStatus().pathStr("transactionStatus", status -> assertThat(status).isEqualTo("ACCP"));
+    }
+
+
+    @Test
     void blockUserAndFailedPayment() {
         given()
                 .obtainTokenFromKeycloak(ADMIN, ADMIN_PASSWORD)
@@ -88,6 +130,7 @@ public class PaymentIT extends BaseContainersTest<ManagementStage, OperationStag
 
         when()
                 .failedSinglePayment("payment.json", "DE80760700240271232400");
+//                .failedBulkPayment("bulk_payment.json", "DE80760700240271232400");
 
         then()
                 .pathStr("devMessage", message -> assertThat(message).isEqualTo("Access Denied! You're trying to access resources you have no permission for."));

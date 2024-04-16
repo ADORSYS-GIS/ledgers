@@ -56,6 +56,47 @@ public class OperationStage extends BaseStage<OperationStage> {
         return self();
     }
 
+    //My updates on bulk payments.
+    @SneakyThrows
+    public OperationStage createBulkPayment(String paymentBodyRes, String ibanFrom) {
+        var resp = RestAssured.given()
+                .header(HttpHeaders.AUTHORIZATION, bearerToken)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(resource(paymentBodyRes, Map.of("ID", UUID.randomUUID().toString(), "PAYMENT_IBAN", ibanFrom)))
+                .queryParams("paymentType", "BULK")
+                .when()
+                .post(OP_PAYMENT)
+                .then()
+                .statusCode(HttpStatus.CREATED.value())
+                .and()
+                .extract();
+
+        this.bearerToken = getBearerToken(resp);
+        this.operationObjectId = resp.path("operationObjectId");
+        this.response = resp;
+        return self();
+    }
+
+// check if bulk payment failed.
+//    @SneakyThrows
+//    public OperationStage failedBulkPayment(String paymentBodyRes, String ibanFrom) {
+//        var resp = RestAssured.given()
+//                .header(HttpHeaders.AUTHORIZATION, bearerToken)
+//                .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                .body(resource(paymentBodyRes, Map.of("ID", UUID.randomUUID().toString(), "PAYMENT_IBAN", ibanFrom)))
+//                .queryParams("paymentType", "BULK")
+//                .when()
+//                .post(OP_PAYMENT)
+//                .then()
+//                .statusCode(HttpStatus.UNAUTHORIZED.value())
+//                .and()
+//                .extract();
+//
+//        this.response = resp;
+//        return self();
+//    }
+
+
     @SneakyThrows
     public OperationStage failedSinglePayment(String paymentBodyRes, String ibanFrom) {
         var resp = RestAssured.given()
