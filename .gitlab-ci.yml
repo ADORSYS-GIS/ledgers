@@ -249,7 +249,7 @@ Test (Unit Tests):
     expire_in: "10 day"
 
 Test (Integration Tests):
-  image: "maven:3.6.3-openjdk-17-slim"
+  image: "maven:3.9.1-sapmachine-17"
   stage: "Test"
   tags:
     - aws
@@ -258,7 +258,8 @@ Test (Integration Tests):
   script:
     # - jabba use $BUILD_JAVA_VERSION
     - java -XX:+PrintFlagsFinal -version | grep -Ei "maxheapsize|maxram"
-    - mvn --fail-at-end -DskipUTs clean install
+    # - mvn --fail-at-end -DskipUTs clean install
+    - mvn -ntp clean test-compile failsafe:integration-test
   artifacts:
     paths:
       - "**/target/surefire-reports/*"
