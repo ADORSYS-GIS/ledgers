@@ -49,7 +49,7 @@ public class StatusStage extends BaseStage<StatusStage> {
         this.response = resp;
         return self();
     }
-    public StatusStage readUserFromDb() { //TODO change method name
+    public StatusStage bulkPaymentStatus() { //TODO change method name
         var query = "SELECT * FROM public.payment WHERE payment_id = :paymentId";
 
         this.paymentEntity = jdbcOperations.queryForObject(
