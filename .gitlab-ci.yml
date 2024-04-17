@@ -249,7 +249,7 @@ Test (Unit Tests):
     expire_in: "10 day"
 
 Test (Integration Tests):
-  image: "docker:dind"
+  image: "maven:3.6.3-openjdk-17-slim"
   stage: "Test"
   tags:
     - aws
@@ -257,12 +257,12 @@ Test (Integration Tests):
     - schedules
   script:
     # - jabba use $BUILD_JAVA_VERSION
-    - apk update
-    - apk add --no-cache openjdk11
-    - wget -q -O /tmp/apache-maven.tar.gz https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
-    - tar -xzf /tmp/apache-maven.tar.gz -C /opt
-    - ln -s /opt/apache-maven-3.6.3 /opt/maven
-    - rm -f /tmp/apache-maven.tar.gz
+    - apt-get update
+    - apt-get install -y apt-transport-https ca-certificates curl software-properties-common gnupg
+    - curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+    - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+    - apt-get update
+    - apt-get install -y docker-ce docker-ce-cli containerd.io
     - java -XX:+PrintFlagsFinal -version | grep -Ei "maxheapsize|maxram"
     - mvn --fail-at-end -DskipUTs clean install
   artifacts:
