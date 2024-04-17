@@ -249,8 +249,8 @@ Test (Unit Tests):
     expire_in: "10 day"
 
 Test (Integration Tests):
-  image: docker:dind
-  stage: "Test"`
+  image: "docker:dind"
+  stage: "Test"
   tags:
     - aws
   except:
