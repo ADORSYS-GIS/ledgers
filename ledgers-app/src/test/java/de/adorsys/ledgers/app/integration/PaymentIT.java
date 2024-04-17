@@ -69,7 +69,7 @@ public class PaymentIT extends BaseContainersTest<ManagementStage, OperationStag
 
         then()
                 .paymentStatus().pathStr("transactionStatus", status -> assertThat(status).isEqualTo("ACCP"))
-                .bulkPaymentStatus();
+                .paymentId();
                 //TODO add new assertion for payment_type create new function verifyUserEntity
         ;
     }
