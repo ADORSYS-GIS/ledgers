@@ -256,10 +256,8 @@ Test (Integration Tests):
   except:
     - schedules
   script:
-    # - jabba use $BUILD_JAVA_VERSION
     - java -XX:+PrintFlagsFinal -version | grep -Ei "maxheapsize|maxram"
-    # - mvn --fail-at-end -DskipUTs clean install
-    - mvn -ntp clean test-compile failsafe:integration-test
+    - mvn -ntp clean test-compile failsafe:integration-test --errors
   artifacts:
     paths:
       - "**/target/failsafe-reports/*"
