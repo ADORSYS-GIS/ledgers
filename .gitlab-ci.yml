@@ -262,7 +262,7 @@ Test (Integration Tests):
     - mvn -ntp clean test-compile failsafe:integration-test
   artifacts:
     paths:
-      - "**/target/surefire-reports/*"
+      - "**/target/failsafe-reports/*"
     name: "$CI_PROJECT_NAME-${CI_BUILD_REF_NAME#*v}-*"
     expire_in: "10 day"
   variables:
