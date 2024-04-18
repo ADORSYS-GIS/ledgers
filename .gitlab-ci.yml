@@ -265,6 +265,8 @@ Test (Integration Tests):
       - "**/target/surefire-reports/*"
     name: "$CI_PROJECT_NAME-${CI_BUILD_REF_NAME#*v}-*"
     expire_in: "10 day"
+  variables:
+    TESTCONTAINERS_RYUK_DISABLED: 'true'
 
 ###########
 # Package
