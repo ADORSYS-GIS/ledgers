@@ -11,7 +11,9 @@ import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.ColumnMapRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 
+import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -33,6 +35,10 @@ public class StatusStage extends BaseStage<StatusStage> {
     @ScenarioState
     private Map<String, Object> paymentEntity;
 
+    @Getter
+    @ScenarioState
+    private List<String> paymentTargets;
+
     @ScenarioState
     private String operationObjectId;
 
@@ -49,7 +55,7 @@ public class StatusStage extends BaseStage<StatusStage> {
         this.response = resp;
         return self();
     }
-    public StatusStage paymentId() { //TODO change method name
+    public StatusStage readPaymentFromDB() {
         var query = "SELECT * FROM public.payment WHERE payment_id = :paymentId";
 
         this.paymentEntity = jdbcOperations.queryForObject(
@@ -58,6 +64,30 @@ public class StatusStage extends BaseStage<StatusStage> {
                 new ColumnMapRowMapper()
         );
         assertThat(paymentEntity).isNotNull();
+        return self();
+    }
+
+    public StatusStage readPaymentTargetsFromDB() {
+        var query = "SELECT cred_iban FROM public.payment_target WHERE payment_payment_id = :paymentId";
+
+        this.paymentTargets = jdbcOperations.query(
+                query,
+                Map.of("paymentId", this.operationObjectId),
+                (rs, row) -> rs.getString(1)
+        );
+        assertThat(paymentTargets).isNotEmpty();
+        return self();
+    }
+
+
+
+    public StatusStage verifyPaymentEntity(Consumer<Map<String, Object>> entityConsumer) {
+        entityConsumer.accept(this.paymentEntity);
+        return self();
+    }
+
+    public StatusStage verifyPaymentTargetsIban(Consumer<List<String>> entityConsumer) {
+        entityConsumer.accept(this.paymentTargets);
         return self();
     }
 

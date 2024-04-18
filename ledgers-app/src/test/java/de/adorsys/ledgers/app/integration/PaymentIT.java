@@ -18,6 +18,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import java.util.List;
 import static de.adorsys.ledgers.app.integration.UserManagementIT.ADMIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -35,6 +36,10 @@ public class PaymentIT extends BaseContainersTest<ManagementStage, OperationStag
     public static final String CHALLENGE_VALUE = "123456";
     public static final String ADMIN_LOGIN = "admin";
     public static final String ADMIN_PASSWORD = "admin123";
+    public static final String SINGLE_PAYMENT_TYPE = "SINGLE";
+    public static final String BULK_PAYMENT_TYPE = "BULK";
+    public static final List<String> BULK_PAYMENT_CREDITORS_IBAN = List.of("DE38760700240320465700", "DE80760700240271232400");
+
 
     @Test
     void testCreateSinglePayment() {
@@ -69,9 +74,13 @@ public class PaymentIT extends BaseContainersTest<ManagementStage, OperationStag
 
         then()
                 .paymentStatus().pathStr("transactionStatus", status -> assertThat(status).isEqualTo("ACCP"))
-                .paymentId();
-                //TODO add new assertion for payment_type create new function verifyUserEntity
-        ;
+                .readPaymentFromDB()
+                .verifyPaymentEntity(payment -> assertThat(payment.get("payment_type")).isEqualTo(BULK_PAYMENT_TYPE))
+                .readPaymentTargetsFromDB()
+                .verifyPaymentTargetsIban(paymentTargets -> {
+                    assertThat(paymentTargets.size()).isEqualTo(2);
+                    assertThat(paymentTargets).containsAll(BULK_PAYMENT_CREDITORS_IBAN);
+                });
     }
 
     @Test

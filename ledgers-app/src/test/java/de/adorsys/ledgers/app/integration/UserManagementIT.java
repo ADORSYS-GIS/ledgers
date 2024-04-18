@@ -102,15 +102,7 @@ public class UserManagementIT extends BaseContainersTest<ManagementStage, Manage
                     assertThat(user.get("branch")).isEqualTo(BRANCH);
                     assertThat(user.get("email")).isEqualTo(newTppEmail);
                     assertThat(user.get("login")).isEqualTo(newTppLogin);
-                })
-                //adding
-                .verifyPaymentEntity(pUser ->{
-                    assertThat(pUser.get("user_id")).isEqualTo(BRANCH);
-                    assertThat(pUser.get("branch")).isEqualTo(BRANCH);
-                    assertThat(pUser.get("email")).isEqualTo(newTppEmail);
-                    assertThat(pUser.get("login")).isEqualTo(newTppLogin);
                 });
-
     }
 
     @Test
