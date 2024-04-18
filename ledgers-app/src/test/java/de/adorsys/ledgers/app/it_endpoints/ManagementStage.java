@@ -334,10 +334,6 @@ public class ManagementStage extends BaseStage<ManagementStage> {
         return self();
     }
 
-    public ManagementStage verifyPaymentEntity(Consumer<Map<String, Object>> entityConsumer) {
-        entityConsumer.accept(this.userEntity);
-        return self();
-    }
     private ManagementStage createNewUser(String endpoint, String login, String email, String branch) {
         var resp = RestAssured.given()
                            .header(AUTHORIZATION, this.bearerToken)
