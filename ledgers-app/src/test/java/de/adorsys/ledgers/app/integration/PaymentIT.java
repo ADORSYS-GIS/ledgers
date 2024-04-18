@@ -126,7 +126,14 @@ public class PaymentIT extends BaseContainersTest<ManagementStage, OperationStag
                 .getStatus().pathStr("scaStatus", stat -> assertThat(stat).isEqualTo("finalised"));
 
         then()
-                .paymentStatus().pathStr("transactionStatus", status -> assertThat(status).isEqualTo("ACCP"));
+                .paymentStatus().pathStr("transactionStatus", status -> assertThat(status).isEqualTo("ACCP"))
+                .readPaymentFromDB()
+                .verifyPaymentEntity( payment -> assertThat(payment.get("payment_type")).isEqualTo(BULK_PAYMENT_TYPE))
+                .readPaymentTargetsFromDB()
+                .verifyPaymentTargetsIban( paymentTarget -> {
+                    assertThat(paymentTarget.size()).isEqualTo(2);
+                    assertThat(paymentTarget).containsAll(BULK_PAYMENT_CREDITORS_IBAN);
+                });
     }
 
 
