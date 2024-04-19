@@ -257,7 +257,7 @@ Test (Integration Tests):
     - schedules
   script:
     - java -XX:+PrintFlagsFinal -version | grep -Ei "maxheapsize|maxram"
-    - mvn -ntp clean test-compile failsafe:integration-test --fail-at-end
+    - mvn -ntp clean test-compile failsafe:integration-test --fail-at-end --errors
     - echo $?
   artifacts:
     paths:
