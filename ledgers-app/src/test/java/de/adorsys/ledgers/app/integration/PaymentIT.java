@@ -62,6 +62,6 @@ public class PaymentIT extends BaseContainersTest<ManagementStage, OperationStag
                 .getStatus().pathStr("scaStatus", stat -> assertThat(stat).isEqualTo("finalised"));
 
         then()
-                .paymentStatus().pathStr("transactionStatus", status -> assertThat(status).isEqualTo("ACSP"));
+                .paymentStatus().pathStr("transactionStatus", status -> assertThat(status).isEqualTo("ACCP"));
     }
 }
