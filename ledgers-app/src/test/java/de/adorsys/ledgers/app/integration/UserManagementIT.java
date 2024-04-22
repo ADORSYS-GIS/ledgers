@@ -120,4 +120,34 @@ class UserManagementIT extends BaseContainersTest<ManagementStage, ManagementSta
                 .createNewTppAsAdmin(TPP_LOGIN_NEW, TPP_EMAIL_NEW, BRANCH);
     }
 
+    @Test
+    public void shouldCreateNewUserAndAdminUserSuccessfully() {
+        // Arrange: Create a new Third-Party Provider (TPP) as admin
+        String newTppLogin = "new-tpp-login";
+        String newTppEmail = "new-tpp-email@mail.ua";
+
+        // Act: Perform API calls to create a new TPP
+        given()
+                .obtainTokenFromKeycloak(ADMIN, ADMIN_PASSWORD)
+                .createNewTppAsAdmin(newTppLogin, newTppEmail, BRANCH);
+
+        // Arrange: Create a new admin user
+        String newAdminLogin = "new-admin-login";
+        String newAdminEmail = "new-admin-email@mail.ua";
+
+        // Act: Perform API calls to create a new admin user
+        given()
+                .obtainTokenFromKeycloak(ADMIN, ADMIN_PASSWORD)
+                .createNewUserAsAdmin(newAdminLogin, newAdminEmail, BRANCH);
+
+        // Assert: Verify that the new admin user is created correctly
+       then().readUserFromDb(newAdminLogin)
+                .verifyUserEntity(user -> {
+                    assertThat(user.get("user_id")).isEqualTo(BRANCH);
+                    assertThat(user.get("branch")).isEqualTo(BRANCH);
+                    assertThat(user.get("email")).isEqualTo(newAdminEmail);
+                    assertThat(user.get("login")).isEqualTo(newAdminLogin);
+                });
+    }
+
 }
