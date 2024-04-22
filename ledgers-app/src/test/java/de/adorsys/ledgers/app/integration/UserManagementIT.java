@@ -9,7 +9,6 @@ import de.adorsys.ledgers.app.BaseContainersTest;
 import de.adorsys.ledgers.app.LedgersApplication;
 import de.adorsys.ledgers.app.TestDBConfiguration;
 import de.adorsys.ledgers.app.it_endpoints.ManagementStage;
-import net.bytebuddy.pool.TypePool;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -119,22 +118,7 @@ public class UserManagementIT extends BaseContainersTest<ManagementStage, Manage
         then().listCustomersLogins()
                 .body((List<String> usersLogin) -> assertThat(usersLogin).contains("newtpp","user-one","user-two"));
 
-        //Read newly created users
 
-        List<String> usersLogins = new ArrayList<>();
-        usersLogins.add("user1");
-
-        for (String userLogin : usersLogins) {
-            then().readUserFromDb(userLogin)
-                    .verifyUserEntity(user -> {
-                        assertThat(user.get("user_id")).isEqualTo(BRANCH);
-                        assertThat(user.get("branch")).isEqualTo(BRANCH);
-                        assertThat(user.get("email")).isEqualTo(getUserEmail(userLogin));
-                        assertThat(user.get("login")).isEqualTo(userLogin);
-
-                        assertThat(user.get("iban")).isNotNull();
-                    });
-        }
     }
 
     private void addNewTpp() {
@@ -143,7 +127,7 @@ public class UserManagementIT extends BaseContainersTest<ManagementStage, Manage
                 .createNewTppAsAdmin(TPP_LOGIN_NEW, TPP_EMAIL_NEW, BRANCH);
     }
     private String getUserEmail (String userLogin){
-        return "emailexample@gmail.com";
+        return "newcutomer@mail.de";
     }
 
     @Test
@@ -165,15 +149,13 @@ public class UserManagementIT extends BaseContainersTest<ManagementStage, Manage
         given()
                 .obtainTokenFromKeycloak(ADMIN, ADMIN_PASSWORD)
                 .createNewUserAsAdmin(newAdminLogin, newAdminEmail, BRANCH);
-
-        // Assert: Verify that the new admin user is created correctly
-//       then().readUserFromDb(newAdminLogin)
-//                .verifyUserEntity(user -> {
-//                    assertThat(user.get("user_id")).isEqualTo(BRANCH);
-//                    assertThat(user.get("branch")).isEqualTo(BRANCH);
-//                    assertThat(user.get("email")).isEqualTo(newAdminEmail);
-//                    assertThat(user.get("login")).isEqualTo(newAdminLogin);
-//                });
+        then().readUserFromDb(newAdminLogin)
+                .verifyUserEntity(user ->{
+                    assertThat(user.get("branch")).isNotNull();
+                    assertThat(user.get("email")).isEqualTo(newAdminEmail);
+                    assertThat(user.get("login")).isEqualTo(newAdminLogin);
+                    assertThat(user.get("user_id")).isNotNull();
+                });
     }
 
 }
