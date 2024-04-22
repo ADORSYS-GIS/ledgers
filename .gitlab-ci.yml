@@ -248,6 +248,25 @@ Test (Unit Tests):
     name: "$CI_PROJECT_NAME-${CI_BUILD_REF_NAME#*v}-*"
     expire_in: "10 day"
 
+Test (Integration Tests):
+  image: "maven:3.9.1-sapmachine-17"
+  stage: "Test"
+  tags:
+    - aws
+  except:
+    - schedules
+  script:
+    - java -XX:+PrintFlagsFinal -version | grep -Ei "maxheapsize|maxram"
+    - mvn -ntp clean test-compile failsafe:integration-test failsafe:verify --fail-at-end --errors
+    - echo $?
+  artifacts:
+    paths:
+      - "**/target/failsafe-reports/*"
+    name: "$CI_PROJECT_NAME-${CI_BUILD_REF_NAME#*v}-*"
+    expire_in: "10 day"
+  variables:
+    TESTCONTAINERS_RYUK_DISABLED: 'true'
+
 ###########
 # Package
 ###########
