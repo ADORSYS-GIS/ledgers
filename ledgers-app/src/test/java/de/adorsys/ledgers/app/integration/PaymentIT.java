@@ -92,4 +92,5 @@ class PaymentIT extends BaseContainersTest<ManagementStage, OperationStage, Stat
         then()
                 .pathStr("devMessage", message -> assertThat(message).isEqualTo("Access Denied! You're trying to access resources you have no permission for."));
     }
+
 }

@@ -1,0 +1,429 @@
+{
+  "className": "de.adorsys.ledgers.app.integration.PaymentIT",
+  "name": "Payment IT",
+  "scenarios": [
+    {
+      "className": "de.adorsys.ledgers.app.integration.PaymentIT",
+      "testMethodName": "testCreateNewUserAndCreateBulkPayment",
+      "description": "Test create new user and create bulk payment",
+      "tagIds": [],
+      "explicitParameters": [],
+      "derivedParameters": [],
+      "scenarioCases": [
+        {
+          "caseNr": 1,
+          "steps": [
+            {
+              "name": "obtain token from keycloak",
+              "words": [
+                {
+                  "value": "Given",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "obtain token from keycloak"
+                },
+                {
+                  "value": "admin",
+                  "argumentInfo": {
+                    "argumentName": "psuLogin",
+                    "formattedValue": "admin"
+                  }
+                },
+                {
+                  "value": "admin123",
+                  "argumentInfo": {
+                    "argumentName": "psuPassword",
+                    "formattedValue": "admin123"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 1512231172,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "create new user as admin",
+              "words": [
+                {
+                  "value": "create new user as admin"
+                },
+                {
+                  "value": "newuser12345",
+                  "argumentInfo": {
+                    "argumentName": "login",
+                    "formattedValue": "newuser12345"
+                  }
+                },
+                {
+                  "value": "newuser12345@mail.de",
+                  "argumentInfo": {
+                    "argumentName": "email",
+                    "formattedValue": "newuser12345@mail.de"
+                  }
+                },
+                {
+                  "value": "",
+                  "argumentInfo": {
+                    "argumentName": "branch",
+                    "formattedValue": ""
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 145361843,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "create new account for user",
+              "words": [
+                {
+                  "value": "create new account for user"
+                },
+                {
+                  "value": "new_account.json",
+                  "argumentInfo": {
+                    "argumentName": "accountBodyResource",
+                    "formattedValue": "new_account.json"
+                  }
+                },
+                {
+                  "value": "DE62500105174439235992",
+                  "argumentInfo": {
+                    "argumentName": "iban",
+                    "formattedValue": "DE62500105174439235992"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 71958767,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "account by iban",
+              "words": [
+                {
+                  "value": "account by iban"
+                },
+                {
+                  "value": "DE62500105174439235992",
+                  "argumentInfo": {
+                    "argumentName": "iban",
+                    "formattedValue": "DE62500105174439235992"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 67386965,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "deposit cash",
+              "words": [
+                {
+                  "value": "deposit cash"
+                },
+                {
+                  "value": "deposit_amount.json",
+                  "argumentInfo": {
+                    "argumentName": "amountResource",
+                    "formattedValue": "deposit_amount.json"
+                  }
+                },
+                {
+                  "value": "10000",
+                  "argumentInfo": {
+                    "argumentName": "amount",
+                    "formattedValue": "10000"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 156981900,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "obtain token from keycloak",
+              "words": [
+                {
+                  "value": "obtain token from keycloak"
+                },
+                {
+                  "value": "newuser12345",
+                  "argumentInfo": {
+                    "argumentName": "psuLogin",
+                    "formattedValue": "newuser12345"
+                  }
+                },
+                {
+                  "value": "12345",
+                  "argumentInfo": {
+                    "argumentName": "psuPassword",
+                    "formattedValue": "12345"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 80510976,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "create bulk payment",
+              "words": [
+                {
+                  "value": "When",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "create bulk payment"
+                },
+                {
+                  "value": "bulk_payment.json",
+                  "argumentInfo": {
+                    "argumentName": "paymentBodyRes",
+                    "formattedValue": "bulk_payment.json"
+                  }
+                },
+                {
+                  "value": "DE62500105174439235992",
+                  "argumentInfo": {
+                    "argumentName": "ibanFrom",
+                    "formattedValue": "DE62500105174439235992"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 191861080,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "sca start",
+              "words": [
+                {
+                  "value": "sca start"
+                },
+                {
+                  "value": "sca_start_payment.json",
+                  "argumentInfo": {
+                    "argumentName": "scaBodyRes",
+                    "formattedValue": "sca_start_payment.json"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 96398600,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "list sca methods",
+              "words": [
+                {
+                  "value": "list sca methods"
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 70572864,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "select sca method",
+              "words": [
+                {
+                  "value": "select sca method"
+                },
+                {
+                  "value": "SMTP_OTP",
+                  "argumentInfo": {
+                    "argumentName": "methodName",
+                    "formattedValue": "SMTP_OTP"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 95918983,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "report challenge value",
+              "words": [
+                {
+                  "value": "report challenge value"
+                },
+                {
+                  "value": "123456",
+                  "argumentInfo": {
+                    "argumentName": "challengeValue",
+                    "formattedValue": "123456"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 93570603,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "get status",
+              "words": [
+                {
+                  "value": "get status"
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 48940307,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "path str",
+              "words": [
+                {
+                  "value": "path str"
+                },
+                {
+                  "value": "scaStatus",
+                  "argumentInfo": {
+                    "argumentName": "path",
+                    "formattedValue": "scaStatus"
+                  }
+                },
+                {
+                  "value": "de.adorsys.ledgers.app.integration.PaymentIT$$Lambda$3497/0x00000008025060c0@641d93f8",
+                  "argumentInfo": {
+                    "argumentName": "pathConsumer",
+                    "formattedValue": "de.adorsys.ledgers.app.integration.PaymentIT$$Lambda$3497/0x00000008025060c0@641d93f8"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 62560927,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "payment status",
+              "words": [
+                {
+                  "value": "Then",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "payment status"
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 91969612,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "path str",
+              "words": [
+                {
+                  "value": "path str"
+                },
+                {
+                  "value": "transactionStatus",
+                  "argumentInfo": {
+                    "argumentName": "path",
+                    "formattedValue": "transactionStatus"
+                  }
+                },
+                {
+                  "value": "de.adorsys.ledgers.app.integration.PaymentIT$$Lambda$3500/0x00000008025496d0@1ad0432e",
+                  "argumentInfo": {
+                    "argumentName": "pathConsumer",
+                    "formattedValue": "de.adorsys.ledgers.app.integration.PaymentIT$$Lambda$3500/0x00000008025496d0@1ad0432e"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 17430084,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "read payment from d b",
+              "words": [
+                {
+                  "value": "read payment from d b"
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 18009822,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "verify payment entity",
+              "words": [
+                {
+                  "value": "verify payment entity"
+                },
+                {
+                  "value": "de.adorsys.ledgers.app.integration.PaymentIT$$Lambda$3502/0x000000080254d868@5350101d",
+                  "argumentInfo": {
+                    "argumentName": "entityConsumer",
+                    "formattedValue": "de.adorsys.ledgers.app.integration.PaymentIT$$Lambda$3502/0x000000080254d868@5350101d"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 567836,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "read payment targets from d b",
+              "words": [
+                {
+                  "value": "read payment targets from d b"
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 8596316,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "verify payment targets iban",
+              "words": [
+                {
+                  "value": "verify payment targets iban"
+                },
+                {
+                  "value": "de.adorsys.ledgers.app.integration.PaymentIT$$Lambda$3504/0x0000000802555620@59c34b4e",
+                  "argumentInfo": {
+                    "argumentName": "entityConsumer",
+                    "formattedValue": "de.adorsys.ledgers.app.integration.PaymentIT$$Lambda$3504/0x0000000802555620@59c34b4e"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 3324275,
+              "depth": 0,
+              "parentFailed": false
+            }
+          ],
+          "explicitArguments": [],
+          "derivedArguments": [],
+          "status": "SUCCESS",
+          "durationInNanos": 2853030752
+        }
+      ],
+      "casesAsTable": false,
+      "durationInNanos": 2853030752
+    }
+  ],
+  "tagMap": {}
+}
