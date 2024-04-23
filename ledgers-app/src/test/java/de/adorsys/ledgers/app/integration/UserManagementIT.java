@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static de.adorsys.ledgers.app.integration.PaymentIT.PSU_LOGIN;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 @ActiveProfiles({"testcontainers-it", "sandbox"})
 @ExtendWith(SpringExtension.class)
@@ -117,6 +117,8 @@ public class UserManagementIT extends BaseContainersTest<ManagementStage, Manage
         when().uploadData("file_upload/users-accounts-balances-payments-upload.yml");
         then().listCustomersLogins()
                 .body((List<String> usersLogin) -> assertThat(usersLogin).contains("newtpp","user-one","user-two"));
+        
+
 
 
     }
@@ -133,8 +135,8 @@ public class UserManagementIT extends BaseContainersTest<ManagementStage, Manage
     @Test
     public void shouldCreateNewUserAndAdminUserSuccessfully() {
         // Arrange: Create a new Third-Party Provider (TPP) as admin
-        String newTppLogin = "new-tpp-login";
-        String newTppEmail = "new-tpp-email@mail.ua";
+        String newTppLogin = "exampleInfinity";
+        String newTppEmail = "exampple@gmail.com";
 
         // Act: Perform API calls to create a new TPP
         given()
@@ -142,8 +144,8 @@ public class UserManagementIT extends BaseContainersTest<ManagementStage, Manage
                 .createNewTppAsAdmin(newTppLogin, newTppEmail, BRANCH);
 
         // Arrange: Create a new admin user
-        String newAdminLogin = "new-admin-login";
-        String newAdminEmail = "new-admin-email@mail.ua";
+        String newAdminLogin = "newAdminUser";
+        String newAdminEmail = "admin@email.com";
 
         // Act: Perform API calls to create a new admin user
         given()
@@ -156,6 +158,18 @@ public class UserManagementIT extends BaseContainersTest<ManagementStage, Manage
                     assertThat(user.get("login")).isEqualTo(newAdminLogin);
                     assertThat(user.get("user_id")).isNotNull();
                 });
+    }
+
+    @Test
+// Test for checking if a user is being deleted successfully.
+    public void deletedUser(){
+        String newUserLogin = "examplein";
+        String newUserEmail = "exampple@gmail.com";
+        given().obtainTokenFromKeycloak(ADMIN, ADMIN_PASSWORD).createNewUserAsAdmin(newUserLogin, newUserEmail, BRANCH);
+
+        // Delete the user and verify if the user is deleted
+        when().deleteUser();
+        then().getAllUsers().body(conc -> assertThat(!conc.equals(newUserLogin)));
     }
 
 }
