@@ -162,13 +162,13 @@ public class UserManagementIT extends BaseContainersTest<ManagementStage, Manage
 
     @Test
 // Test for checking if a user is being deleted successfully.
-    public void deletedUser(){
+    public void TestdeleteUserAsTPP(){
         String newUserLogin = "examplein";
         String newUserEmail = "exampple@gmail.com";
         given().obtainTokenFromKeycloak(ADMIN, ADMIN_PASSWORD).createNewUserAsAdmin(newUserLogin, newUserEmail, BRANCH);
 
         // Delete the user and verify if the user is deleted
-        when().deleteUser();
+        when().deleteTPPUser();
         then().getAllUsers().body(conc -> assertThat(!conc.equals(newUserLogin)));
     }
 
