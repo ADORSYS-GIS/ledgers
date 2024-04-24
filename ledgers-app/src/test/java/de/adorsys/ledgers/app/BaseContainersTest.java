@@ -1,13 +1,24 @@
 /*
- * Copyright (c) 2018-2024 adorsys GmbH and Co. KG
- * All rights are reserved.
+ * Copyright 2018-2024 adorsys GmbH & Co KG
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or (at
+ * your option) any later version. This program is distributed in the hope that
+ * it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://www.gnu.org/licenses/.
+ *
+ * This project is also available under a separate commercial license. You can
+ * contact us at sales@adorsys.com.
  */
 
 package de.adorsys.ledgers.app;
 
 import com.google.common.io.Resources;
-import com.tngtech.jgiven.integration.spring.EnableJGiven;
-import com.tngtech.jgiven.integration.spring.junit5.SpringScenarioTest;
 import de.adorsys.ledgers.keycloak.client.KeycloakClientConfiguration;
 import io.restassured.RestAssured;
 import io.restassured.path.json.config.JsonPathConfig;
@@ -28,10 +39,9 @@ import java.util.List;
 import java.util.Map;
 import static java.lang.String.format;
 
-@SuppressWarnings({"PMD.TestClassWithoutTestCases", "rawtypes"})
+@SuppressWarnings("rawtypes")
 @Import(KeycloakClientConfiguration.class)
-@EnableJGiven
-public class BaseContainersTest<G, W, T> extends SpringScenarioTest<G, W, T> {
+public class BaseContainersTest<G, W, T> extends AbstractContainerDatabaseTest<G, W, T> {
 
     protected static List<GenericContainer> containers;
 
@@ -112,5 +122,9 @@ public class BaseContainersTest<G, W, T> extends SpringScenarioTest<G, W, T> {
                                .withExposedPorts(8080);
         keycloak.start();
         return keycloak;
+    }
+
+    protected void clearData() {
+        performQuery(postgreSQLContainer, resource("db/scripts/clear-data.sql"));
     }
 }

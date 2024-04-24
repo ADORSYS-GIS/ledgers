@@ -8,9 +8,9 @@ package de.adorsys.ledgers.app.integration;
 import de.adorsys.ledgers.app.BaseContainersTest;
 import de.adorsys.ledgers.app.LedgersApplication;
 import de.adorsys.ledgers.app.TestDBConfiguration;
-import de.adorsys.ledgers.app.it_stages.ManagementStage;
-import de.adorsys.ledgers.app.it_stages.StatusStage;
-import de.adorsys.ledgers.app.it_stages.OperationStage;
+import de.adorsys.ledgers.app.it_endpoints.ManagementStage;
+import de.adorsys.ledgers.app.it_endpoints.StatusStage;
+import de.adorsys.ledgers.app.it_endpoints.OperationStage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,16 +18,8 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 import java.util.List;
-
-import static de.adorsys.ledgers.app.Const.ADMIN_LOGIN;
-import static de.adorsys.ledgers.app.Const.ADMIN_PASSWORD;
-import static de.adorsys.ledgers.app.Const.CHALLENGE_VALUE;
-import static de.adorsys.ledgers.app.Const.PSU_EMAIL_NEW;
-import static de.adorsys.ledgers.app.Const.PSU_LOGIN;
-import static de.adorsys.ledgers.app.Const.PSU_LOGIN_NEW;
-import static de.adorsys.ledgers.app.Const.PSU_PASSWORD;
+import static de.adorsys.ledgers.app.integration.UserManagementIT.ADMIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles({"testcontainers-it", "sandbox"})
@@ -36,10 +28,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ContextConfiguration(classes = {TestDBConfiguration.class},
         initializers = { PaymentIT.Initializer.class })
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-class PaymentIT extends BaseContainersTest<ManagementStage, OperationStage, StatusStage> {
-    public static final List<String> BULK_PAYMENT_CREDITORS_IBAN = List.of("DE38760700240320465700", "DE80760700240271232400");
+public class PaymentIT extends BaseContainersTest<ManagementStage, OperationStage, StatusStage> {
+    public static final String PSU_LOGIN = "anton.brueckner";
+    public static final String PSU_LOGIN_NEW = "newuser12345";
+    public static final String PSU_EMAIL_NEW = "newuser12345@mail.de";
+    public static final String PSU_PASSWORD = "12345";
+    public static final String CHALLENGE_VALUE = "123456";
+    public static final String ADMIN_LOGIN = "admin";
+    public static final String ADMIN_PASSWORD = "admin123";
+    public static final String SINGLE_PAYMENT_TYPE = "SINGLE";
     public static final String BULK_PAYMENT_TYPE = "BULK";
-    private static final String FINALISED_STATUS = "finalised";
+    public static final List<String> BULK_PAYMENT_CREDITORS_IBAN = List.of("DE38760700240320465700", "DE80760700240271232400");
+
 
     @Test
     void testCreateSinglePayment() {
@@ -100,28 +100,12 @@ class PaymentIT extends BaseContainersTest<ManagementStage, OperationStage, Stat
                 .listScaMethods()
                 .selectScaMethod("SMTP_OTP")
                 .reportChallengeValue(CHALLENGE_VALUE)
-                .getStatus().pathStr("scaStatus", stat -> assertThat(stat).isEqualTo(FINALISED_STATUS));
+                .getStatus().pathStr("scaStatus", stat -> assertThat(stat).isEqualTo("finalised"));
 
         then()
                 .paymentStatus().pathStr("transactionStatus", status -> assertThat(status).isEqualTo("ACCP"));
     }
 
-    @Test
-    void blockUserAndFailedPayment() {
-        given()
-                .obtainTokenFromKeycloak(ADMIN_LOGIN, ADMIN_PASSWORD)
-                .getUserIdByLogin(PSU_LOGIN)
-                .changeStatusUser()
-                .getAllUsers()
-                .path("findAll { o -> o.login.equals(\"" + PSU_LOGIN + "\") }[0].blocked", blocked -> assertThat(blocked).isEqualTo(true))
-                .obtainTokenFromKeycloak(PSU_LOGIN, PSU_PASSWORD);
-
-        when()
-                .failedSinglePayment("payment.json", "DE80760700240271232400");
-
-        then()
-                .pathStr("devMessage", message -> assertThat(message).isEqualTo("Access Denied! You're trying to access resources you have no permission for."));
-    }
     @Test
     void testCreateNewUserAndCreateBulkPayment() {
         String newIban = "DE62500105174439235992";
@@ -150,6 +134,25 @@ class PaymentIT extends BaseContainersTest<ManagementStage, OperationStage, Stat
                     assertThat(paymentTarget.size()).isEqualTo(2);
                     assertThat(paymentTarget).containsAll(BULK_PAYMENT_CREDITORS_IBAN);
                 });
+    }
+
+
+    @Test
+    void blockUserAndFailedPayment() {
+        given()
+                .obtainTokenFromKeycloak(ADMIN, ADMIN_PASSWORD)
+                .getUserIdByLogin(PSU_LOGIN)
+                .changeStatusUser()
+                .getAllUsers()
+                .path("findAll { o -> o.login.equals(\"" + PSU_LOGIN + "\") }[0].blocked", blocked -> assertThat(blocked).isEqualTo(true))
+                .obtainTokenFromKeycloak(PSU_LOGIN, PSU_PASSWORD);
+
+        when()
+                .failedSinglePayment("payment.json", "DE80760700240271232400");
+
+
+        then()
+                .pathStr("devMessage", message -> assertThat(message).isEqualTo("Access Denied! You're trying to access resources you have no permission for."));
     }
 
 }
