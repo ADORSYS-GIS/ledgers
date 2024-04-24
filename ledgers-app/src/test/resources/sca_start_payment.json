@@ -1,0 +1,6 @@
+{
+  "oprId": "%OPERATION_OBJECT_ID%",
+  "externalId": null,
+  "authorisationId": "%AUTHORISATION_ID%",
+  "opType": "PAYMENT"
+}

@@ -212,11 +212,12 @@ public class MiddlewareUserManagementServiceImpl implements MiddlewareUserManage
     @Override
     public void editBasicSelf(String userId, UserTO user) {
         UserBO storedUser = userService.findById(userId);
+        String oldLogin = storedUser.getLogin();
         storedUser.setLogin(user.getLogin());
         storedUser.setEmail(user.getEmail());
         storedUser.setPin(user.getPin());
         userService.updateUser(storedUser);
-        dataService.updateUser(keycloakUserMapper.toKeycloakUser(storedUser), storedUser.getLogin());
+        dataService.updateUser(keycloakUserMapper.toKeycloakUser(storedUser), oldLogin);
         updatePasswordByLogin(storedUser.getLogin(), user.getPin());
     }
 
