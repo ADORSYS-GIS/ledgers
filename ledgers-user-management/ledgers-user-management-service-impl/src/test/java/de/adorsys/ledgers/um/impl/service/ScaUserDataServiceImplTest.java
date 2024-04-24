@@ -127,7 +127,7 @@ class ScaUserDataServiceImplTest {
         try {
             return reader.getObjectFromResource(getClass(), "sca-user-data.yml", ScaUserDataBO.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //NOPMD
         }
         return null;
     }
@@ -136,7 +136,7 @@ class ScaUserDataServiceImplTest {
         try {
             return reader.getObjectFromResource(getClass(), "sca-user-data.yml", ScaUserDataEntity.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //NOPMD
         }
         return null;
     }

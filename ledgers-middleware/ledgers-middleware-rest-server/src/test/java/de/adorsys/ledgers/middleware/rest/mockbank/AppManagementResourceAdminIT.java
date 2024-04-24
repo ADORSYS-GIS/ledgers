@@ -39,8 +39,8 @@ import org.springframework.web.context.annotation.RequestScope;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 
@@ -53,6 +53,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 class AppManagementResourceAdminIT {
 
     private MockMvc mockMvc;
+
+    @Autowired
+    private WebApplicationContext wac;
 
     @Configuration
     static class ContextConfiguration {
@@ -90,9 +93,6 @@ class AppManagementResourceAdminIT {
         }
     }
 
-    @Autowired
-    private WebApplicationContext wac;
-
     @BeforeEach
     void before() {
         this.mockMvc = MockMvcBuilders
@@ -107,12 +107,12 @@ class AppManagementResourceAdminIT {
 
         // Then
         assertNotNull(servletContext);
-        assertTrue(servletContext instanceof MockServletContext);
+        assertInstanceOf(MockServletContext.class, servletContext);
         assertNotNull(wac.getBean(AppMgmtResource.class));
     }
 
     @Test
-    void givenPingURI_whenMockMVC_thenReturnsPong() throws Exception {
+    void givenPingURI_whenMockMVC_thenReturnsPong() throws Exception {  //NOPMD
         // When
         this.mockMvc.perform(
                         MockMvcRequestBuilders.get("/management/app/ping"))

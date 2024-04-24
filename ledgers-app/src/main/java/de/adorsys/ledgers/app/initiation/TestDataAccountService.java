@@ -32,6 +32,7 @@ import java.util.function.Predicate;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@SuppressWarnings("PMD.TestClassWithoutTestCases")
 public class TestDataAccountService {
     private final MockbankInitData mockbankInitData;
     private final DepositAccountService depositAccountService;

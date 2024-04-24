@@ -26,6 +26,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@SuppressWarnings("CPD-START")
 class PaymentAccountValidatorTest {
     private static final String ID = "ID";
     private static final String IBAN = "IBAN";

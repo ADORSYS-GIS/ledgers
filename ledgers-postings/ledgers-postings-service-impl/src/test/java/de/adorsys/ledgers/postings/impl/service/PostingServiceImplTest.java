@@ -33,6 +33,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@SuppressWarnings("CPD-START")
 class PostingServiceImplTest {
     private static final String LEDGER_ID = "Ledger Id";
     private static final LocalDateTime DATE_TIME = LocalDateTime.now();
@@ -184,7 +185,7 @@ class PostingServiceImplTest {
         try {
             return YamlReader.getInstance().getObjectFromResource(PostingServiceImpl.class, fileName, aClass);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //NOPMD
         }
         return null;
     }

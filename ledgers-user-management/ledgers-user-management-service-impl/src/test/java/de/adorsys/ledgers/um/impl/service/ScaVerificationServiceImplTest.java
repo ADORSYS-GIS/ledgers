@@ -162,7 +162,7 @@ class ScaVerificationServiceImplTest {
         try {
             return reader.getObjectFromResource(getClass(), "email-verification.yml", EmailVerificationEntity.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //NOPMD
         }
         return null;
     }
@@ -171,7 +171,7 @@ class ScaVerificationServiceImplTest {
         try {
             return reader.getObjectFromResource(getClass(), "email-verification.yml", EmailVerificationBO.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //NOPMD
         }
         return null;
     }

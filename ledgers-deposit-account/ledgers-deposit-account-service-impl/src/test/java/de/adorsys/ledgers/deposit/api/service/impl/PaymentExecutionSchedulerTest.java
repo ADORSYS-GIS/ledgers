@@ -47,9 +47,9 @@ class PaymentExecutionSchedulerTest {
         when(paymentRepository.getAllDuePayments())
                 .thenReturn(Collections.singletonList(singlePayment));
         when(accountRepository.findById(ACCOUNT_ID))
-                .thenReturn(java.util.Optional.of(getDepositAccount()));
+                .thenReturn(Optional.of(getDepositAccount()));
         when(accountRepository.findByIbanAndCurrency(IBAN, "EUR"))
-                .thenReturn(java.util.Optional.of(getDepositAccount()));
+                .thenReturn(Optional.of(getDepositAccount()));
 
         // When
         paymentExecutionScheduler.scheduler();
@@ -68,7 +68,7 @@ class PaymentExecutionSchedulerTest {
         blockedAccount.setBlocked(true);
 
         when(accountRepository.findById(ACCOUNT_ID))
-                .thenReturn(java.util.Optional.of(blockedAccount));
+                .thenReturn(Optional.of(blockedAccount));
 
         // When
         paymentExecutionScheduler.scheduler();
@@ -84,7 +84,7 @@ class PaymentExecutionSchedulerTest {
         when(paymentRepository.getAllDuePayments())
                 .thenReturn(Collections.singletonList(singlePayment));
         when(accountRepository.findById(anyString()))
-                .thenReturn(java.util.Optional.of(getDepositAccount()));
+                .thenReturn(Optional.of(getDepositAccount()));
 
         DepositAccount blockedAccount = getDepositAccount();
         blockedAccount.setBlocked(true);
@@ -116,7 +116,7 @@ class PaymentExecutionSchedulerTest {
         try {
             return YamlReader.getInstance().getObjectFromResource(DepositAccountPaymentServiceImpl.class, file, t);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //NOPMD
             throw new IllegalStateException("Resource file not found", e);
         }
     }

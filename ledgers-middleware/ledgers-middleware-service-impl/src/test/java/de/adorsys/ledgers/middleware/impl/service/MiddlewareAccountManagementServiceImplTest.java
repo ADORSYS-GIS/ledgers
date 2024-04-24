@@ -52,6 +52,7 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@SuppressWarnings({"PMD.CouplingBetweenObjects", "PMD.TooManyMethods", "CPD-START"})
 class MiddlewareAccountManagementServiceImplTest {
     private static final String WRONG_ID = "wrong id";
     private static final String ACCOUNT_ID = "id";
@@ -71,7 +72,6 @@ class MiddlewareAccountManagementServiceImplTest {
 
     @InjectMocks
     private MiddlewareAccountManagementServiceImpl middlewareService;
-
     @Mock
     private UserMapper userMapper;
     @Mock
@@ -542,11 +542,6 @@ class MiddlewareAccountManagementServiceImplTest {
         return new CustomPageableImpl(1, 5);
     }
 
-    private UserBO getUserBO() {
-        UserBO user = buildUserBO();
-        user.getAccountAccesses().get(0).setAccountId(ACCOUNT_ID);
-        return user;
-    }
 
     private AisConsentBO getAisConsentBO() {
         return new AisConsentBO("id", "userId", "tppId", 4, new AisAccountAccessInfoBO(), LocalDate.now().plusDays(5), false);
@@ -583,7 +578,7 @@ class MiddlewareAccountManagementServiceImplTest {
         try {
             return MAPPER.readValue(PaymentConverter.class.getResourceAsStream(fileName), aClass);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //NOPMD
         }
         return null;
     }

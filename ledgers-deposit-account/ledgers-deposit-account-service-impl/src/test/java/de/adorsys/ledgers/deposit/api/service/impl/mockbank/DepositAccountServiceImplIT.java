@@ -16,6 +16,7 @@ import de.adorsys.ledgers.postings.api.domain.PostingBO;
 import de.adorsys.ledgers.postings.api.service.AccountStmtService;
 import de.adorsys.ledgers.postings.api.service.LedgerService;
 import de.adorsys.ledgers.postings.api.service.PostingService;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,6 +41,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 @SpringBootTest(classes = DepositAccountServiceApplication.class)
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
         TransactionalTestExecutionListener.class})
+@Slf4j
 class DepositAccountServiceImplIT {
 
     @Autowired
@@ -67,10 +69,10 @@ class DepositAccountServiceImplIT {
     void use_case_newbank_no_overriden_tx_nok() throws IOException {
         loadPosting("use_case_newbank_no_overriden_tx.yml");
 
-        LocalDateTime dateTime = LocalDateTime.of(2018, Month.JANUARY, 01, 23, 59);
-        checkBalance("1104", dateTime, new BigDecimal(4200000.00));
-        checkBalance("3001", dateTime, new BigDecimal(-4200000.00));
-        checkWrongBalance("1104", dateTime, new BigDecimal(0.00));
+        LocalDateTime dateTime = LocalDateTime.of(2018, Month.JANUARY, 1, 23, 59);
+        checkBalance("1104", dateTime, new BigDecimal("4200000.00"));
+        checkBalance("3001", dateTime, BigDecimal.valueOf(-4200000.00));
+        checkWrongBalance("1104", dateTime, new BigDecimal("0.00"));
     }
 
     /**
@@ -80,32 +82,32 @@ class DepositAccountServiceImplIT {
     void use_case_newbank_no_overriden_tx_ok() throws IOException {
         loadPosting("use_case_newbank_no_overriden_tx.yml");
 
-        LocalDateTime dateTime = LocalDateTime.of(2018, Month.JANUARY, 01, 8, 30);
-        checkBalance("1104", dateTime, new BigDecimal(0.00));
-        checkBalance("3001", dateTime, new BigDecimal(0.00));
-        dateTime = LocalDateTime.of(2018, Month.JANUARY, 01, 23, 59);
-        checkBalance("1104", dateTime, new BigDecimal(4200000.00));
-        checkBalance("3001", dateTime, new BigDecimal(-4200000.00));
+        LocalDateTime dateTime = LocalDateTime.of(2018, Month.JANUARY, 1, 8, 30);
+        checkBalance("1104", dateTime, new BigDecimal("0.00"));
+        checkBalance("3001", dateTime, new BigDecimal("0.00"));
+        dateTime = LocalDateTime.of(2018, Month.JANUARY, 1, 23, 59);
+        checkBalance("1104", dateTime, new BigDecimal("4200000.00"));
+        checkBalance("3001", dateTime, BigDecimal.valueOf(-4200000.00));
 
-        dateTime = LocalDateTime.of(2018, Month.JANUARY, 02, 23, 59);
-        checkBalance("11240", dateTime, new BigDecimal(2000000.00));
-        checkBalance("1104", dateTime, new BigDecimal(2200000.00));
+        dateTime = LocalDateTime.of(2018, Month.JANUARY, 2, 23, 59);
+        checkBalance("11240", dateTime, new BigDecimal("2000000.00"));
+        checkBalance("1104", dateTime, new BigDecimal("2200000.00"));
 
-        dateTime = LocalDateTime.of(2018, Month.JANUARY, 03, 23, 59);
-        checkBalance("11240", dateTime, new BigDecimal(1835600.00));
-        checkBalance("1810", dateTime, new BigDecimal(14400.00));
-        checkBalance("1001", dateTime, new BigDecimal(150000.00));
+        dateTime = LocalDateTime.of(2018, Month.JANUARY, 3, 23, 59);
+        checkBalance("11240", dateTime, new BigDecimal("1835600.00"));
+        checkBalance("1810", dateTime, new BigDecimal("14400.00"));
+        checkBalance("1001", dateTime, new BigDecimal("150000.00"));
 
         dateTime = LocalDateTime.of(2018, Month.JANUARY, 8, 23, 59);
-        checkBalance("11240", dateTime, new BigDecimal(1803600.00));
-        checkBalance("5057", dateTime, new BigDecimal(32000.00));
+        checkBalance("11240", dateTime, new BigDecimal("1803600.00"));
+        checkBalance("5057", dateTime, new BigDecimal("32000.00"));
 
         dateTime = LocalDateTime.of(2018, Month.JANUARY, 12, 23, 59);
-        checkBalance("1001", dateTime, new BigDecimal(156500.00));
-        checkBalance("DE69760700240340283600", dateTime, new BigDecimal(-1500.00));
-        checkBalance("1006", dateTime, new BigDecimal(3500.00));
-        checkBalance("DE80760700240271232400", dateTime, new BigDecimal(-3500.00));
-        checkBalance("DE38760700240320465700", dateTime, new BigDecimal(-5000.00));
+        checkBalance("1001", dateTime, new BigDecimal("156500.00"));
+        checkBalance("DE69760700240340283600", dateTime, BigDecimal.valueOf(-1500.00));
+        checkBalance("1006", dateTime, new BigDecimal("3500.00"));
+        checkBalance("DE80760700240271232400", dateTime, BigDecimal.valueOf(-3500.00));
+        checkBalance("DE38760700240320465700", dateTime, BigDecimal.valueOf(-5000.00));
     }
 
     @Test
@@ -141,7 +143,8 @@ class DepositAccountServiceImplIT {
             try {
                 postingService.newPosting(p);
             } catch (Exception e) {
-                System.out.println("error adding posting");
+                log.error(e.getMessage());
+                log.error("Error adding posting in test");
             }
         }
     }

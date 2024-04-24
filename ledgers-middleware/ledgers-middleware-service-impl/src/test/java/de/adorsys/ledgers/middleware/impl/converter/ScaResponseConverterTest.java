@@ -35,6 +35,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@SuppressWarnings("CPD-START")
 class ScaResponseConverterTest {
 
     private static final String PSU_MESSAGE = "Message from core-banking to PSU";

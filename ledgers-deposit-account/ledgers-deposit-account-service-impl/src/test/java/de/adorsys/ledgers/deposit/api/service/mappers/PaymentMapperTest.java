@@ -160,7 +160,7 @@ class PaymentMapperTest {
         try {
             return YamlReader.getInstance().getObjectFromResource(DepositAccountServiceImpl.class, fileName, t);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //NOPMD
             throw new IllegalStateException("Resource file not found", e);
         }
     }

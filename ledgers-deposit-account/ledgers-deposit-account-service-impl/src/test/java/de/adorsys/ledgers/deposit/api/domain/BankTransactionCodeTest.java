@@ -42,6 +42,6 @@ class BankTransactionCodeTest {
 
     private void assertion(String product) {
         String result = BankTransactionCode.getByPaymentProduct(product);
-        assertSame(result, (productVsCode.get(product)));
+        assertSame(result, productVsCode.get(product));
     }
 }

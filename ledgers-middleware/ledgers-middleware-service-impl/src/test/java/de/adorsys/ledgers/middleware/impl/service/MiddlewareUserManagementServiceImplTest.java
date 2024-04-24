@@ -48,6 +48,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@SuppressWarnings("PMD.TooManyMethods")
 class MiddlewareUserManagementServiceImplTest {
     private static final String USER_ID = "SomeUniqueID";
     private static final String BRANCH_ID = "Nuremberg";
@@ -467,7 +468,7 @@ class MiddlewareUserManagementServiceImplTest {
         try {
             return YamlReader.getInstance().getObjectFromResource(MiddlewareUserManagementServiceImplTest.class, fileName, aClass);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //NOPMD
         }
         return null;
     }

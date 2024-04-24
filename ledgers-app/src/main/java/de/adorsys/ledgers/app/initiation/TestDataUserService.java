@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@SuppressWarnings("PMD.TestClassWithoutTestCases")
 public class TestDataUserService {
     private final MockbankInitData mockbankInitData;
     private final UserService userService;

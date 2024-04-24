@@ -40,7 +40,7 @@ class PaymentSyntacticalValidatorTest {
         assertDoesNotThrow(() -> service.check(testPmt, null));
     }
 
-    private void test(PaymentBO payment, boolean valid, boolean allowed) {
+    private void test(PaymentBO payment, boolean valid, boolean allowed) {  // NOPMD
         assertEquals(!valid, PaymentFieldValidator.isInvalidRequestedExecutionDateTime(payment, allowed));
     }
 
@@ -52,11 +52,11 @@ class PaymentSyntacticalValidatorTest {
         assertDoesNotThrow(() -> service.check(testPmt, null));
     }
 
-    void tst(PaymentBO payment, boolean allowedPastDates, boolean valid) {
+    void tst(PaymentBO payment, boolean allowedPastDates, boolean valid) { //NOPMD
         assertEquals(valid, !PaymentFieldValidator.isInvalidStartDate(payment, allowedPastDates));
     }
 
-    void tst(PaymentBO payment, boolean valid) {
+    void tst(PaymentBO payment, boolean valid) { //NOPMD
         assertEquals(valid, !PaymentFieldValidator.isInvalidEndDate(payment));
     }
 

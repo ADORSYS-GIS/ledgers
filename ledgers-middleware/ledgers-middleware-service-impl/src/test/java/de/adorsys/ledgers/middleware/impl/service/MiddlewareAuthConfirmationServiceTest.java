@@ -25,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@SuppressWarnings("CPD-START")
 class MiddlewareAuthConfirmationServiceTest {
     private static final String AUTH_ID = "auth_id";
     private static final String USER_LOGIN = "user_login";
