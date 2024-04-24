@@ -128,7 +128,7 @@ class UserManagementIT extends BaseContainersTest<ManagementStage, ManagementSta
 
         // Act: Perform API calls to create a new TPP
         given()
-                .obtainTokenFromKeycloak(ADMIN, ADMIN_PASSWORD)
+                .obtainTokenFromKeycloak(ADMIN_LOGIN, ADMIN_PASSWORD)
                 .createNewTppAsAdmin(newTppLogin, newTppEmail, BRANCH);
 
         // Arrange: Create a new admin user
@@ -137,7 +137,7 @@ class UserManagementIT extends BaseContainersTest<ManagementStage, ManagementSta
 
         // Act: Perform API calls to create a new admin user
         given()
-                .obtainTokenFromKeycloak(ADMIN, ADMIN_PASSWORD)
+                .obtainTokenFromKeycloak(ADMIN_LOGIN, ADMIN_PASSWORD)
                 .createNewUserAsAdmin(newAdminLogin, newAdminEmail, BRANCH);
 
         // Assert: Verify that the new admin user is created correctly
