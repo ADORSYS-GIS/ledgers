@@ -44,6 +44,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Slf4j
+@SuppressWarnings("CPD-START")
 class PaymentTOMapperTest {
     private static final ObjectMapper STATIC_MAPPER = new ObjectMapper()
                                                               .findAndRegisterModules()
@@ -153,7 +154,7 @@ class PaymentTOMapperTest {
         String payment = readPayment("xs2aBulkList.xml");
         PaymentTO result = mapper.toAbstractPayment(payment, "BULK", "sepa-credit-transfers-xml");
         assertThat(result).isEqualToComparingFieldByFieldRecursively(readPaymentTO("BulkPaymentTO.json"));*/
-        assertTrue(true);
+        assertTrue(true); //NOPMD
         //TODO not implemented yet!  see task : https://git.adorsys.de/adorsys/xs2a/psd2-dynamic-sandbox/issues/589
     }
 

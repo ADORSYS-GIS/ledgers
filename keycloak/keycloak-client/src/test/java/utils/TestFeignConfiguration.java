@@ -11,5 +11,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableFeignClients(basePackageClasses = {KeycloakTokenRestClient.class})
+@SuppressWarnings("PMD.TestClassWithoutTestCases")
 public class TestFeignConfiguration {
 }

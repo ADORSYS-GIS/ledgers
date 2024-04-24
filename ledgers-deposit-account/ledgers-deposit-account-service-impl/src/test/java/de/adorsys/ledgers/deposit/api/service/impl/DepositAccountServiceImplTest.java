@@ -55,6 +55,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@SuppressWarnings("PMD.TooManyMethods")
 class DepositAccountServiceImplTest {
     private static final String ACCOUNT_ID = "ACCOUNT_ID";
     private static final String POSTING_ID = "posting_ID";
@@ -427,7 +428,7 @@ class DepositAccountServiceImplTest {
         try {
             return YamlReader.getInstance().getObjectFromResource(DepositAccountPaymentServiceImpl.class, file, t);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //NOPMD
             throw new IllegalStateException("Resource file not found", e);
         }
     }

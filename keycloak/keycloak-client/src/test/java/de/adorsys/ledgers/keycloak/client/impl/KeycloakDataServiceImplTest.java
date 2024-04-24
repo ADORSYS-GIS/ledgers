@@ -35,6 +35,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@SuppressWarnings("CPD-START")
 class KeycloakDataServiceImplTest {
 
     @InjectMocks
@@ -83,7 +84,6 @@ class KeycloakDataServiceImplTest {
 
     @Test
     void clientExists_nf() {
-        RealmResource realmResource = mock(RealmResource.class);
         when(keycloak.realm(any())).thenThrow(NotFoundException.class);
 
         boolean exists = service.clientExists();
@@ -153,7 +153,6 @@ class KeycloakDataServiceImplTest {
         when(keycloak.realm(any())).thenReturn(realmResource);
         UsersResource usersResource = mock(UsersResource.class);
         when(realmResource.users()).thenReturn(usersResource);
-        UserResource userResource = mock(UserResource.class);
         when(usersResource.search(any(), eq(true))).thenReturn(Collections.singletonList(new UserRepresentation()));
 
         boolean exists = service.userExists("login");

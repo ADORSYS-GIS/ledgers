@@ -58,6 +58,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@SuppressWarnings({"PMD.TooManyMethods", "CPD-START"})
 class SCAOperationServiceImplTest {
 
     private static final String SCA_USER_DATA_ID = "sca_user_data_id";
@@ -743,7 +744,6 @@ class SCAOperationServiceImplTest {
 
     private void callGenerateAuthCode(boolean usesStaticTan, boolean staticTanPresent, boolean methodIdPresent, boolean methodIsPresent, boolean methodSupported) {
         String email = "spe@adorsys.com.ua";
-        ArgumentCaptor<SCAOperationEntity> captor = ArgumentCaptor.forClass(SCAOperationEntity.class);
         UserBO userBO = mock(UserBO.class);
         ScaUserDataBO method = new ScaUserDataBO(methodSupported ? ScaMethodTypeBO.SMTP_OTP : ScaMethodTypeBO.APP_OTP, email);
         method.setId(SCA_USER_DATA_ID);

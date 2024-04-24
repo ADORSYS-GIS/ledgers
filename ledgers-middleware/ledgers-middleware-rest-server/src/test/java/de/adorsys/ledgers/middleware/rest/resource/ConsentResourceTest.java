@@ -33,6 +33,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
+@SuppressWarnings("PMD.SignatureDeclareThrowsException")
 class ConsentResourceTest {
 
     private static final String CONSENT_ID = "consent-id";

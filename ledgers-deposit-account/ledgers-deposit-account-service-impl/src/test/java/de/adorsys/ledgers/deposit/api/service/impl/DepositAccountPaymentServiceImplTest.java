@@ -37,6 +37,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@SuppressWarnings("PMD.TooManyMethods")
 class DepositAccountPaymentServiceImplTest {
     private static final String PAYMENT_ID = "myPaymentId";
     private static final String WRONG_PAYMENT_ID = "wrongId";
@@ -293,7 +294,7 @@ class DepositAccountPaymentServiceImplTest {
         try {
             return objectMapper.writeValueAsBytes(remittanceUnstructuredList);
         } catch (JsonProcessingException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(); //NOPMD
             throw new IllegalStateException("Resource file not found", ex);
         }
     }
@@ -302,7 +303,7 @@ class DepositAccountPaymentServiceImplTest {
         try {
             return Files.readAllBytes(Path.of("src/test/resources/de/adorsys/ledgers/deposit/api/service/impl/RemittanceInfoStructured.yml"));
         } catch (IOException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(); //NOPMD
             throw new IllegalStateException("Resource file not found", ex);
         }
     }
@@ -327,7 +328,7 @@ class DepositAccountPaymentServiceImplTest {
         try {
             return YamlReader.getInstance().getObjectFromResource(DepositAccountPaymentServiceImpl.class, file, t);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //NOPMD
             throw new IllegalStateException("Resource file not found", e);
         }
     }

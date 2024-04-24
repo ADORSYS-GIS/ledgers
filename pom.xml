@@ -530,6 +530,7 @@
                     <rulesets>
                         <ruleset>${ruleset.basedir}/qa/pmd/pmd-ruleset.xml</ruleset>
                     </rulesets>
+                    <includeTests>true</includeTests>
                     <failOnViolation>true</failOnViolation>
                     <printFailingErrors>true</printFailingErrors>
                     <excludes>

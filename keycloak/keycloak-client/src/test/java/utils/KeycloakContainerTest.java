@@ -15,7 +15,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-@SuppressWarnings("java:S2187")
+@SuppressWarnings({"java:S2187", "PMD.TestClassWithoutTestCases"})
 @Testcontainers
 public class KeycloakContainerTest {
 
@@ -26,6 +26,7 @@ public class KeycloakContainerTest {
                                                                       .withEnv("DB_VENDOR", "h2");
 
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+        @Override
         public void initialize(@NotNull ConfigurableApplicationContext configurableApplicationContext) {
             if (!keycloakContainer.isRunning()) {
                 keycloakContainer.start();

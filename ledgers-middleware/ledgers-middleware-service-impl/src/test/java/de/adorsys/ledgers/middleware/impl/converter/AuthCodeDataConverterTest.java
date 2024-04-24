@@ -37,7 +37,7 @@ class AuthCodeDataConverterTest {
         try {
             return YamlReader.getInstance().getObjectFromInputStream(getClass().getResourceAsStream("auth-code-data.yml"), (Class<T>) AuthCodeDataTO.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //NOPMD
             throw new IllegalStateException("Resource file not found", e);
         }
     }

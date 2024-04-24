@@ -41,8 +41,9 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@SuppressWarnings("CPD-START")
 class PaymentExecutionServiceTest {
-    private static int PMT_ID = 0;
+    private static int PMT_ID = 0; //NOPMD
     private static final String IBAN = "DE1234567890";
     private static final Currency EUR = Currency.getInstance("EUR");
     private static final TransactionStatus STATUS_ACSC = TransactionStatus.ACSC;
@@ -50,7 +51,7 @@ class PaymentExecutionServiceTest {
     private static final TransactionStatus STATUS_ACSP = TransactionStatus.ACSP;
     private static final TransactionStatusBO STATUS_BO_ACSC = TransactionStatusBO.ACSC;
     private static final TransactionStatusBO STATUS_BO_ACCC = TransactionStatusBO.ACCC;
-    private static final TransactionStatusBO STATUS_BO_ACSP = TransactionStatusBO.ACSP;
+    private static final TransactionStatusBO STATUS_BO_ACSP = TransactionStatusBO.ACSP;  //NOPMD
     private static final TransactionStatusBO STATUS_BO_RJCT = TransactionStatusBO.RJCT;
 
     private static final String executionRulePreceding = "preceding";
@@ -249,12 +250,12 @@ class PaymentExecutionServiceTest {
         try {
             return YamlReader.getInstance().getObjectFromResource(DepositAccountPaymentServiceImpl.class, file, t);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //NOPMD
             throw new IllegalStateException("Resource file not found", e);
         }
     }
 
-    private PaymentBO getPaymentBO() {
+    private PaymentBO getPaymentBO() {  //NOPMD
         return new PaymentBO("pmt1", false, null,
                              null, SINGLE, "sepa-credit-transfers", null, null, null, null,
                              null, getReference(EUR), null, null, ACSP, getTargets(EUR, EUR, null), getDepositAccount().getId());

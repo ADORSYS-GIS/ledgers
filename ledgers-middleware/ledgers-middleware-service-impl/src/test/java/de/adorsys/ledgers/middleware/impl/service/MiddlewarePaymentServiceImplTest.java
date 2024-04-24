@@ -52,6 +52,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@SuppressWarnings("CPD-START")
 class MiddlewarePaymentServiceImplTest {
     private static final String PAYMENT_ID = "myPaymentId";
     private static final String SINGLE_BO = "PaymentSingle.yml";
@@ -156,7 +157,6 @@ class MiddlewarePaymentServiceImplTest {
     void initiatePayment() {
         // Given
         PaymentBO paymentBO = readYml(PaymentBO.class, SINGLE_BO);
-        DepositAccountBO account = getAccountBO(paymentBO);
 
         UserBO userBO = readYml(UserBO.class, "user1.yml");
         userBO.setScaUserData(Collections.emptyList());
@@ -164,7 +164,7 @@ class MiddlewarePaymentServiceImplTest {
         when(accessService.exchangeTokenStartSca(anyBoolean(), any())).thenReturn(new BearerTokenTO());
         when(scaResponseResolver.updatePaymentRelatedResponseFields(any(), any())).thenAnswer(i -> localResolver.updatePaymentRelatedResponseFields((SCAPaymentResponseTO) i.getArguments()[0], (PaymentBO) i.getArguments()[1]));
         when(paymentConverter.toPaymentBO(any(PaymentTO.class))).thenReturn(paymentBO);
-        when(paymentService.initiatePayment(paymentBO, TransactionStatusBO.ACTC)).thenReturn(paymentBO);
+        when(paymentService.initiatePayment(paymentBO, TransactionStatusBO.ACTC)).thenReturn(paymentBO); //NOPMD
 
         // When
         Object result = middlewareService.initiatePayment(SCA_INFO_TO, PAYMENT_TO);
@@ -177,7 +177,6 @@ class MiddlewarePaymentServiceImplTest {
     void initiatePayment_hasSca() {
         // Given
         PaymentBO paymentBO = readYml(PaymentBO.class, SINGLE_BO);
-        DepositAccountBO account = getAccountBO(paymentBO);
 
         UserBO userBO = readYml(UserBO.class, "user1.yml");
         when(scaUtils.userBO(USER_LOGIN)).thenReturn(userBO);
@@ -193,7 +192,7 @@ class MiddlewarePaymentServiceImplTest {
         assertNotNull(result);
     }
 
-    private DepositAccountBO getAccountBO(PaymentBO paymentBO) {
+    private DepositAccountBO getAccountBO(PaymentBO paymentBO) {  //NOPMD
         DepositAccountBO account = new DepositAccountBO();
         account.setId("");
         account.setIban(paymentBO.getDebtorAccount().getIban());
@@ -301,14 +300,14 @@ class MiddlewarePaymentServiceImplTest {
         List<PaymentTO> result = middlewareService.getPendingPeriodicPayments(SCA_INFO_TO);
 
         // Then
-        assertTrue(result.size() > 0);
+        assertFalse(result.isEmpty());
     }
 
     private static <T> T readYml(Class<T> aClass, String fileName) {
         try {
             return YamlReader.getInstance().getObjectFromResource(PaymentConverter.class, fileName, aClass);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //NOPMD
         }
         return null;
     }
@@ -328,7 +327,7 @@ class MiddlewarePaymentServiceImplTest {
         return info;
     }
 
-    private DepositAccountBO getAccount(Currency currency, boolean isBlocked) {
+    private DepositAccountBO getAccount(Currency currency, boolean isBlocked) {  //NOPMD
         return DepositAccountBO.builder()
                        .iban(IBAN)
                        .currency(currency)
