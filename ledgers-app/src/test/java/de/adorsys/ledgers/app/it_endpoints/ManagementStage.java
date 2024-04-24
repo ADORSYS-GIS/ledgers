@@ -31,7 +31,6 @@ public class ManagementStage extends BaseStage<ManagementStage> {
 
     public static final String UPLOAD_DATA = "/staff-access/data/upload";
     public static String DELETE_USER = "/staff-access/data/user/{userId}";
-    public static String DELETE_TPP_USER = "/staff-access/data/user/{userId}";
     public static final String USERS_RESOURCE_ADMIN = "/admin/user";
     public static final String USERS_RESOURCE_STAFF = "staff-access/users";
     public static final String GET_ALL_USERS = "/admin/users/all";
@@ -189,18 +188,6 @@ public class ManagementStage extends BaseStage<ManagementStage> {
         this.response = resp;
         this.userId = resp.path("id");
         return self();
-    }
-    public ManagementStage deleteTPPUser(){
-    var response = RestAssured.given()
-            .header(AUTHORIZATION, this.bearerToken)
-            .when()
-            .delete(DELETE_TPP_USER,    userId)
-            .then()
-            .statusCode(HttpStatus.OK.value())
-            .and()
-            .extract();
-    this.response = response;
-    return self();
     }
 
     public ManagementStage getUserIdByLogin(String login) {

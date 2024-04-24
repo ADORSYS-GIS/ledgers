@@ -4,6 +4,594 @@
   "scenarios": [
     {
       "className": "de.adorsys.ledgers.app.integration.UserManagementIT",
+      "testMethodName": "TestdeleteUser",
+      "description": "Testdelete user",
+      "tagIds": [],
+      "explicitParameters": [],
+      "derivedParameters": [],
+      "scenarioCases": [
+        {
+          "caseNr": 1,
+          "steps": [
+            {
+              "name": "obtain token from keycloak",
+              "words": [
+                {
+                  "value": "Given",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "obtain token from keycloak"
+                },
+                {
+                  "value": "admin",
+                  "argumentInfo": {
+                    "argumentName": "psuLogin",
+                    "formattedValue": "admin"
+                  }
+                },
+                {
+                  "value": "admin123",
+                  "argumentInfo": {
+                    "argumentName": "psuPassword",
+                    "formattedValue": "admin123"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 1187860056,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "create new user as admin",
+              "words": [
+                {
+                  "value": "create new user as admin"
+                },
+                {
+                  "value": "examplein",
+                  "argumentInfo": {
+                    "argumentName": "login",
+                    "formattedValue": "examplein"
+                  }
+                },
+                {
+                  "value": "exampple@gmail.com",
+                  "argumentInfo": {
+                    "argumentName": "email",
+                    "formattedValue": "exampple@gmail.com"
+                  }
+                },
+                {
+                  "value": "UA_735297",
+                  "argumentInfo": {
+                    "argumentName": "branch",
+                    "formattedValue": "UA_735297"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 149708241,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "delete user",
+              "words": [
+                {
+                  "value": "When",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "delete user"
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 212961890,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "get all users",
+              "words": [
+                {
+                  "value": "Then",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "get all users"
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 154654326,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "body",
+              "words": [
+                {
+                  "value": "body"
+                },
+                {
+                  "value": "de.adorsys.ledgers.app.integration.UserManagementIT$$Lambda$3488/0x00000008024db210@633f76a",
+                  "argumentInfo": {
+                    "argumentName": "bodyConsumer",
+                    "formattedValue": "de.adorsys.ledgers.app.integration.UserManagementIT$$Lambda$3488/0x00000008024db210@633f76a"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 149200897,
+              "depth": 0,
+              "parentFailed": false
+            }
+          ],
+          "explicitArguments": [],
+          "derivedArguments": [],
+          "status": "SUCCESS",
+          "durationInNanos": 1877731384
+        }
+      ],
+      "casesAsTable": false,
+      "durationInNanos": 1877731384
+    },
+    {
+      "className": "de.adorsys.ledgers.app.integration.UserManagementIT",
+      "testMethodName": "shouldCreateNewUserAndAdminUserSuccessfully",
+      "description": "Should create new user and admin user successfully",
+      "tagIds": [],
+      "explicitParameters": [],
+      "derivedParameters": [],
+      "scenarioCases": [
+        {
+          "caseNr": 1,
+          "steps": [
+            {
+              "name": "obtain token from keycloak",
+              "words": [
+                {
+                  "value": "Given",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "obtain token from keycloak"
+                },
+                {
+                  "value": "admin",
+                  "argumentInfo": {
+                    "argumentName": "psuLogin",
+                    "formattedValue": "admin"
+                  }
+                },
+                {
+                  "value": "admin123",
+                  "argumentInfo": {
+                    "argumentName": "psuPassword",
+                    "formattedValue": "admin123"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 59882459,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "create new tpp as admin",
+              "words": [
+                {
+                  "value": "create new tpp as admin"
+                },
+                {
+                  "value": "exampleInfinity",
+                  "argumentInfo": {
+                    "argumentName": "login",
+                    "formattedValue": "exampleInfinity"
+                  }
+                },
+                {
+                  "value": "exampple@gmail.com",
+                  "argumentInfo": {
+                    "argumentName": "email",
+                    "formattedValue": "exampple@gmail.com"
+                  }
+                },
+                {
+                  "value": "UA_735297",
+                  "argumentInfo": {
+                    "argumentName": "branch",
+                    "formattedValue": "UA_735297"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 105073642,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "obtain token from keycloak",
+              "words": [
+                {
+                  "value": "Given",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "obtain token from keycloak"
+                },
+                {
+                  "value": "admin",
+                  "argumentInfo": {
+                    "argumentName": "psuLogin",
+                    "formattedValue": "admin"
+                  }
+                },
+                {
+                  "value": "admin123",
+                  "argumentInfo": {
+                    "argumentName": "psuPassword",
+                    "formattedValue": "admin123"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 51604040,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "create new user as admin",
+              "words": [
+                {
+                  "value": "create new user as admin"
+                },
+                {
+                  "value": "newAdminUser",
+                  "argumentInfo": {
+                    "argumentName": "login",
+                    "formattedValue": "newAdminUser"
+                  }
+                },
+                {
+                  "value": "admin@email.com",
+                  "argumentInfo": {
+                    "argumentName": "email",
+                    "formattedValue": "admin@email.com"
+                  }
+                },
+                {
+                  "value": "UA_735297",
+                  "argumentInfo": {
+                    "argumentName": "branch",
+                    "formattedValue": "UA_735297"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 73828363,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "read user from db",
+              "words": [
+                {
+                  "value": "Then",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "read user from db"
+                },
+                {
+                  "value": "newAdminUser",
+                  "argumentInfo": {
+                    "argumentName": "userLogin",
+                    "formattedValue": "newAdminUser"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 13150847,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "verify user entity",
+              "words": [
+                {
+                  "value": "verify user entity"
+                },
+                {
+                  "value": "de.adorsys.ledgers.app.integration.UserManagementIT$$Lambda$3540/0x0000000802598ac8@20281cee",
+                  "argumentInfo": {
+                    "argumentName": "entityConsumer",
+                    "formattedValue": "de.adorsys.ledgers.app.integration.UserManagementIT$$Lambda$3540/0x0000000802598ac8@20281cee"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 404331,
+              "depth": 0,
+              "parentFailed": false
+            }
+          ],
+          "explicitArguments": [],
+          "derivedArguments": [],
+          "status": "SUCCESS",
+          "durationInNanos": 305025157
+        }
+      ],
+      "casesAsTable": false,
+      "durationInNanos": 305025157
+    },
+    {
+      "className": "de.adorsys.ledgers.app.integration.UserManagementIT",
+      "testMethodName": "addNewStaffUserAndDepositCash",
+      "description": "Add new staff user and deposit cash",
+      "tagIds": [],
+      "explicitParameters": [],
+      "derivedParameters": [],
+      "scenarioCases": [
+        {
+          "caseNr": 1,
+          "steps": [
+            {
+              "name": "obtain token from keycloak",
+              "words": [
+                {
+                  "value": "Given",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "obtain token from keycloak"
+                },
+                {
+                  "value": "admin",
+                  "argumentInfo": {
+                    "argumentName": "psuLogin",
+                    "formattedValue": "admin"
+                  }
+                },
+                {
+                  "value": "admin123",
+                  "argumentInfo": {
+                    "argumentName": "psuPassword",
+                    "formattedValue": "admin123"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 72618890,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "create new tpp as admin",
+              "words": [
+                {
+                  "value": "create new tpp as admin"
+                },
+                {
+                  "value": "newtpp",
+                  "argumentInfo": {
+                    "argumentName": "login",
+                    "formattedValue": "newtpp"
+                  }
+                },
+                {
+                  "value": "newtpp@mail.de",
+                  "argumentInfo": {
+                    "argumentName": "email",
+                    "formattedValue": "newtpp@mail.de"
+                  }
+                },
+                {
+                  "value": "UA_735297",
+                  "argumentInfo": {
+                    "argumentName": "branch",
+                    "formattedValue": "UA_735297"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 99304546,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "obtain token from keycloak",
+              "words": [
+                {
+                  "value": "Given",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "obtain token from keycloak"
+                },
+                {
+                  "value": "newtpp",
+                  "argumentInfo": {
+                    "argumentName": "psuLogin",
+                    "formattedValue": "newtpp"
+                  }
+                },
+                {
+                  "value": "11111",
+                  "argumentInfo": {
+                    "argumentName": "psuPassword",
+                    "formattedValue": "11111"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 70352405,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "create new user as staff",
+              "words": [
+                {
+                  "value": "create new user as staff"
+                },
+                {
+                  "value": "newcutomer",
+                  "argumentInfo": {
+                    "argumentName": "login",
+                    "formattedValue": "newcutomer"
+                  }
+                },
+                {
+                  "value": "newcutomer@mail.de",
+                  "argumentInfo": {
+                    "argumentName": "email",
+                    "formattedValue": "newcutomer@mail.de"
+                  }
+                },
+                {
+                  "value": "UA_735297",
+                  "argumentInfo": {
+                    "argumentName": "branch",
+                    "formattedValue": "UA_735297"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 84986067,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "create new account for user",
+              "words": [
+                {
+                  "value": "create new account for user"
+                },
+                {
+                  "value": "new_account.json",
+                  "argumentInfo": {
+                    "argumentName": "accountBodyResource",
+                    "formattedValue": "new_account.json"
+                  }
+                },
+                {
+                  "value": "UA379326228389769852388931161",
+                  "argumentInfo": {
+                    "argumentName": "iban",
+                    "formattedValue": "UA379326228389769852388931161"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 63966434,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "account by iban",
+              "words": [
+                {
+                  "value": "account by iban"
+                },
+                {
+                  "value": "UA379326228389769852388931161",
+                  "argumentInfo": {
+                    "argumentName": "iban",
+                    "formattedValue": "UA379326228389769852388931161"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 62499664,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "deposit cash",
+              "words": [
+                {
+                  "value": "When",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "deposit cash"
+                },
+                {
+                  "value": "deposit_amount.json",
+                  "argumentInfo": {
+                    "argumentName": "amountResource",
+                    "formattedValue": "deposit_amount.json"
+                  }
+                },
+                {
+                  "value": "10000.00",
+                  "argumentInfo": {
+                    "argumentName": "amount",
+                    "formattedValue": "10000.00"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 70624566,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "get account details",
+              "words": [
+                {
+                  "value": "Then",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "get account details"
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 37911636,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "path",
+              "words": [
+                {
+                  "value": "path"
+                },
+                {
+                  "value": "balances.amount.amount[0]",
+                  "argumentInfo": {
+                    "argumentName": "path",
+                    "formattedValue": "balances.amount.amount[0]"
+                  }
+                },
+                {
+                  "value": "de.adorsys.ledgers.app.integration.UserManagementIT$$Lambda$3548/0x00000008025d86c0@1c96c6b5",
+                  "argumentInfo": {
+                    "argumentName": "pathConsumer",
+                    "formattedValue": "de.adorsys.ledgers.app.integration.UserManagementIT$$Lambda$3548/0x00000008025d86c0@1c96c6b5"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 17059218,
+              "depth": 0,
+              "parentFailed": false
+            }
+          ],
+          "explicitArguments": [],
+          "derivedArguments": [],
+          "status": "SUCCESS",
+          "durationInNanos": 581039056
+        }
+      ],
+      "casesAsTable": false,
+      "durationInNanos": 581039056
+    },
+    {
+      "className": "de.adorsys.ledgers.app.integration.UserManagementIT",
       "testMethodName": "TestdeleteUserAsTPP",
       "description": "Testdelete user as t p p",
       "tagIds": [],
@@ -39,7 +627,7 @@
                 }
               ],
               "status": "PASSED",
-              "durationInNanos": 1349730880,
+              "durationInNanos": 50217912,
               "depth": 0,
               "parentFailed": false
             },
@@ -50,17 +638,17 @@
                   "value": "create new user as admin"
                 },
                 {
-                  "value": "examplein",
+                  "value": "exampleintpp",
                   "argumentInfo": {
                     "argumentName": "login",
-                    "formattedValue": "examplein"
+                    "formattedValue": "exampleintpp"
                   }
                 },
                 {
-                  "value": "exampple@gmail.com",
+                  "value": "examppletpp@gmail.com",
                   "argumentInfo": {
                     "argumentName": "email",
-                    "formattedValue": "exampple@gmail.com"
+                    "formattedValue": "examppletpp@gmail.com"
                   }
                 },
                 {
@@ -72,23 +660,23 @@
                 }
               ],
               "status": "PASSED",
-              "durationInNanos": 136063343,
+              "durationInNanos": 82617071,
               "depth": 0,
               "parentFailed": false
             },
             {
-              "name": "delete t p p user",
+              "name": "delete user",
               "words": [
                 {
                   "value": "When",
                   "isIntroWord": true
                 },
                 {
-                  "value": "delete t p p user"
+                  "value": "delete user"
                 }
               ],
               "status": "PASSED",
-              "durationInNanos": 226736863,
+              "durationInNanos": 98853114,
               "depth": 0,
               "parentFailed": false
             },
@@ -104,7 +692,7 @@
                 }
               ],
               "status": "PASSED",
-              "durationInNanos": 134323783,
+              "durationInNanos": 90315693,
               "depth": 0,
               "parentFailed": false
             },
@@ -115,15 +703,15 @@
                   "value": "body"
                 },
                 {
-                  "value": "de.adorsys.ledgers.app.integration.UserManagementIT$$Lambda$3493/0x00000008024e2430@555a7331",
+                  "value": "de.adorsys.ledgers.app.integration.UserManagementIT$$Lambda$3549/0x00000008025f6e40@46b1e3b1",
                   "argumentInfo": {
                     "argumentName": "bodyConsumer",
-                    "formattedValue": "de.adorsys.ledgers.app.integration.UserManagementIT$$Lambda$3493/0x00000008024e2430@555a7331"
+                    "formattedValue": "de.adorsys.ledgers.app.integration.UserManagementIT$$Lambda$3549/0x00000008025f6e40@46b1e3b1"
                   }
                 }
               ],
               "status": "PASSED",
-              "durationInNanos": 144367777,
+              "durationInNanos": 18278538,
               "depth": 0,
               "parentFailed": false
             }
@@ -131,11 +719,926 @@
           "explicitArguments": [],
           "derivedArguments": [],
           "status": "SUCCESS",
-          "durationInNanos": 2015528350
+          "durationInNanos": 341248597
         }
       ],
       "casesAsTable": false,
-      "durationInNanos": 2015528350
+      "durationInNanos": 341248597
+    },
+    {
+      "className": "de.adorsys.ledgers.app.integration.UserManagementIT",
+      "testMethodName": "testUpdateSelf",
+      "description": "Test update self",
+      "tagIds": [],
+      "explicitParameters": [],
+      "derivedParameters": [],
+      "scenarioCases": [
+        {
+          "caseNr": 1,
+          "steps": [
+            {
+              "name": "obtain token from keycloak",
+              "words": [
+                {
+                  "value": "Given",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "obtain token from keycloak"
+                },
+                {
+                  "value": "admin",
+                  "argumentInfo": {
+                    "argumentName": "psuLogin",
+                    "formattedValue": "admin"
+                  }
+                },
+                {
+                  "value": "admin123",
+                  "argumentInfo": {
+                    "argumentName": "psuPassword",
+                    "formattedValue": "admin123"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 78352884,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "create new tpp as admin",
+              "words": [
+                {
+                  "value": "create new tpp as admin"
+                },
+                {
+                  "value": "newtpp",
+                  "argumentInfo": {
+                    "argumentName": "login",
+                    "formattedValue": "newtpp"
+                  }
+                },
+                {
+                  "value": "newtpp@mail.de",
+                  "argumentInfo": {
+                    "argumentName": "email",
+                    "formattedValue": "newtpp@mail.de"
+                  }
+                },
+                {
+                  "value": "UA_735297",
+                  "argumentInfo": {
+                    "argumentName": "branch",
+                    "formattedValue": "UA_735297"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 161191483,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "obtain token from keycloak",
+              "words": [
+                {
+                  "value": "Given",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "obtain token from keycloak"
+                },
+                {
+                  "value": "newtpp",
+                  "argumentInfo": {
+                    "argumentName": "psuLogin",
+                    "formattedValue": "newtpp"
+                  }
+                },
+                {
+                  "value": "11111",
+                  "argumentInfo": {
+                    "argumentName": "psuPassword",
+                    "formattedValue": "11111"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 77747924,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "update self tpp",
+              "words": [
+                {
+                  "value": "When",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "update self tpp"
+                },
+                {
+                  "value": "UA_735297",
+                  "argumentInfo": {
+                    "argumentName": "branchId",
+                    "formattedValue": "UA_735297"
+                  }
+                },
+                {
+                  "value": "new-tpp-login",
+                  "argumentInfo": {
+                    "argumentName": "newLogin",
+                    "formattedValue": "new-tpp-login"
+                  }
+                },
+                {
+                  "value": "new-tpp-email@mail.ua",
+                  "argumentInfo": {
+                    "argumentName": "newEmail",
+                    "formattedValue": "new-tpp-email@mail.ua"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 177483145,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "obtain token from keycloak",
+              "words": [
+                {
+                  "value": "Then",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "obtain token from keycloak"
+                },
+                {
+                  "value": "new-tpp-login",
+                  "argumentInfo": {
+                    "argumentName": "psuLogin",
+                    "formattedValue": "new-tpp-login"
+                  }
+                },
+                {
+                  "value": "11111",
+                  "argumentInfo": {
+                    "argumentName": "psuPassword",
+                    "formattedValue": "11111"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 75432866,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "read user from db",
+              "words": [
+                {
+                  "value": "read user from db"
+                },
+                {
+                  "value": "new-tpp-login",
+                  "argumentInfo": {
+                    "argumentName": "userLogin",
+                    "formattedValue": "new-tpp-login"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 2586901,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "verify user entity",
+              "words": [
+                {
+                  "value": "verify user entity"
+                },
+                {
+                  "value": "de.adorsys.ledgers.app.integration.UserManagementIT$$Lambda$3558/0x0000000802624a70@2b7143c9",
+                  "argumentInfo": {
+                    "argumentName": "entityConsumer",
+                    "formattedValue": "de.adorsys.ledgers.app.integration.UserManagementIT$$Lambda$3558/0x0000000802624a70@2b7143c9"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 336834,
+              "depth": 0,
+              "parentFailed": false
+            }
+          ],
+          "explicitArguments": [],
+          "derivedArguments": [],
+          "status": "SUCCESS",
+          "durationInNanos": 574200580
+        }
+      ],
+      "casesAsTable": false,
+      "durationInNanos": 574200580
+    },
+    {
+      "className": "de.adorsys.ledgers.app.integration.UserManagementIT",
+      "testMethodName": "testUploadData",
+      "description": "Test upload data",
+      "tagIds": [],
+      "explicitParameters": [],
+      "derivedParameters": [],
+      "scenarioCases": [
+        {
+          "caseNr": 1,
+          "steps": [
+            {
+              "name": "obtain token from keycloak",
+              "words": [
+                {
+                  "value": "Given",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "obtain token from keycloak"
+                },
+                {
+                  "value": "admin",
+                  "argumentInfo": {
+                    "argumentName": "psuLogin",
+                    "formattedValue": "admin"
+                  }
+                },
+                {
+                  "value": "admin123",
+                  "argumentInfo": {
+                    "argumentName": "psuPassword",
+                    "formattedValue": "admin123"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 78171330,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "create new tpp as admin",
+              "words": [
+                {
+                  "value": "create new tpp as admin"
+                },
+                {
+                  "value": "newtpp",
+                  "argumentInfo": {
+                    "argumentName": "login",
+                    "formattedValue": "newtpp"
+                  }
+                },
+                {
+                  "value": "newtpp@mail.de",
+                  "argumentInfo": {
+                    "argumentName": "email",
+                    "formattedValue": "newtpp@mail.de"
+                  }
+                },
+                {
+                  "value": "UA_735297",
+                  "argumentInfo": {
+                    "argumentName": "branch",
+                    "formattedValue": "UA_735297"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 139337301,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "obtain token from keycloak",
+              "words": [
+                {
+                  "value": "Given",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "obtain token from keycloak"
+                },
+                {
+                  "value": "newtpp",
+                  "argumentInfo": {
+                    "argumentName": "psuLogin",
+                    "formattedValue": "newtpp"
+                  }
+                },
+                {
+                  "value": "11111",
+                  "argumentInfo": {
+                    "argumentName": "psuPassword",
+                    "formattedValue": "11111"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 91755889,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "upload data",
+              "words": [
+                {
+                  "value": "When",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "upload data"
+                },
+                {
+                  "value": "file_upload/users-accounts-balances-payments-upload.yml",
+                  "argumentInfo": {
+                    "argumentName": "resourceName",
+                    "formattedValue": "file_upload/users-accounts-balances-payments-upload.yml"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 255430967,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "list customers logins",
+              "words": [
+                {
+                  "value": "Then",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "list customers logins"
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 33010126,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "body",
+              "words": [
+                {
+                  "value": "body"
+                },
+                {
+                  "value": "de.adorsys.ledgers.app.integration.UserManagementIT$$Lambda$3574/0x0000000802647548@3743db31",
+                  "argumentInfo": {
+                    "argumentName": "bodyConsumer",
+                    "formattedValue": "de.adorsys.ledgers.app.integration.UserManagementIT$$Lambda$3574/0x0000000802647548@3743db31"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 11816079,
+              "depth": 0,
+              "parentFailed": false
+            }
+          ],
+          "explicitArguments": [],
+          "derivedArguments": [],
+          "status": "SUCCESS",
+          "durationInNanos": 611113148
+        }
+      ],
+      "casesAsTable": false,
+      "durationInNanos": 611113148
+    },
+    {
+      "className": "de.adorsys.ledgers.app.integration.UserManagementIT",
+      "testMethodName": "deleteUserAsAdmin",
+      "description": "Delete user as admin",
+      "tagIds": [],
+      "explicitParameters": [],
+      "derivedParameters": [],
+      "scenarioCases": [
+        {
+          "caseNr": 1,
+          "steps": [
+            {
+              "name": "obtain token from keycloak",
+              "words": [
+                {
+                  "value": "Given",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "obtain token from keycloak"
+                },
+                {
+                  "value": "admin",
+                  "argumentInfo": {
+                    "argumentName": "psuLogin",
+                    "formattedValue": "admin"
+                  }
+                },
+                {
+                  "value": "admin123",
+                  "argumentInfo": {
+                    "argumentName": "psuPassword",
+                    "formattedValue": "admin123"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 78803477,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "get user id by login",
+              "words": [
+                {
+                  "value": "get user id by login"
+                },
+                {
+                  "value": "anton.brueckner",
+                  "argumentInfo": {
+                    "argumentName": "login",
+                    "formattedValue": "anton.brueckner"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 367276991,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "delete user",
+              "words": [
+                {
+                  "value": "When",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "delete user"
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 212021444,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "get all users",
+              "words": [
+                {
+                  "value": "Then",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "get all users"
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 162147104,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "path",
+              "words": [
+                {
+                  "value": "path"
+                },
+                {
+                  "value": "login",
+                  "argumentInfo": {
+                    "argumentName": "path",
+                    "formattedValue": "login"
+                  }
+                },
+                {
+                  "value": "de.adorsys.ledgers.app.integration.UserManagementIT$$Lambda$3586/0x0000000802677048@361b5a4f",
+                  "argumentInfo": {
+                    "argumentName": "pathConsumer",
+                    "formattedValue": "de.adorsys.ledgers.app.integration.UserManagementIT$$Lambda$3586/0x0000000802677048@361b5a4f"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 35803472,
+              "depth": 0,
+              "parentFailed": false
+            }
+          ],
+          "explicitArguments": [],
+          "derivedArguments": [],
+          "status": "SUCCESS",
+          "durationInNanos": 856971720
+        }
+      ],
+      "casesAsTable": false,
+      "durationInNanos": 856971720
+    },
+    {
+      "className": "de.adorsys.ledgers.app.integration.UserManagementIT",
+      "testMethodName": "testUpdatePassword",
+      "description": "Test update password",
+      "tagIds": [],
+      "explicitParameters": [],
+      "derivedParameters": [],
+      "scenarioCases": [
+        {
+          "caseNr": 1,
+          "steps": [
+            {
+              "name": "obtain token from keycloak",
+              "words": [
+                {
+                  "value": "Given",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "obtain token from keycloak"
+                },
+                {
+                  "value": "admin",
+                  "argumentInfo": {
+                    "argumentName": "psuLogin",
+                    "formattedValue": "admin"
+                  }
+                },
+                {
+                  "value": "admin123",
+                  "argumentInfo": {
+                    "argumentName": "psuPassword",
+                    "formattedValue": "admin123"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 93841252,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "create new tpp as admin",
+              "words": [
+                {
+                  "value": "create new tpp as admin"
+                },
+                {
+                  "value": "newtpp",
+                  "argumentInfo": {
+                    "argumentName": "login",
+                    "formattedValue": "newtpp"
+                  }
+                },
+                {
+                  "value": "newtpp@mail.de",
+                  "argumentInfo": {
+                    "argumentName": "email",
+                    "formattedValue": "newtpp@mail.de"
+                  }
+                },
+                {
+                  "value": "UA_735297",
+                  "argumentInfo": {
+                    "argumentName": "branch",
+                    "formattedValue": "UA_735297"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 136809014,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "obtain token from keycloak",
+              "words": [
+                {
+                  "value": "When",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "obtain token from keycloak"
+                },
+                {
+                  "value": "admin",
+                  "argumentInfo": {
+                    "argumentName": "psuLogin",
+                    "formattedValue": "admin"
+                  }
+                },
+                {
+                  "value": "admin123",
+                  "argumentInfo": {
+                    "argumentName": "psuPassword",
+                    "formattedValue": "admin123"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 52296701,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "change password branch",
+              "words": [
+                {
+                  "value": "Then",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "change password branch"
+                },
+                {
+                  "value": "UA_735297",
+                  "argumentInfo": {
+                    "argumentName": "branch",
+                    "formattedValue": "UA_735297"
+                  }
+                },
+                {
+                  "value": "hello",
+                  "argumentInfo": {
+                    "argumentName": "newPassword",
+                    "formattedValue": "hello"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 89728326,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "obtain token from keycloak",
+              "words": [
+                {
+                  "value": "obtain token from keycloak"
+                },
+                {
+                  "value": "newtpp",
+                  "argumentInfo": {
+                    "argumentName": "psuLogin",
+                    "formattedValue": "newtpp"
+                  }
+                },
+                {
+                  "value": "hello",
+                  "argumentInfo": {
+                    "argumentName": "psuPassword",
+                    "formattedValue": "hello"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 47268462,
+              "depth": 0,
+              "parentFailed": false
+            }
+          ],
+          "explicitArguments": [],
+          "derivedArguments": [],
+          "status": "SUCCESS",
+          "durationInNanos": 420640237
+        }
+      ],
+      "casesAsTable": false,
+      "durationInNanos": 420640237
+    },
+    {
+      "className": "de.adorsys.ledgers.app.integration.UserManagementIT",
+      "testMethodName": "testTppUpdatesHimself",
+      "description": "Test tpp updates himself",
+      "tagIds": [],
+      "explicitParameters": [],
+      "derivedParameters": [],
+      "scenarioCases": [
+        {
+          "caseNr": 1,
+          "steps": [
+            {
+              "name": "obtain token from keycloak",
+              "words": [
+                {
+                  "value": "Given",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "obtain token from keycloak"
+                },
+                {
+                  "value": "admin",
+                  "argumentInfo": {
+                    "argumentName": "psuLogin",
+                    "formattedValue": "admin"
+                  }
+                },
+                {
+                  "value": "admin123",
+                  "argumentInfo": {
+                    "argumentName": "psuPassword",
+                    "formattedValue": "admin123"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 74694604,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "create new tpp as admin",
+              "words": [
+                {
+                  "value": "create new tpp as admin"
+                },
+                {
+                  "value": "newtpp",
+                  "argumentInfo": {
+                    "argumentName": "login",
+                    "formattedValue": "newtpp"
+                  }
+                },
+                {
+                  "value": "newtpp@mail.de",
+                  "argumentInfo": {
+                    "argumentName": "email",
+                    "formattedValue": "newtpp@mail.de"
+                  }
+                },
+                {
+                  "value": "UA_735297",
+                  "argumentInfo": {
+                    "argumentName": "branch",
+                    "formattedValue": "UA_735297"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 116890819,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "obtain token from keycloak",
+              "words": [
+                {
+                  "value": "Given",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "obtain token from keycloak"
+                },
+                {
+                  "value": "newtpp",
+                  "argumentInfo": {
+                    "argumentName": "psuLogin",
+                    "formattedValue": "newtpp"
+                  }
+                },
+                {
+                  "value": "11111",
+                  "argumentInfo": {
+                    "argumentName": "psuPassword",
+                    "formattedValue": "11111"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 89020317,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "get user id by login",
+              "words": [
+                {
+                  "value": "get user id by login"
+                },
+                {
+                  "value": "newtpp",
+                  "argumentInfo": {
+                    "argumentName": "login",
+                    "formattedValue": "newtpp"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 248905063,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "modify",
+              "words": [
+                {
+                  "value": "modify"
+                },
+                {
+                  "value": "update_tpp_user.json",
+                  "argumentInfo": {
+                    "argumentName": "resourceName",
+                    "formattedValue": "update_tpp_user.json"
+                  }
+                },
+                {
+                  "value": "newtpplogin",
+                  "argumentInfo": {
+                    "argumentName": "newLogin",
+                    "formattedValue": "newtpplogin"
+                  }
+                },
+                {
+                  "value": "newtpp@mail.de",
+                  "argumentInfo": {
+                    "argumentName": "email",
+                    "formattedValue": "newtpp@mail.de"
+                  }
+                },
+                {
+                  "value": "UA_735297",
+                  "argumentInfo": {
+                    "argumentName": "branch",
+                    "formattedValue": "UA_735297"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 129149028,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "obtain token from keycloak",
+              "words": [
+                {
+                  "value": "When",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "obtain token from keycloak"
+                },
+                {
+                  "value": "newtpplogin",
+                  "argumentInfo": {
+                    "argumentName": "psuLogin",
+                    "formattedValue": "newtpplogin"
+                  }
+                },
+                {
+                  "value": "11111",
+                  "argumentInfo": {
+                    "argumentName": "psuPassword",
+                    "formattedValue": "11111"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 81529489,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "read user from db",
+              "words": [
+                {
+                  "value": "Then",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "read user from db"
+                },
+                {
+                  "value": "newtpplogin",
+                  "argumentInfo": {
+                    "argumentName": "userLogin",
+                    "formattedValue": "newtpplogin"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 1871646,
+              "depth": 0,
+              "parentFailed": false
+            }
+          ],
+          "explicitArguments": [],
+          "derivedArguments": [],
+          "status": "SUCCESS",
+          "durationInNanos": 742857494
+        }
+      ],
+      "casesAsTable": false,
+      "durationInNanos": 742857494
     }
   ],
   "tagMap": {}
