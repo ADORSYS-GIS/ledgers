@@ -4,8 +4,8 @@
   "scenarios": [
     {
       "className": "de.adorsys.ledgers.app.integration.PaymentIT",
-      "testMethodName": "testCreateNewUserAndCreateBulkPayment",
-      "description": "Test create new user and create bulk payment",
+      "testMethodName": "testCreateBulkPayment",
+      "description": "Test create bulk payment",
       "tagIds": [],
       "explicitParameters": [],
       "derivedParameters": [],
@@ -24,140 +24,10 @@
                   "value": "obtain token from keycloak"
                 },
                 {
-                  "value": "admin",
+                  "value": "anton.brueckner",
                   "argumentInfo": {
                     "argumentName": "psuLogin",
-                    "formattedValue": "admin"
-                  }
-                },
-                {
-                  "value": "admin123",
-                  "argumentInfo": {
-                    "argumentName": "psuPassword",
-                    "formattedValue": "admin123"
-                  }
-                }
-              ],
-              "status": "PASSED",
-              "durationInNanos": 1197065633,
-              "depth": 0,
-              "parentFailed": false
-            },
-            {
-              "name": "create new user as admin",
-              "words": [
-                {
-                  "value": "create new user as admin"
-                },
-                {
-                  "value": "newuser12345",
-                  "argumentInfo": {
-                    "argumentName": "login",
-                    "formattedValue": "newuser12345"
-                  }
-                },
-                {
-                  "value": "newuser12345@mail.de",
-                  "argumentInfo": {
-                    "argumentName": "email",
-                    "formattedValue": "newuser12345@mail.de"
-                  }
-                },
-                {
-                  "value": "",
-                  "argumentInfo": {
-                    "argumentName": "branch",
-                    "formattedValue": ""
-                  }
-                }
-              ],
-              "status": "PASSED",
-              "durationInNanos": 138330671,
-              "depth": 0,
-              "parentFailed": false
-            },
-            {
-              "name": "create new account for user",
-              "words": [
-                {
-                  "value": "create new account for user"
-                },
-                {
-                  "value": "new_account.json",
-                  "argumentInfo": {
-                    "argumentName": "accountBodyResource",
-                    "formattedValue": "new_account.json"
-                  }
-                },
-                {
-                  "value": "DE62500105174439235992",
-                  "argumentInfo": {
-                    "argumentName": "iban",
-                    "formattedValue": "DE62500105174439235992"
-                  }
-                }
-              ],
-              "status": "PASSED",
-              "durationInNanos": 88644954,
-              "depth": 0,
-              "parentFailed": false
-            },
-            {
-              "name": "account by iban",
-              "words": [
-                {
-                  "value": "account by iban"
-                },
-                {
-                  "value": "DE62500105174439235992",
-                  "argumentInfo": {
-                    "argumentName": "iban",
-                    "formattedValue": "DE62500105174439235992"
-                  }
-                }
-              ],
-              "status": "PASSED",
-              "durationInNanos": 110375262,
-              "depth": 0,
-              "parentFailed": false
-            },
-            {
-              "name": "deposit cash",
-              "words": [
-                {
-                  "value": "deposit cash"
-                },
-                {
-                  "value": "deposit_amount.json",
-                  "argumentInfo": {
-                    "argumentName": "amountResource",
-                    "formattedValue": "deposit_amount.json"
-                  }
-                },
-                {
-                  "value": "10000",
-                  "argumentInfo": {
-                    "argumentName": "amount",
-                    "formattedValue": "10000"
-                  }
-                }
-              ],
-              "status": "PASSED",
-              "durationInNanos": 90972090,
-              "depth": 0,
-              "parentFailed": false
-            },
-            {
-              "name": "obtain token from keycloak",
-              "words": [
-                {
-                  "value": "obtain token from keycloak"
-                },
-                {
-                  "value": "newuser12345",
-                  "argumentInfo": {
-                    "argumentName": "psuLogin",
-                    "formattedValue": "newuser12345"
+                    "formattedValue": "anton.brueckner"
                   }
                 },
                 {
@@ -169,19 +39,19 @@
                 }
               ],
               "status": "PASSED",
-              "durationInNanos": 61457115,
+              "durationInNanos": 1275702147,
               "depth": 0,
               "parentFailed": false
             },
             {
-              "name": "create bulk payment",
+              "name": "create single payment",
               "words": [
                 {
                   "value": "When",
                   "isIntroWord": true
                 },
                 {
-                  "value": "create bulk payment"
+                  "value": "create single payment"
                 },
                 {
                   "value": "bulk_payment.json",
@@ -191,15 +61,15 @@
                   }
                 },
                 {
-                  "value": "DE62500105174439235992",
+                  "value": "DE80760700240271232400",
                   "argumentInfo": {
                     "argumentName": "ibanFrom",
-                    "formattedValue": "DE62500105174439235992"
+                    "formattedValue": "DE80760700240271232400"
                   }
                 }
               ],
               "status": "PASSED",
-              "durationInNanos": 115021800,
+              "durationInNanos": 178795909,
               "depth": 0,
               "parentFailed": false
             },
@@ -218,7 +88,7 @@
                 }
               ],
               "status": "PASSED",
-              "durationInNanos": 57925108,
+              "durationInNanos": 97561262,
               "depth": 0,
               "parentFailed": false
             },
@@ -230,7 +100,7 @@
                 }
               ],
               "status": "PASSED",
-              "durationInNanos": 68052999,
+              "durationInNanos": 120501041,
               "depth": 0,
               "parentFailed": false
             },
@@ -249,7 +119,7 @@
                 }
               ],
               "status": "PASSED",
-              "durationInNanos": 128290616,
+              "durationInNanos": 233449941,
               "depth": 0,
               "parentFailed": false
             },
@@ -268,7 +138,7 @@
                 }
               ],
               "status": "PASSED",
-              "durationInNanos": 112210982,
+              "durationInNanos": 163114297,
               "depth": 0,
               "parentFailed": false
             },
@@ -280,7 +150,7 @@
                 }
               ],
               "status": "PASSED",
-              "durationInNanos": 69472288,
+              "durationInNanos": 68809001,
               "depth": 0,
               "parentFailed": false
             },
@@ -298,15 +168,15 @@
                   }
                 },
                 {
-                  "value": "de.adorsys.ledgers.app.integration.PaymentIT$$Lambda$3497/0x0000000802505a80@641d93f8",
+                  "value": "de.adorsys.ledgers.app.integration.PaymentIT$$Lambda$3497/0x00000008024f2640@312bb23a",
                   "argumentInfo": {
                     "argumentName": "pathConsumer",
-                    "formattedValue": "de.adorsys.ledgers.app.integration.PaymentIT$$Lambda$3497/0x0000000802505a80@641d93f8"
+                    "formattedValue": "de.adorsys.ledgers.app.integration.PaymentIT$$Lambda$3497/0x00000008024f2640@312bb23a"
                   }
                 }
               ],
               "status": "PASSED",
-              "durationInNanos": 72288764,
+              "durationInNanos": 63386639,
               "depth": 0,
               "parentFailed": false
             },
@@ -322,7 +192,7 @@
                 }
               ],
               "status": "PASSED",
-              "durationInNanos": 100942921,
+              "durationInNanos": 57696240,
               "depth": 0,
               "parentFailed": false
             },
@@ -340,15 +210,15 @@
                   }
                 },
                 {
-                  "value": "de.adorsys.ledgers.app.integration.PaymentIT$$Lambda$3500/0x00000008025494c8@1ad0432e",
+                  "value": "de.adorsys.ledgers.app.integration.PaymentIT$$Lambda$3500/0x000000080253fb00@1b78eba4",
                   "argumentInfo": {
                     "argumentName": "pathConsumer",
-                    "formattedValue": "de.adorsys.ledgers.app.integration.PaymentIT$$Lambda$3500/0x00000008025494c8@1ad0432e"
+                    "formattedValue": "de.adorsys.ledgers.app.integration.PaymentIT$$Lambda$3500/0x000000080253fb00@1b78eba4"
                   }
                 }
               ],
               "status": "PASSED",
-              "durationInNanos": 17311755,
+              "durationInNanos": 13033758,
               "depth": 0,
               "parentFailed": false
             },
@@ -360,7 +230,7 @@
                 }
               ],
               "status": "PASSED",
-              "durationInNanos": 14273466,
+              "durationInNanos": 13510025,
               "depth": 0,
               "parentFailed": false
             },
@@ -371,15 +241,15 @@
                   "value": "verify payment entity"
                 },
                 {
-                  "value": "de.adorsys.ledgers.app.integration.PaymentIT$$Lambda$3502/0x000000080254ee38@13ad18e4",
+                  "value": "de.adorsys.ledgers.app.integration.PaymentIT$$Lambda$3502/0x0000000802547460@4fa1c76a",
                   "argumentInfo": {
                     "argumentName": "entityConsumer",
-                    "formattedValue": "de.adorsys.ledgers.app.integration.PaymentIT$$Lambda$3502/0x000000080254ee38@13ad18e4"
+                    "formattedValue": "de.adorsys.ledgers.app.integration.PaymentIT$$Lambda$3502/0x0000000802547460@4fa1c76a"
                   }
                 }
               ],
               "status": "PASSED",
-              "durationInNanos": 822324,
+              "durationInNanos": 427531,
               "depth": 0,
               "parentFailed": false
             },
@@ -391,7 +261,7 @@
                 }
               ],
               "status": "PASSED",
-              "durationInNanos": 2069917,
+              "durationInNanos": 2009091,
               "depth": 0,
               "parentFailed": false
             },
@@ -402,15 +272,15 @@
                   "value": "verify payment targets iban"
                 },
                 {
-                  "value": "de.adorsys.ledgers.app.integration.PaymentIT$$Lambda$3504/0x000000080254f258@5929790a",
+                  "value": "de.adorsys.ledgers.app.integration.PaymentIT$$Lambda$3504/0x0000000802547880@652a028c",
                   "argumentInfo": {
                     "argumentName": "entityConsumer",
-                    "formattedValue": "de.adorsys.ledgers.app.integration.PaymentIT$$Lambda$3504/0x000000080254f258@5929790a"
+                    "formattedValue": "de.adorsys.ledgers.app.integration.PaymentIT$$Lambda$3504/0x0000000802547880@652a028c"
                   }
                 }
               ],
               "status": "PASSED",
-              "durationInNanos": 10434414,
+              "durationInNanos": 30456007,
               "depth": 0,
               "parentFailed": false
             }
@@ -418,11 +288,11 @@
           "explicitArguments": [],
           "derivedArguments": [],
           "status": "SUCCESS",
-          "durationInNanos": 2482108715
+          "durationInNanos": 2343125571
         }
       ],
       "casesAsTable": false,
-      "durationInNanos": 2482108715
+      "durationInNanos": 2343125571
     }
   ],
   "tagMap": {}

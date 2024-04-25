@@ -57,7 +57,6 @@ public class StatusStage extends BaseStage<StatusStage> {
     }
     public StatusStage readPaymentFromDB() {
         var query = "SELECT * FROM public.payment WHERE payment_id = :paymentId";
-
         this.paymentEntity = jdbcOperations.queryForObject(
                 query,
                 Map.of("paymentId", this.operationObjectId),
@@ -66,10 +65,8 @@ public class StatusStage extends BaseStage<StatusStage> {
         assertThat(paymentEntity).isNotNull();
         return self();
     }
-
     public StatusStage readPaymentTargetsFromDB() {
         var query = "SELECT cred_iban FROM public.payment_target WHERE payment_payment_id = :paymentId";
-
         this.paymentTargets = jdbcOperations.query(
                 query,
                 Map.of("paymentId", this.operationObjectId),
@@ -78,14 +75,10 @@ public class StatusStage extends BaseStage<StatusStage> {
         assertThat(paymentTargets).isNotNull();
         return self();
     }
-
-
-
     public StatusStage verifyPaymentEntity(Consumer<Map<String, Object>> entityConsumer) {
         entityConsumer.accept(this.paymentEntity);
         return self();
     }
-
     public StatusStage verifyPaymentTargetsIban(Consumer<List<String>> entityConsumer) {
         entityConsumer.accept(this.paymentTargets);
         return self();
