@@ -45,7 +45,6 @@ public class PaymentIT extends BaseContainersTest<ManagementStage, OperationStag
     void testCreateSinglePayment() {
         given()
                 .obtainTokenFromKeycloak(PSU_LOGIN, PSU_PASSWORD);
-
         when()
                 .createSinglePayment("payment.json", "DE80760700240271232400")
                 .scaStart("sca_start_payment.json")
