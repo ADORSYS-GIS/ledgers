@@ -120,4 +120,57 @@ class UserManagementIT extends BaseContainersTest<ManagementStage, ManagementSta
                 .createNewTppAsAdmin(TPP_LOGIN_NEW, TPP_EMAIL_NEW, BRANCH);
     }
 
+
+    @Test
+    public void shouldCreateNewUserAndAdminUserSuccessfully() {
+        //  Create a new Third-Party Provider (TPP) as admin
+        String newTppLogin = "exampleInfinity";
+        String newTppEmail = "exampple@gmail.com";
+
+        //  Perform API calls to create a new TPP
+        given()
+                .obtainTokenFromKeycloak(ADMIN_LOGIN, ADMIN_PASSWORD)
+                .createNewTppAsAdmin(newTppLogin, newTppEmail, BRANCH);
+
+        // Create a new admin user
+        String newAdminLogin = "newAdminUser";
+        String newAdminEmail = "admin@email.com";
+
+        // Perform API calls to create a new admin user
+        given()
+                .obtainTokenFromKeycloak(ADMIN_LOGIN, ADMIN_PASSWORD)
+                .createNewUserAsAdmin(newAdminLogin, newAdminEmail, BRANCH);
+        then().readUserFromDb(newAdminLogin)
+                .verifyUserEntity(user ->{
+                    assertThat(user.get("branch")).isNotNull();
+                    assertThat(user.get("email")).isEqualTo(newAdminEmail);
+                    assertThat(user.get("login")).isEqualTo(newAdminLogin);
+                    assertThat(user.get("user_id")).isNotNull();
+                });
+    }
+
+    @Test
+// Test for checking if a user is being deleted successfully.
+    public void TestdeleteUserAsTPP(){
+        String newUsertppLogin = "exampleintpp";
+        String newUserEmail = "examppletpp@gmail.com";
+        given().obtainTokenFromKeycloak(ADMIN_LOGIN, ADMIN_PASSWORD).createNewUserAsAdmin(newUsertppLogin, newUserEmail, BRANCH);
+
+        // Delete the user and verify if the user is deleted
+        when().deleteUser();
+        then().getAllUsers().body(conc -> assertThat(!conc.equals(newUsertppLogin)));
+    }
+
+    @Test
+    public void TestdeleteUser(){
+        String newUserLogin = "examplein";
+        String newUserEmail = "exampple@gmail.com";
+        given().obtainTokenFromKeycloak(ADMIN_LOGIN, ADMIN_PASSWORD).createNewUserAsAdmin(newUserLogin, newUserEmail, BRANCH);
+
+        // Delete the user and verify if the user is deleted
+        when().deleteUser();
+        then().getAllUsers().body(conc -> assertThat(!conc.equals(newUserLogin)));
+    }
+
+
 }
