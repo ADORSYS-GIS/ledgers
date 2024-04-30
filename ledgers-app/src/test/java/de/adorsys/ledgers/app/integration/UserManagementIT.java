@@ -136,7 +136,6 @@ class UserManagementIT extends BaseContainersTest<ManagementStage, ManagementSta
         when().deleteUser();
         then().listCustomerLogins().body(login -> assertThat(!login.equals(newUserTppLogin)));
     }
-
     @Test
     public void testDeleteUser(){
         String newUserLogin = "examplein";
