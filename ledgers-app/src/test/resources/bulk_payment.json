@@ -21,10 +21,7 @@
   "debtorName": null,
   "debtorAgent": null,
   "transactionStatus": null,
-
   "targets": [
-
-
     {
       "paymentId": null,
       "endToEndIdentification": "WBG-123456779",
@@ -55,7 +52,6 @@
       "remittanceInformationUnstructuredArray": ["Ref. Number WBG-1222"],
       "remittanceInformationStructuredArray": null
     },
-
     {
       "paymentId": null,
       "endToEndIdentification": "WBG-123456789",

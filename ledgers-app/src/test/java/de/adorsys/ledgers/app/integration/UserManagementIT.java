@@ -18,12 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.List;
 
-import static de.adorsys.ledgers.app.Const.ADMIN_LOGIN;
-import static de.adorsys.ledgers.app.Const.ADMIN_PASSWORD;
-import static de.adorsys.ledgers.app.Const.PSU_LOGIN;
-import static de.adorsys.ledgers.app.Const.TPP_EMAIL_NEW;
-import static de.adorsys.ledgers.app.Const.TPP_LOGIN_NEW;
-import static de.adorsys.ledgers.app.Const.TPP_PASSWORD;
+import static de.adorsys.ledgers.app.Const.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles({"testcontainers-it", "sandbox"})
@@ -111,40 +106,35 @@ class UserManagementIT extends BaseContainersTest<ManagementStage, ManagementSta
                 .obtainTokenFromKeycloak(ADMIN_LOGIN, ADMIN_PASSWORD)
                 .createNewTppAsAdmin(TPP_LOGIN_NEW, TPP_EMAIL_NEW, BRANCH);
     }
+
     @Test
-    public void testShouldCreateNewUserAndAdminUserSuccessfully() {
-        //  Create a new Third-Party Provider (TPP) as admin
-        String newTppLogin = "exampleInfinity";
-        String newTppEmail = "exampple@gmail.com";
-        //  Perform API calls to create a new TPP
-        given()
-                .obtainTokenFromKeycloak(ADMIN_LOGIN, ADMIN_PASSWORD)
-                .createNewTppAsAdmin(newTppLogin, newTppEmail, BRANCH);
-        // Create a new admin user
-        String newAdminLogin = "newAdminUser";
-        String newAdminEmail = "admin@email.com";
-        // Perform API calls to create a new admin user
-        given()
-                .obtainTokenFromKeycloak(ADMIN_LOGIN, ADMIN_PASSWORD)
-                .createNewAdminAsAdmin(newAdminLogin, newAdminEmail);
-        then().readUserFromDb(newAdminLogin)
+    public void testCreateNewTPP() {
+      addNewTpp();
+        then().readUserFromDb(TPP_LOGIN_NEW)
                 .verifyUserEntity(user ->{
                     assertThat(user.get("branch")).isNotNull();
-                    assertThat(user.get("email")).isEqualTo(newAdminEmail);
-                    assertThat(user.get("login")).isEqualTo(newAdminLogin);
-                    assertThat(user.get("user_id")).isNotNull();
+                    assertThat(user.get("email")).isEqualTo(TPP_EMAIL_NEW);
+                    assertThat(user.get("login")).isEqualTo(TPP_LOGIN_NEW);
                 });
     }
 
+
+
     @Test
-// Test for checking if a user is being deleted successfully.
     public void testDeleteUserAsTPP(){
         String newUserTppLogin = "exampleintpp";
         String newUserEmail = "examppletpp@gmail.com";
-        given().obtainTokenFromKeycloak(ADMIN_LOGIN, ADMIN_PASSWORD).createNewUserAsAdmin(newUserTppLogin, newUserEmail, BRANCH);
-        // Delete the user and verify if the user is deleted
+        addNewTpp();
+        given().obtainTokenFromKeycloak(TPP_LOGIN_NEW, TPP_PASSWORD).createNewUserAsStaff(newUserTppLogin, newUserEmail, BRANCH);
+        then().readUserFromDb(newUserTppLogin)
+                .verifyUserEntity(user ->{
+                    assertThat(user.get("branch")).isNotNull();
+                    assertThat(user.get("email")).isEqualTo(newUserEmail);
+                    assertThat(user.get("login")).isEqualTo(newUserTppLogin);
+                    assertThat(user.get("user_id")).isNotNull();
+                });
         when().deleteUser();
-        then().getAllUsers().body(conc -> assertThat(!conc.equals(newUserTppLogin)));
+        then().listCustomerLogins().body(login -> assertThat(!login.equals(newUserTppLogin)));
     }
 
     @Test
@@ -152,7 +142,6 @@ class UserManagementIT extends BaseContainersTest<ManagementStage, ManagementSta
         String newUserLogin = "examplein";
         String newUserEmail = "exampple@gmail.com";
         given().obtainTokenFromKeycloak(ADMIN_LOGIN, ADMIN_PASSWORD).createNewUserAsAdmin(newUserLogin, newUserEmail, BRANCH);
-        // Delete the user and verify if the user is deleted
         when().deleteUser();
         then().getAllUsers().body(conc -> assertThat(!conc.equals(newUserLogin)));
     }
