@@ -186,6 +186,23 @@ public class ManagementStage extends BaseStage<ManagementStage> {
         return self();
     }
 
+    public ManagementStage createNewAdminAsAdmin(String login, String email) {
+        var resp = RestAssured.given()
+                           .header(AUTHORIZATION, this.bearerToken)
+                           .contentType(MediaType.APPLICATION_JSON_VALUE)
+                           .body(resource("new_system.json", Map.of("LOGIN", login, "EMAIL", email, "ID", UUID.randomUUID().toString())))
+                           .when()
+                           .post(USERS_RESOURCE_ADMIN)
+                           .then()
+                           .statusCode(HttpStatus.OK.value())
+                           .and()
+                           .extract();
+
+        this.response = resp;
+        this.userId = resp.path("id");
+        return self();
+    }
+
     public ManagementStage getUserIdByLogin(String login) {
         var oldToken = bearerToken;
         obtainTokenFromKeycloak("admin", "admin123");

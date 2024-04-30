@@ -126,7 +126,7 @@ class UserManagementIT extends BaseContainersTest<ManagementStage, ManagementSta
         // Perform API calls to create a new admin user
         given()
                 .obtainTokenFromKeycloak(ADMIN_LOGIN, ADMIN_PASSWORD)
-                .createNewUserAsAdmin(newAdminLogin, newAdminEmail, BRANCH);
+                .createNewAdminAsAdmin(newAdminLogin, newAdminEmail);
         then().readUserFromDb(newAdminLogin)
                 .verifyUserEntity(user ->{
                     assertThat(user.get("branch")).isNotNull();
