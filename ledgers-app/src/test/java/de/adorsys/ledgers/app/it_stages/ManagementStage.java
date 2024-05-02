@@ -168,32 +168,13 @@ public class ManagementStage extends BaseStage<ManagementStage> {
     public ManagementStage createNewUserAsStaff(String login, String email, String branch) {
         return createNewUser(USERS_RESOURCE_STAFF, login, email, branch);
     }
-    public ManagementStage createNewUserAsTpp(String login, String email, String branch){
-        return createNewUser(USERS_RESOURCE_STAFF,login,email,branch);
-    }
+
 
     public ManagementStage createNewTppAsAdmin(String login, String email, String branch) {
         var resp = RestAssured.given()
                            .header(AUTHORIZATION, this.bearerToken)
                            .contentType(MediaType.APPLICATION_JSON_VALUE)
                            .body(resource("new_staff.json", Map.of("LOGIN", login, "EMAIL", email, "ID", branch)))
-                           .when()
-                           .post(USERS_RESOURCE_ADMIN)
-                           .then()
-                           .statusCode(HttpStatus.OK.value())
-                           .and()
-                           .extract();
-
-        this.response = resp;
-        this.userId = resp.path("id");
-        return self();
-    }
-
-    public ManagementStage createNewAdminAsAdmin(String login, String email) {
-        var resp = RestAssured.given()
-                           .header(AUTHORIZATION, this.bearerToken)
-                           .contentType(MediaType.APPLICATION_JSON_VALUE)
-                           .body(resource("new_system.json", Map.of("LOGIN", login, "EMAIL", email, "ID", UUID.randomUUID().toString())))
                            .when()
                            .post(USERS_RESOURCE_ADMIN)
                            .then()

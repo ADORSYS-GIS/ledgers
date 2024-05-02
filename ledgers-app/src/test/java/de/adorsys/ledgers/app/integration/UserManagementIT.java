@@ -106,10 +106,9 @@ class UserManagementIT extends BaseContainersTest<ManagementStage, ManagementSta
                 .obtainTokenFromKeycloak(ADMIN_LOGIN, ADMIN_PASSWORD)
                 .createNewTppAsAdmin(TPP_LOGIN_NEW, TPP_EMAIL_NEW, BRANCH);
     }
-
     @Test
     public void testCreateNewTPP() {
-      addNewTpp();
+        addNewTpp();
         then().readUserFromDb(TPP_LOGIN_NEW)
                 .verifyUserEntity(user ->{
                     assertThat(user.get("branch")).isNotNull();
@@ -117,9 +116,6 @@ class UserManagementIT extends BaseContainersTest<ManagementStage, ManagementSta
                     assertThat(user.get("login")).isEqualTo(TPP_LOGIN_NEW);
                 });
     }
-
-
-
     @Test
     public void testDeleteUserAsTPP(){
         String newUserTppLogin = "exampleintpp";
@@ -136,6 +132,7 @@ class UserManagementIT extends BaseContainersTest<ManagementStage, ManagementSta
         when().deleteUser();
         then().listCustomerLogins().body(login -> assertThat(!login.equals(newUserTppLogin)));
     }
+
     @Test
     public void testDeleteUser(){
         String newUserLogin = "examplein";
@@ -143,5 +140,16 @@ class UserManagementIT extends BaseContainersTest<ManagementStage, ManagementSta
         given().obtainTokenFromKeycloak(ADMIN_LOGIN, ADMIN_PASSWORD).createNewUserAsAdmin(newUserLogin, newUserEmail, BRANCH);
         when().deleteUser();
         then().getAllUsers().body(conc -> assertThat(!conc.equals(newUserLogin)));
+    }
+    @Test
+    public void testCreateNewAdmin() {
+        String newAdminLogin = "admin2";
+        String newAdminEmail = "newadmin@gmail.com";
+        given().obtainTokenFromKeycloak(ADMIN_LOGIN, ADMIN_PASSWORD).createNewUserAsAdmin(newAdminLogin, newAdminEmail, BRANCH);
+        then().readUserFromDb(newAdminLogin)
+                .verifyUserEntity(user ->{
+                    assertThat(user.get("email")).isEqualTo(newAdminEmail);
+                    assertThat(user.get("login")).isEqualTo(newAdminLogin);
+                });
     }
 }
