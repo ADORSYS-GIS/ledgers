@@ -169,6 +169,7 @@ public class ManagementStage extends BaseStage<ManagementStage> {
         return createNewUser(USERS_RESOURCE_STAFF, login, email, branch);
     }
 
+
     public ManagementStage createNewTppAsAdmin(String login, String email, String branch) {
         var resp = RestAssured.given()
                            .header(AUTHORIZATION, this.bearerToken)
