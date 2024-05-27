@@ -17,6 +17,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 import java.util.List;
 import static de.adorsys.ledgers.app.Const.ADMIN_LOGIN;
 import static de.adorsys.ledgers.app.Const.ADMIN_PASSWORD;
@@ -55,11 +56,12 @@ class PaymentIT extends BaseContainersTest<ManagementStage, OperationStage, Stat
         given()
                 .obtainTokenFromKeycloak(PSU_LOGIN, PSU_PASSWORD);
         when()
-                .createSinglePayment("bulk_payment.json", "DE80760700240271232400")
+                .createBulkPayment("bulk_payment.json", "DE80760700240271232400")
                 .scaStart("sca_start_payment.json")
                 .listScaMethods()
                 .selectScaMethod("SMTP_OTP")
                 .reportChallengeValue(CHALLENGE_VALUE)
+                .getStatus().getStatus()
                 .getStatus().pathStr("scaStatus", stat -> assertThat(stat).isEqualTo("finalised"));
         then()
                 .paymentStatus().pathStr("transactionStatus", status -> assertThat(status).isEqualTo("ACCP"))

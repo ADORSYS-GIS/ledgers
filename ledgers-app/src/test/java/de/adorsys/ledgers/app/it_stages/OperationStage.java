@@ -12,6 +12,7 @@ import lombok.SneakyThrows;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+
 import java.util.Map;
 import java.util.UUID;
 import static de.adorsys.ledgers.app.BaseContainersTest.resource;
@@ -46,6 +47,24 @@ public class OperationStage extends BaseStage<OperationStage> {
                            .statusCode(HttpStatus.CREATED.value())
                            .and()
                            .extract();
+        this.bearerToken = getBearerToken(resp);
+        this.operationObjectId = resp.path("operationObjectId");
+        this.response = resp;
+        return self();
+    }
+    @SneakyThrows
+    public OperationStage createBulkPayment(String paymentBodyRes, String iban) {
+        var resp = RestAssured.given()
+                .header(HttpHeaders.AUTHORIZATION, bearerToken)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(resource(paymentBodyRes, Map.of("ID", UUID.randomUUID().toString(), "PAYMENT_IBAN", iban)))
+                .queryParams("paymentType", "BULK")
+                .when()
+                .post(OP_PAYMENT)
+                .then()
+                .statusCode(HttpStatus.CREATED.value())
+                .and()
+                .extract();
         this.bearerToken = getBearerToken(resp);
         this.operationObjectId = resp.path("operationObjectId");
         this.response = resp;
