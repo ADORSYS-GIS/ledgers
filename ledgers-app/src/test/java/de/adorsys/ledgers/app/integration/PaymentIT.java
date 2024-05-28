@@ -134,4 +134,29 @@ class PaymentIT extends BaseContainersTest<ManagementStage, OperationStage, Stat
                     assertThat(paymentTarget).containsAll(BULK_PAYMENT_CREDITORS_IBAN);
                 });
     }
+
+    @Test
+    void blockUnblockUserAndProceedPayment() {
+        given()
+                .obtainTokenFromKeycloak(ADMIN_LOGIN, ADMIN_PASSWORD)
+                .getUserIdByLogin(PSU_LOGIN)
+                .changeStatusUser()
+                .getAllUsers()
+                .path("findAll { o -> o.login.equals(\"" + PSU_LOGIN + "\") }[0].blocked", blocked -> assertThat(blocked).isEqualTo(true))
+                .changeStatusUser()
+                .getAllUsers()
+                .path("findAll { o -> o.login.equals(\"" + PSU_LOGIN + "\") }[0].blocked", blocked -> assertThat(blocked).isEqualTo(false))
+                .obtainTokenFromKeycloak(PSU_LOGIN, PSU_PASSWORD);
+
+        when()
+                .createSinglePayment("payment.json", "DE80760700240271232400")
+                .scaStart("sca_start_payment.json")
+                .listScaMethods()
+                .selectScaMethod("SMTP_OTP")
+                .reportChallengeValue(CHALLENGE_VALUE)
+                .getStatus().pathStr("scaStatus", stat -> assertThat(stat).isEqualTo("finalised"));
+
+        then()
+                .paymentStatus().pathStr("transactionStatus", status -> assertThat(status).isEqualTo("ACCP"));
+    }
 }
