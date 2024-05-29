@@ -159,4 +159,23 @@ class PaymentIT extends BaseContainersTest<ManagementStage, OperationStage, Stat
         then()
                 .paymentStatus().pathStr("transactionStatus", status -> assertThat(status).isEqualTo("ACCP"));
     }
+
+    @Test
+    void createNewUserAndBlockUserFailedPayment() {
+        String newIban = "DE62500105174439235992";
+        given()
+                .obtainTokenFromKeycloak(ADMIN_LOGIN, ADMIN_PASSWORD)
+                .createNewUserAsAdmin(PSU_LOGIN_NEW, PSU_EMAIL_NEW, "")
+                .createNewAccountForUser("new_account.json", newIban)
+                .accountByIban(newIban)
+                .depositCash("deposit_amount.json", "100000")
+                .changeStatusUser()
+                .bodyAsString(blocked -> assertThat(Boolean.valueOf(blocked)).isEqualTo(true))
+                .obtainTokenFromKeycloak(PSU_LOGIN_NEW, PSU_PASSWORD);
+        when()
+                .failedSinglePayment("payment.json", newIban);
+
+        then()
+                .pathStr("devMessage", message -> assertThat(message).isEqualTo("Access Denied! You're trying to access resources you have no permission for."));
+    }
 }

@@ -32,6 +32,11 @@ public class BaseStage<SELF extends Stage<?>> extends Stage<SELF> {
         return self();
     }
 
+    public SELF bodyAsString(Consumer<String> bodyConsumer) {
+        bodyConsumer.accept(this.response.body().asString());
+        return self();
+    }
+
     @NotNull
     protected static String getAccessToken(ExtractableResponse<Response> resp) {
         return "Bearer " + resp.path("access_token");
