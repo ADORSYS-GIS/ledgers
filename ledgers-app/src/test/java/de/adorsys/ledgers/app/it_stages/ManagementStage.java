@@ -35,6 +35,7 @@ public class ManagementStage extends BaseStage<ManagementStage> {
     private static final String DELETE_USER_RESOURCE = "/staff-access/data/user/{userId}";
     private static final String USERS_RESOURCE_ADMIN = "/admin/user";
     private static final String USERS_RESOURCE_STAFF = "staff-access/users";
+    private static final String STAFF_BRANCH_RESOURCE = "/staff-access/data/branch/{branchId}";
     private static final String GET_ALL_USERS = "/admin/users/all";
     private static final String ACCOUNTS_RESOURCE = "/staff-access/accounts";
     private static final String ACCOUNT_BY_IBAN = "/staff-access/accounts/acc/acc";
@@ -141,6 +142,19 @@ public class ManagementStage extends BaseStage<ManagementStage> {
         this.response = resp;
         return self();
     }
+    public ManagementStage deleteTppWithAllRelatedData(String branchId) {
+        var resp = RestAssured.given()
+                           .header(AUTHORIZATION, bearerToken)
+                           .when()
+                           .delete(STAFF_BRANCH_RESOURCE, branchId)
+                           .then()
+                           .statusCode(HttpStatus.OK.value())
+                           .and()
+                           .extract();
+
+        this.response = resp;
+        return self();
+    }
 
     @SneakyThrows
     public ManagementStage uploadData(String resourceName) {
@@ -230,6 +244,20 @@ public class ManagementStage extends BaseStage<ManagementStage> {
                            .queryParams("userId", userId)
                            .when()
                            .post(ACCOUNTS_RESOURCE)
+                           .then()
+                           .statusCode(HttpStatus.OK.value())
+                           .and()
+                           .extract();
+        accountByIban(iban);
+        this.response = resp;
+        return self();
+    }
+    public ManagementStage getAccountForUser() {
+        var resp = RestAssured.given()
+                           .header(AUTHORIZATION, this.bearerToken)
+                           .contentType(MediaType.APPLICATION_JSON_VALUE)
+                           .when()
+                           .get(ACCOUNTS_RESOURCE)
                            .then()
                            .statusCode(HttpStatus.OK.value())
                            .and()
