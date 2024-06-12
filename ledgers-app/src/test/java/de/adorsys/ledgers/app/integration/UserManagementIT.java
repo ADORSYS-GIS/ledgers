@@ -43,6 +43,27 @@ class UserManagementIT extends BaseContainersTest<ManagementStage, ManagementSta
         then().getAllUsers()
                 .path("login", (List<String> logins) -> assertThat(logins).doesNotContain(PSU_LOGIN));
     }
+
+    @Test
+    void updateUserScaDataTest() {
+        String newSmtpMethodValue = "test-email@gmail.com";
+        given()
+                .obtainTokenFromKeycloak(ADMIN_LOGIN, ADMIN_PASSWORD)
+                .createNewUserAsAdmin(PSU_LOGIN_NEW, PSU_EMAIL_NEW, "")
+                .getUserIdByLogin(PSU_LOGIN_NEW);
+
+        when()
+                .modifyScaUser("new_sca.json", newSmtpMethodValue);
+
+        then().
+                getUserIdByLogin(PSU_LOGIN_NEW)
+                .path("findAll { o -> o.login.equals(\""+ PSU_LOGIN_NEW +"\") }[0].scaUserData", (List<Map<String, String>> sca) -> {
+                    assertThat(sca.size()).isEqualTo(1);
+                    assertThat(sca.get(0).get("scaMethod")).isEqualTo("SMTP_OTP");
+                    assertThat(sca.get(0).get("methodValue")).isEqualTo(newSmtpMethodValue);
+                });
+    }
+
     @Test
     void addNewStaffUserAndDepositCash() {
         addNewTpp();
@@ -58,6 +79,7 @@ class UserManagementIT extends BaseContainersTest<ManagementStage, ManagementSta
                 .getAccountDetails()
                 .path("balances.amount.amount[0]", am -> assertThat(am.toString()).isEqualTo(amount));
     }
+
     @Test
     void testTppUpdatesHimself() {
         addNewTpp();
@@ -79,6 +101,7 @@ class UserManagementIT extends BaseContainersTest<ManagementStage, ManagementSta
         then().changePasswordBranch(BRANCH, newPassword)
                 .obtainTokenFromKeycloak(TPP_LOGIN_NEW, newPassword);
     }
+
     @Test
     void testUpdateSelf() {
         String newTppLogin = "new-tpp-login";
@@ -130,7 +153,6 @@ class UserManagementIT extends BaseContainersTest<ManagementStage, ManagementSta
                 .pathStr("findAll { o -> o.login.equals(\""+ credUser3[0] +"\") }[0].id", userId -> assertThat(userId).isNull());
     }
 
-
     @Test
     void testGetListOfAccounts() {
         addNewTpp();
@@ -173,6 +195,7 @@ class UserManagementIT extends BaseContainersTest<ManagementStage, ManagementSta
                     assertThat(user.get("login")).isEqualTo(TPP_LOGIN_NEW);
                 });
     }
+
     @Test
     public void testDeleteUserAsTPP(){
         String newUserTppLogin = "exampleintpp";
@@ -198,6 +221,7 @@ class UserManagementIT extends BaseContainersTest<ManagementStage, ManagementSta
         when().deleteUser();
         then().getAllUsers().body(conc -> assertThat(!conc.equals(newUserLogin)));
     }
+
     @Test
     public void testCreateNewAdmin() {
         String newAdminLogin = "admin2";

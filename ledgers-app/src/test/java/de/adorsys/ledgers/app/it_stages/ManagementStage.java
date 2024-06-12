@@ -48,6 +48,7 @@ public class ManagementStage extends BaseStage<ManagementStage> {
     private static final String MODIFY_USER_RESOURCE_AS_STAFF = "/staff-access/users/modify";
     private static final String MODIFY_SELF_RESOURCE = "/users/me";
     private static final String CUSTOMERS_RESOURCE_LOGIN = "/staff-access/users/logins";
+    private static final String STAFF_RESOURCE_SCA = "/staff-access/users/{userId}/sca-data";
 
     @Autowired
     private NamedParameterJdbcOperations jdbcOperations;
@@ -83,6 +84,21 @@ public class ManagementStage extends BaseStage<ManagementStage> {
 
         this.response = resp;
         this.bearerToken = getAccessToken(resp);
+        return self();
+    }
+
+    public ManagementStage modifyScaUser(String resourceSca, String smtpMethodValue) {
+        var resp = RestAssured.given()
+                           .header(AUTHORIZATION, this.bearerToken)
+                           .header(AUTHORIZATION, bearerToken)
+                           .contentType(ContentType.JSON)
+                           .body(resource(resourceSca, Map.of("METHOD_VALUE", smtpMethodValue)))
+                           .when()
+                           .post(STAFF_RESOURCE_SCA, userId)
+                           .then()
+                           .statusCode(HttpStatus.CREATED.value())
+                           .extract();
+        this.response = resp;
         return self();
     }
 

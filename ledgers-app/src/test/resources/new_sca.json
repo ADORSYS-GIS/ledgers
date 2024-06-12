@@ -1,0 +1,11 @@
+[
+  {
+    "id": "094c6378-60d4-4674-8b25-024c515b6bb3",
+    "scaMethod": "SMTP_OTP",
+    "methodValue": "%METHOD_VALUE%",
+    "usesStaticTan": true,
+    "staticTan": "123456",
+    "decoupled": false,
+    "valid": false
+  }
+]
