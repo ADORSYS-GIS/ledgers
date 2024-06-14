@@ -38,6 +38,8 @@ public class ManagementStage extends BaseStage<ManagementStage> {
     private static final String STAFF_BRANCH_RESOURCE = "/staff-access/data/branch/{branchId}";
     private static final String GET_ALL_USERS = "/admin/users/all";
     private static final String ACCOUNTS_RESOURCE = "/staff-access/accounts";
+    private static final String ACCOUNTS_MULTILEVEL_RESOURCE = "/users/multilevel";
+    private static final String ACC_ACCESS = "/staff-access/users/access/{userId}";
     private static final String ACCOUNT_BY_IBAN = "/staff-access/accounts/acc/acc";
     private static final String ACCOUNT_DETAIL = "/staff-access/accounts/{accountId}";
     private static final String DEPOSIT_CASH_RESOURCE = "/staff-access/accounts/{accountId}/cash";
@@ -236,6 +238,22 @@ public class ManagementStage extends BaseStage<ManagementStage> {
         return self();
     }
 
+    public ManagementStage multilevel(String login, String iban) {
+        var resp = RestAssured.given()
+                           .header(AUTHORIZATION, this.bearerToken)
+                           .contentType(MediaType.APPLICATION_JSON_VALUE)
+                           .when()
+                           .queryParams("login", login, "ibanParam", iban)
+                           .get(ACCOUNTS_MULTILEVEL_RESOURCE)
+                           .then()
+                           .statusCode(HttpStatus.OK.value())
+                           .and()
+                           .extract();
+
+        this.response = resp;
+        return self();
+    }
+
     public ManagementStage changeStatusUser() {
         var resp = RestAssured.given()
                            .header(AUTHORIZATION, this.bearerToken)
@@ -268,6 +286,22 @@ public class ManagementStage extends BaseStage<ManagementStage> {
         this.response = resp;
         return self();
     }
+
+public ManagementStage updateAccAccess(String resource, String iban) {
+    var resp = RestAssured.given()
+                       .header(AUTHORIZATION, this.bearerToken)
+                       .contentType(MediaType.APPLICATION_JSON_VALUE)
+                       .body(resource(resource, Map.of("IBAN", iban, "ACC_ID", this.accountId)))
+                       .when()
+                       .put(ACC_ACCESS, this.userId)
+                       .then()
+                       .statusCode(HttpStatus.OK.value())
+                       .and()
+                       .extract();
+    accountByIban(iban);
+    this.response = resp;
+    return self();
+}
     public ManagementStage getAccountForUser() {
         var resp = RestAssured.given()
                            .header(AUTHORIZATION, this.bearerToken)

@@ -21,6 +21,7 @@ import java.util.Map;
 
 import static de.adorsys.ledgers.app.Const.*;//NOPMD
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ActiveProfiles({"testcontainers-it", "sandbox"})
 @ExtendWith(SpringExtension.class)
@@ -232,6 +233,29 @@ class UserManagementIT extends BaseContainersTest<ManagementStage, ManagementSta
                     assertThat(user.get("email")).isEqualTo(newAdminEmail);
                     assertThat(user.get("login")).isEqualTo(newAdminLogin);
                 });
+    }
+
+    @Test
+    public void multiScaTest() {
+        addNewTpp();
+        String additionalUserLogin = "Leontovich";
+        String additionalUserEmail = "leontovich@gmail.com";
+        given()
+                .obtainTokenFromKeycloak(TPP_LOGIN_NEW, TPP_PASSWORD)
+                .createNewUserAsStaff(CUSTOMER_LOGIN, CUSTOMER_EMAIL, BRANCH)
+                .createNewAccountForUser("new_account.json", NEW_IBANS.get(0))
+                .accountByIban(NEW_IBANS.get(0))
+                .createNewUserAsStaff(additionalUserLogin, additionalUserEmail, BRANCH);
+
+        when()
+                .updateAccAccess("access_account.json", NEW_IBANS.get(0))
+                .getUserIdByLogin(CUSTOMER_LOGIN)
+                .updateAccAccess("access_account.json", NEW_IBANS.get(0));
+
+        then().multilevel(additionalUserLogin, NEW_IBANS.get(0))
+                .bodyStr(multilevel -> assertTrue(Boolean.parseBoolean(multilevel)))
+                .multilevel(CUSTOMER_LOGIN, NEW_IBANS.get(0))
+                .bodyStr(multilevel -> assertTrue(Boolean.parseBoolean(multilevel)));
     }
 
     private void addNewTpp() {
