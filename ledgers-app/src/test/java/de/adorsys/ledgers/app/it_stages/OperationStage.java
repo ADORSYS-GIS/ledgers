@@ -8,7 +8,6 @@ package de.adorsys.ledgers.app.it_stages;
 import com.tngtech.jgiven.annotation.ScenarioState;
 import com.tngtech.jgiven.integration.spring.JGivenStage;
 import io.restassured.RestAssured;
-import lombok.SneakyThrows;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,6 +19,7 @@ import static de.adorsys.ledgers.app.BaseContainersTest.resource;
 @JGivenStage
 public class OperationStage extends BaseStage<OperationStage> {
     private static final String OP_PAYMENT = "/operation/payment";
+    private static final String EXECUTE_PAYMENT = "/payments/{paymentId}/execution";
     private static final String SCA_AUTHORISATIONS_METHOD = "/sca/authorisations/{authorisationId}/scaMethods/{scaMethodId}";
     private static final String SCA_START = "/sca/start";
     private static final String SCA_AUTHORISATIONS = "/sca/authorisations/{authorisationId}";
@@ -34,7 +34,6 @@ public class OperationStage extends BaseStage<OperationStage> {
     @ScenarioState
     private String bearerToken;
 
-    @SneakyThrows
     public OperationStage createSinglePayment(String paymentBodyRes, String ibanFrom) {
         var resp = RestAssured.given()
                            .header(HttpHeaders.AUTHORIZATION, bearerToken)
@@ -52,7 +51,21 @@ public class OperationStage extends BaseStage<OperationStage> {
         this.response = resp;
         return self();
     }
-    @SneakyThrows
+
+    public OperationStage executePayment() {
+        var resp = RestAssured.given()
+                           .header(HttpHeaders.AUTHORIZATION, bearerToken)
+                           .contentType(MediaType.APPLICATION_JSON_VALUE)
+                           .when()
+                           .post(EXECUTE_PAYMENT, this.operationId)
+                           .then()
+                           .statusCode(HttpStatus.ACCEPTED.value())
+                           .and()
+                           .extract();
+        this.response = resp;
+        return self();
+    }
+
     public OperationStage createBulkPayment(String paymentBodyRes, String iban) {
         var resp = RestAssured.given()
                 .header(HttpHeaders.AUTHORIZATION, bearerToken)
@@ -70,8 +83,6 @@ public class OperationStage extends BaseStage<OperationStage> {
         this.response = resp;
         return self();
     }
-
-    @SneakyThrows
     public OperationStage failedSinglePayment(String paymentBodyRes, String ibanFrom) {
         this.response = RestAssured.given()
                            .header(HttpHeaders.AUTHORIZATION, bearerToken)
@@ -91,7 +102,7 @@ public class OperationStage extends BaseStage<OperationStage> {
         var resp = RestAssured.given()
                            .header(HttpHeaders.AUTHORIZATION, bearerToken)
                            .contentType(MediaType.APPLICATION_JSON_VALUE)
-                           .body(resource(scaBodyRes, Map.of("AUTHORISATION_ID", this.authorisationId, "OPERATION_OBJECT_ID", this.operationObjectId)))
+                           .body(resource(scaBodyRes, Map.of("AUTHORISATION_ID", authorisationId, "OPERATION_OBJECT_ID", this.operationObjectId)))
                            .when()
                            .post(SCA_START)
                            .then()

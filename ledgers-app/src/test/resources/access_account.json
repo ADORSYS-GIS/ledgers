@@ -2,6 +2,6 @@
   "iban": "%IBAN%",
   "currency": "EUR",
   "accessType": "OWNER",
-  "scaWeight": 20,
+  "scaWeight": 50,
   "accountId": "%ACC_ID%"
 }

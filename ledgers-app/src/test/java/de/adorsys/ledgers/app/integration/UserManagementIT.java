@@ -236,7 +236,7 @@ class UserManagementIT extends BaseContainersTest<ManagementStage, ManagementSta
     }
 
     @Test
-    public void multiScaTest() {
+    public void multilevelScaTest() {
         addNewTpp();
         String additionalUserLogin = "Leontovich";
         String additionalUserEmail = "leontovich@gmail.com";

@@ -26,7 +26,13 @@ import static de.adorsys.ledgers.app.Const.PSU_EMAIL_NEW;
 import static de.adorsys.ledgers.app.Const.PSU_LOGIN;
 import static de.adorsys.ledgers.app.Const.PSU_LOGIN_NEW;
 import static de.adorsys.ledgers.app.Const.PSU_PASSWORD;
+import static de.adorsys.ledgers.app.Const.TPP_EMAIL_NEW;
+import static de.adorsys.ledgers.app.Const.TPP_LOGIN_NEW;
+import static de.adorsys.ledgers.app.Const.TPP_PASSWORD;
+import static de.adorsys.ledgers.middleware.rest.utils.Constants.BRANCH;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 @ActiveProfiles({"testcontainers-it", "sandbox"})
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = LedgersApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -158,5 +164,11 @@ class PaymentIT extends BaseContainersTest<ManagementStage, OperationStage, Stat
 
         then()
                 .paymentStatus().pathStr("transactionStatus", status -> assertThat(status).isEqualTo("ACCP"));
+    }
+
+    private void addNewTpp() {
+        given()
+                .obtainTokenFromKeycloak(ADMIN_LOGIN, ADMIN_PASSWORD)
+                .createNewTppAsAdmin(TPP_LOGIN_NEW, TPP_EMAIL_NEW, BRANCH);
     }
 }
