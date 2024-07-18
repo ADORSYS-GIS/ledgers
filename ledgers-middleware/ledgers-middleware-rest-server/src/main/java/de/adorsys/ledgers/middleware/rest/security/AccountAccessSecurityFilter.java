@@ -58,7 +58,7 @@ public class AccountAccessSecurityFilter extends SecurityExpressionAdapter {
     }
 
     //-- Manager User checks --//
-    public boolean  hasManagerAccessToUser(String userId) {
+    public boolean hasManagerAccessToUser(String userId) {
         UserTO user = user();
         return hasAnyRole(SYSTEM.name(), STAFF.name()) && user.isEnabled() && hasAccessToUser(user, userId);
     }

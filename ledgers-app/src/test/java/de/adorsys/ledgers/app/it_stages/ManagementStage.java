@@ -29,6 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @JGivenStage
+@SuppressWarnings("PMD.TooManyMethods")
 public class ManagementStage extends BaseStage<ManagementStage> {
 
     private static final String UPLOAD_DATA = "/staff-access/data/upload";
@@ -233,7 +234,7 @@ public class ManagementStage extends BaseStage<ManagementStage> {
                           .extract();
 
         this.response = resp;
-        this.userId = this.response.path("findAll { o -> o.login.equals(\""+ login +"\") }[0].id");
+        this.userId = this.response.path("findAll { o -> o.login.equals(\"%s\") }[0].id".formatted(login));
         this.bearerToken = oldToken;
         return self();
     }

@@ -4,12 +4,13 @@
  */
 
 package de.adorsys.ledgers.app.integration;
+
 import de.adorsys.ledgers.app.BaseContainersTest;
 import de.adorsys.ledgers.app.LedgersApplication;
 import de.adorsys.ledgers.app.TestDBConfiguration;
 import de.adorsys.ledgers.app.it_stages.ManagementStage;
-import de.adorsys.ledgers.app.it_stages.StatusStage;
 import de.adorsys.ledgers.app.it_stages.OperationStage;
+import de.adorsys.ledgers.app.it_stages.StatusStage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +19,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.List;
-
 import static de.adorsys.ledgers.app.Const.ADMIN_LOGIN;
 import static de.adorsys.ledgers.app.Const.ADMIN_PASSWORD;
 import static de.adorsys.ledgers.app.Const.CHALLENGE_VALUE;
@@ -26,12 +26,7 @@ import static de.adorsys.ledgers.app.Const.PSU_EMAIL_NEW;
 import static de.adorsys.ledgers.app.Const.PSU_LOGIN;
 import static de.adorsys.ledgers.app.Const.PSU_LOGIN_NEW;
 import static de.adorsys.ledgers.app.Const.PSU_PASSWORD;
-import static de.adorsys.ledgers.app.Const.TPP_EMAIL_NEW;
-import static de.adorsys.ledgers.app.Const.TPP_LOGIN_NEW;
-import static de.adorsys.ledgers.app.Const.TPP_PASSWORD;
-import static de.adorsys.ledgers.middleware.rest.utils.Constants.BRANCH;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ActiveProfiles({"testcontainers-it", "sandbox"})
 @ExtendWith(SpringExtension.class)
@@ -164,11 +159,5 @@ class PaymentIT extends BaseContainersTest<ManagementStage, OperationStage, Stat
 
         then()
                 .paymentStatus().pathStr("transactionStatus", status -> assertThat(status).isEqualTo("ACCP"));
-    }
-
-    private void addNewTpp() {
-        given()
-                .obtainTokenFromKeycloak(ADMIN_LOGIN, ADMIN_PASSWORD)
-                .createNewTppAsAdmin(TPP_LOGIN_NEW, TPP_EMAIL_NEW, BRANCH);
     }
 }

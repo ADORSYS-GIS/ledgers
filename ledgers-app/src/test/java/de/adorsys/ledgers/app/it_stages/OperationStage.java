@@ -128,7 +128,7 @@ public class OperationStage extends BaseStage<OperationStage> {
     }
 
     public OperationStage selectScaMethod(String methodName) {
-        var methodId = response.path("scaMethods.findAll { o -> o.scaMethod == '" + methodName + "' }[0].id");
+        var methodId = response.path("scaMethods.findAll { o -> o.scaMethod == '%s' }[0].id".formatted(methodName));
         var resp = RestAssured.given()
                            .header(HttpHeaders.AUTHORIZATION, bearerToken)
                            .contentType(MediaType.APPLICATION_JSON_VALUE)
