@@ -28,11 +28,8 @@ import org.keycloak.services.Urls;
 import org.keycloak.services.managers.AppAuthManager;
 import org.keycloak.services.managers.AuthenticationManager;
 import org.keycloak.services.resource.RealmResourceProvider;
-import org.keycloak.services.resources.Cors;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
-import static org.keycloak.services.resources.Cors.ACCESS_CONTROL_ALLOW_METHODS;
-import static org.keycloak.services.resources.Cors.ACCESS_CONTROL_ALLOW_ORIGIN;
 import static org.keycloak.services.util.DefaultClientSessionContext.fromClientSessionScopeParameter;
 
 /**
@@ -64,13 +61,13 @@ public class ConfigurableTokenResourceProvider implements RealmResourceProvider 
 
     @OPTIONS
     public Response preflight() {
-        KeycloakContext context = session.getContext();
-        return Cors.add(context.getHttpRequest(), Response.ok())
-                       .auth()
-                       .preflight()
-                       .allowedMethods("POST", "OPTIONS")
-                       .build();
+        return Response.ok()
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "POST, OPTIONS")
+                .header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+                .build();
     }
+
 
     @POST
     @Consumes(APPLICATION_JSON)
@@ -109,6 +106,7 @@ public class ConfigurableTokenResourceProvider implements RealmResourceProvider 
         try {
             RealmModel realm = session.getContext().getRealm();
             String tokenString = readAccessTokenFrom(request);
+            EventBuilder eventBuilder = new EventBuilder(realm, session, session.getContext().getConnection());
             TokenVerifier<AccessToken> verifier = TokenVerifier.create(tokenString, AccessToken.class).withChecks(
                     TokenVerifier.IS_ACTIVE,
                     new TokenVerifier.RealmUrlCheck(Urls.realmIssuer(session.getContext().getUri().getBaseUri(), realm.getName()))
@@ -116,7 +114,7 @@ public class ConfigurableTokenResourceProvider implements RealmResourceProvider 
             SignatureVerifierContext verifierContext = session.getProvider(SignatureProvider.class, verifier.getHeader().getAlgorithm().name()).verifier(verifier.getHeader().getKeyId());
             verifier.verifierContext(verifierContext);
             AccessToken accessToken = verifier.verify().getToken();
-            if (!tokenManager.checkTokenValidForIntrospection(session, realm, accessToken, false)) {
+            if (!tokenManager.checkTokenValidForIntrospection(session, realm, accessToken, false, eventBuilder)) {
                 throw new VerificationException("introspection_failed");
             }
             return accessToken;
@@ -169,16 +167,18 @@ public class ConfigurableTokenResourceProvider implements RealmResourceProvider 
 
         return userSession;
     }
-
-
+    
+    
     private Response buildCorsResponse(@Context HttpRequest request, AccessTokenResponse response) {
-        Cors cors = Cors.add(request)
-                            .auth()
-                            .allowedMethods("POST")
-                            .auth()
-                            .exposedHeaders(ACCESS_CONTROL_ALLOW_METHODS, ACCESS_CONTROL_ALLOW_ORIGIN)
-                            .allowAllOrigins();
-        return cors.builder(Response.ok(response).type(MediaType.APPLICATION_JSON_TYPE)).build();
+        String origin = request.getHttpHeaders().getHeaderString("Origin");
+        
+        Response.ResponseBuilder responseBuilder = Response.ok(response)
+                .type(MediaType.APPLICATION_JSON_TYPE)
+                .header("Access-Control-Allow-Origin", origin != null ? origin : "*")
+                .header("Access-Control-Allow-Methods", "POST")
+                .header("Access-Control-Expose-Headers", "Access-Control-Allow-Methods, Access-Control-Allow-Origin");
+        
+        return responseBuilder.build();
     }
 
 
