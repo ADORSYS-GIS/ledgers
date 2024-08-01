@@ -11,12 +11,14 @@ import de.adorsys.ledgers.keycloak.client.model.KeycloakUser;
 import de.adorsys.ledgers.keycloak.client.rest.KeycloakTokenRestClient;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Response;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.*;
 import org.keycloak.admin.client.token.TokenManager;
 import org.keycloak.representations.AccessTokenResponse;
+import org.keycloak.representations.idm.RequiredActionProviderRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -63,6 +65,11 @@ class KeycloakDataServiceImplTest {
         when(realmResource.roles()).thenReturn(rolesResource);
         ClientsResource clientResource = mock(ClientsResource.class);
         when(realmResource.clients()).thenReturn(clientResource);
+        RequiredActionProviderRepresentation mockAction = mock(RequiredActionProviderRepresentation.class);
+        when(mockAction.getAlias()).thenReturn("VERIFY_PROFILE");
+        AuthenticationManagementResource authenticationManagementResource = mock(AuthenticationManagementResource.class);
+        when(realmResource.flows()).thenReturn(authenticationManagementResource);
+        when(authenticationManagementResource.getRequiredActions()).thenReturn(List.of(mockAction));
         when(clientResource.create(any())).thenReturn(Response.created(new URI("")).build());
 
         service.createDefaultSchema();

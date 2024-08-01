@@ -57,9 +57,21 @@ public class KeycloakDataServiceImpl implements KeycloakDataService {
                                                 configuration.getSmtpServer());
         realm.setEditUsernameAllowed(true);
         createRealm(realm);
+        configRealmAuthenticationRequirements(realm);
         createRealmScopes(realm);
         createRealmRoles(realm);
         createClient(realm.getRealm());
+    }
+
+    private void configRealmAuthenticationRequirements(KeycloakRealm realm) {
+        RealmResource realmResource = keycloak.realm(realm.getRealm());
+        RequiredActionProviderRepresentation verifyProfileAction = realmResource.flows().getRequiredActions().stream()
+                                                                           .filter(action -> "VERIFY_PROFILE".equals(action.getAlias()))
+                                                                           .findFirst()
+                                                                           .orElseThrow(() -> new RuntimeException("VERIFY_PROFILE action not found"));
+
+        verifyProfileAction.setEnabled(false);
+        realmResource.flows().updateRequiredAction(verifyProfileAction.getAlias(), verifyProfileAction);
     }
 
     private void createRealm(KeycloakRealm realm) {

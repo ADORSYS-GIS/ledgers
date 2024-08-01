@@ -13,6 +13,7 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.ext.Provider;
 import org.jboss.logging.Logger;
 import org.keycloak.TokenVerifier;
 import org.keycloak.common.VerificationException;
@@ -25,17 +26,21 @@ import org.keycloak.protocol.oidc.TokenManager;
 import org.keycloak.representations.AccessToken;
 import org.keycloak.representations.AccessTokenResponse;
 import org.keycloak.services.Urls;
+import org.keycloak.services.cors.Cors;
 import org.keycloak.services.managers.AppAuthManager;
 import org.keycloak.services.managers.AuthenticationManager;
 import org.keycloak.services.resource.RealmResourceProvider;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
+import static org.keycloak.services.cors.Cors.ACCESS_CONTROL_ALLOW_METHODS;
+import static org.keycloak.services.cors.Cors.ACCESS_CONTROL_ALLOW_ORIGIN;
 import static org.keycloak.services.util.DefaultClientSessionContext.fromClientSessionScopeParameter;
 
 /**
  * @author Lorent Lempereur
  */
 @SuppressWarnings("PMD")
+@Provider
 public class ConfigurableTokenResourceProvider implements RealmResourceProvider {
 
     static final String ID = "configurable-token";
@@ -61,13 +66,13 @@ public class ConfigurableTokenResourceProvider implements RealmResourceProvider 
 
     @OPTIONS
     public Response preflight() {
-        return Response.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "POST, OPTIONS")
-                .header("Access-Control-Allow-Headers", "Content-Type, Authorization")
-                .build();
+        KeycloakContext context = session.getContext();
+        return Cors.add(context.getHttpRequest(), Response.ok())
+                       .auth()
+                       .preflight()
+                       .allowedMethods("POST", "OPTIONS")
+                       .build();
     }
-
 
     @POST
     @Consumes(APPLICATION_JSON)
@@ -95,7 +100,7 @@ public class ConfigurableTokenResourceProvider implements RealmResourceProvider 
         LOG.infof("Configurable token requested for username=%s and client=%s on realm=%s", userSession.getUser().getUsername(), client.getClientId(), realm.getName());
         AuthenticatedClientSessionModel clientSession = userSession.getAuthenticatedClientSessionByClient(client.getId());
         ClientSessionContext clientSessionContext = fromClientSessionScopeParameter(clientSession, session);
-
+        session.getContext().setClient(client);
         AccessToken newToken = tokenManager.createClientAccessToken(session, realm, client, userSession.getUser(), userSession, clientSessionContext);
         updateTokenExpiration(newToken, tokenConfiguration);
         updateScope(newToken, tokenConfiguration);
@@ -167,18 +172,16 @@ public class ConfigurableTokenResourceProvider implements RealmResourceProvider 
 
         return userSession;
     }
-    
-    
+
+
     private Response buildCorsResponse(@Context HttpRequest request, AccessTokenResponse response) {
-        String origin = request.getHttpHeaders().getHeaderString("Origin");
-        
-        Response.ResponseBuilder responseBuilder = Response.ok(response)
-                .type(MediaType.APPLICATION_JSON_TYPE)
-                .header("Access-Control-Allow-Origin", origin != null ? origin : "*")
-                .header("Access-Control-Allow-Methods", "POST")
-                .header("Access-Control-Expose-Headers", "Access-Control-Allow-Methods, Access-Control-Allow-Origin");
-        
-        return responseBuilder.build();
+        Cors cors = Cors.add(request)
+                            .auth()
+                            .allowedMethods("POST")
+                            .auth()
+                            .exposedHeaders(ACCESS_CONTROL_ALLOW_METHODS, ACCESS_CONTROL_ALLOW_ORIGIN)
+                            .allowAllOrigins();
+        return cors.builder(Response.ok(response).type(MediaType.APPLICATION_JSON_TYPE)).build();
     }
 
 
