@@ -13,6 +13,7 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.ext.Provider;
 import org.jboss.logging.Logger;
 import org.keycloak.TokenVerifier;
 import org.keycloak.common.VerificationException;
@@ -25,20 +26,21 @@ import org.keycloak.protocol.oidc.TokenManager;
 import org.keycloak.representations.AccessToken;
 import org.keycloak.representations.AccessTokenResponse;
 import org.keycloak.services.Urls;
+import org.keycloak.services.cors.Cors;
 import org.keycloak.services.managers.AppAuthManager;
 import org.keycloak.services.managers.AuthenticationManager;
 import org.keycloak.services.resource.RealmResourceProvider;
-import org.keycloak.services.resources.Cors;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
-import static org.keycloak.services.resources.Cors.ACCESS_CONTROL_ALLOW_METHODS;
-import static org.keycloak.services.resources.Cors.ACCESS_CONTROL_ALLOW_ORIGIN;
+import static org.keycloak.services.cors.Cors.ACCESS_CONTROL_ALLOW_METHODS;
+import static org.keycloak.services.cors.Cors.ACCESS_CONTROL_ALLOW_ORIGIN;
 import static org.keycloak.services.util.DefaultClientSessionContext.fromClientSessionScopeParameter;
 
 /**
  * @author Lorent Lempereur
  */
 @SuppressWarnings("PMD")
+@Provider
 public class ConfigurableTokenResourceProvider implements RealmResourceProvider {
 
     static final String ID = "configurable-token";
@@ -98,7 +100,7 @@ public class ConfigurableTokenResourceProvider implements RealmResourceProvider 
         LOG.infof("Configurable token requested for username=%s and client=%s on realm=%s", userSession.getUser().getUsername(), client.getClientId(), realm.getName());
         AuthenticatedClientSessionModel clientSession = userSession.getAuthenticatedClientSessionByClient(client.getId());
         ClientSessionContext clientSessionContext = fromClientSessionScopeParameter(clientSession, session);
-
+        session.getContext().setClient(client);
         AccessToken newToken = tokenManager.createClientAccessToken(session, realm, client, userSession.getUser(), userSession, clientSessionContext);
         updateTokenExpiration(newToken, tokenConfiguration);
         updateScope(newToken, tokenConfiguration);
@@ -109,6 +111,7 @@ public class ConfigurableTokenResourceProvider implements RealmResourceProvider 
         try {
             RealmModel realm = session.getContext().getRealm();
             String tokenString = readAccessTokenFrom(request);
+            EventBuilder eventBuilder = new EventBuilder(realm, session, session.getContext().getConnection());
             TokenVerifier<AccessToken> verifier = TokenVerifier.create(tokenString, AccessToken.class).withChecks(
                     TokenVerifier.IS_ACTIVE,
                     new TokenVerifier.RealmUrlCheck(Urls.realmIssuer(session.getContext().getUri().getBaseUri(), realm.getName()))
@@ -116,7 +119,7 @@ public class ConfigurableTokenResourceProvider implements RealmResourceProvider 
             SignatureVerifierContext verifierContext = session.getProvider(SignatureProvider.class, verifier.getHeader().getAlgorithm().name()).verifier(verifier.getHeader().getKeyId());
             verifier.verifierContext(verifierContext);
             AccessToken accessToken = verifier.verify().getToken();
-            if (!tokenManager.checkTokenValidForIntrospection(session, realm, accessToken, false)) {
+            if (!tokenManager.checkTokenValidForIntrospection(session, realm, accessToken, false, eventBuilder)) {
                 throw new VerificationException("introspection_failed");
             }
             return accessToken;

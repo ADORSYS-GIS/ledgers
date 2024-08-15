@@ -94,7 +94,7 @@ class PaymentIT extends BaseContainersTest<ManagementStage, OperationStage, Stat
                 .paymentStatus().pathStr("transactionStatus", status -> assertThat(status).isEqualTo("ACCP"));
     }
     @Test
-    void blockUserAndFailedPayment() {
+    void  blockUserAndFailedPayment() {
         given()
                 .obtainTokenFromKeycloak(ADMIN_LOGIN, ADMIN_PASSWORD)
                 .getUserIdByLogin(PSU_LOGIN)
