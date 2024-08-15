@@ -345,18 +345,18 @@ Release artifacts to private repo (tags):
     JAVA_TOOL_OPTIONS: "-Djavax.net.ssl.trustStorePassword=changeit -XX:MaxRAM=3G"
   <<: *release_java_private
 
-Clone to github:
-  stage: "Clone to github"
-  <<: *sync_changes_github
-  image:
-    name: alpine/git:latest
-    entrypoint: [ "" ]
-  only:
-    - develop
-    - /^release-5\..*/
-  except:
-    - schedules
-  variables:
-    GITHUB_USERNAME: adorsys
-    GITHUB_REPOSITORY: adorsys/ledgers
-    GITHUB_PROJECT_CLONE_VERSION: "5"
+#Clone to github:
+#  stage: "Clone to github"
+#  <<: *sync_changes_github
+#  image:
+#    name: alpine/git:latest
+#    entrypoint: [ "" ]
+#  only:
+#    - develop
+#    - /^release-5\..*/
+#  except:
+#    - schedules
+#  variables:
+#    GITHUB_USERNAME: adorsys
+#    GITHUB_REPOSITORY: adorsys/ledgers
+#    GITHUB_PROJECT_CLONE_VERSION: "5"
