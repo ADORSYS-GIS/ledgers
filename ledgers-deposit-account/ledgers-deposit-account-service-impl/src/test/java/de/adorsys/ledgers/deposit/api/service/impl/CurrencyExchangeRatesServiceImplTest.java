@@ -112,7 +112,7 @@ class CurrencyExchangeRatesServiceImplTest {
         Currency uah = Currency.getInstance("UAH");
         // Then
         assertThrows(DepositModuleException.class, () -> {
-            List<ExchangeRateBO> result = currencyExchangeRatesService.getExchangeRates(EUR, EUR, uah);
+            currencyExchangeRatesService.getExchangeRates(EUR, EUR, uah);
         });
     }
 

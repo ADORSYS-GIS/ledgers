@@ -62,8 +62,9 @@ class LoadCoaIFRSIT {
         LedgerAccountBO[] ledgerAccounts = mapper.readValue(inputStream, LedgerAccountBO[].class);
         for (LedgerAccountBO ledgerAccount : ledgerAccounts) {
 
-            if (ledgerAccount.getName() == null)
+            if (ledgerAccount.getName() == null) {
                 fail("Missing account name for " + ledgerAccount.getShortDesc());
+            }
             String name = ledgerAccount.getName();
 
             LedgerAccountBO parent = null;

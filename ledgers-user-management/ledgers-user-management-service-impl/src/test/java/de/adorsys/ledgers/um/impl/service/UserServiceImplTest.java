@@ -44,6 +44,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@SuppressWarnings("PMD.TooManyMethods")
 class UserServiceImplTest {
     private static final List<AccountAccess> accountAccessList = readListYml(AccountAccess.class, "account-access.yml");
     private static final List<AccountAccessBO> accountAccessBOList = readListYml(AccountAccessBO.class, "account-access.yml");
@@ -395,7 +396,7 @@ class UserServiceImplTest {
         try {
             return YamlReader.getInstance().getListFromResource(UserConverterTest.class, fileName, aClass);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //NOPMD
         }
         return null;
     }
@@ -404,7 +405,7 @@ class UserServiceImplTest {
         try {
             return reader.getObjectFromResource(getClass(), "user-BO.yml", UserBO.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //NOPMD
         }
         return null;
     }
@@ -413,7 +414,7 @@ class UserServiceImplTest {
         try {
             return reader.getObjectFromResource(getClass(), "user-entity.yml", UserEntity.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //NOPMD
         }
         return null;
     }

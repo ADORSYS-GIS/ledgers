@@ -76,7 +76,6 @@ class KeycloakAuthMapperTest {
         assertEquals(NAME, result.getAccessTokenObject().getLogin());
         assertEquals(SUBJECT, result.getAccessTokenObject().getSub());
         assertEquals(UserRoleTO.CUSTOMER, result.getAccessTokenObject().getRole());
-        System.out.println();
     }
 
     private AccessToken getAccessToken() {

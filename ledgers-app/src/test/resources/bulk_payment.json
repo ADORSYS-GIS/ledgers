@@ -1,0 +1,87 @@
+{
+  "paymentId": "%ID%",
+  "batchBookingPreferred": null,
+  "requestedExecutionDate": null,
+  "requestedExecutionTime": null,
+  "paymentType": "BULK",
+  "paymentProduct": "sepa-credit-transfers",
+  "startDate": null,
+  "endDate": null,
+  "executionRule": null,
+  "frequency": null,
+  "dayOfExecution": null,
+  "debtorAccount": {
+    "iban": "%PAYMENT_IBAN%",
+    "bban": null,
+    "pan": null,
+    "maskedPan": null,
+    "msisdn": null,
+    "currency": "EUR"
+  },
+  "debtorName": null,
+  "debtorAgent": null,
+  "transactionStatus": null,
+  "targets": [
+    {
+      "paymentId": null,
+      "endToEndIdentification": "WBG-123456779",
+      "instructedAmount": {
+        "currency": "EUR",
+        "amount": 0.01
+      },
+      "creditorAccount": {
+        "iban": "DE38760700240320465700",
+        "bban": null,
+        "pan": null,
+        "maskedPan": null,
+        "msisdn": null,
+        "currency": "EUR"
+      },
+      "creditorAgent": "AAAADEBBXXX",
+      "creditorName": "WBG",
+      "creditorAddress": {
+        "street": "WBG Straße",
+        "buildingNumber": "56",
+        "city": "Nürnberg",
+        "postalCode": "90543",
+        "country": "DE",
+        "line1": null,
+        "line2": null
+      },
+      "purposeCode": null,
+      "remittanceInformationUnstructuredArray": ["Ref. Number WBG-1222"],
+      "remittanceInformationStructuredArray": null
+    },
+    {
+      "paymentId": null,
+      "endToEndIdentification": "WBG-123456789",
+      "instructedAmount": {
+        "currency": "EUR",
+        "amount": 0.01
+      },
+      "creditorAccount": {
+        "iban": "DE80760700240271232400",
+        "bban": null,
+        "pan": null,
+        "maskedPan": null,
+        "msisdn": null,
+        "currency": "EUR"
+      },
+      "creditorAgent": "AAAADEBBXXX",
+      "creditorName": "WBG",
+      "creditorAddress": {
+        "street": "WBG Straße",
+        "buildingNumber": "56",
+        "city": "Nürnberg",
+        "postalCode": "90543",
+        "country": "DE",
+        "line1": null,
+        "line2": null
+      },
+      "purposeCode": null,
+      "remittanceInformationUnstructuredArray": ["Ref. Number WBG-1222"],
+      "remittanceInformationStructuredArray": null
+    }
+  ],
+  "accountId": null
+}

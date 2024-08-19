@@ -46,6 +46,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
+@SuppressWarnings("PMD.SignatureDeclareThrowsException")
 class DataMgmtStaffResourceTest {
 
     private static final String ACCOUNT_ID = "account-id";

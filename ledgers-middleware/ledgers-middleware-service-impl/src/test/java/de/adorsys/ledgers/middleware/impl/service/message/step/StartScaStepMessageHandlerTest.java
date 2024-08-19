@@ -21,6 +21,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SuppressWarnings("CPD-START")
 class StartScaStepMessageHandlerTest {
     private static final String OP_ID = "12345";
 

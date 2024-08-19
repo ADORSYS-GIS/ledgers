@@ -7,17 +7,14 @@ package de.adorsys.ledgers.middleware.impl.converter;
 
 import de.adorsys.ledgers.deposit.api.domain.BalanceBO;
 import de.adorsys.ledgers.deposit.api.domain.DepositAccountBO;
-import de.adorsys.ledgers.middleware.api.domain.account.AccountBalanceTO;
 import de.adorsys.ledgers.middleware.api.domain.account.AccountDetailsTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 import pro.javatar.commons.reader.YamlReader;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 class AccountDetailsMapperTest {

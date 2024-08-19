@@ -6,32 +6,12 @@
 package de.adorsys.ledgers.middleware.rest.mockbank;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.springtestdbunit.DbUnitTestExecutionListener;
-import com.github.springtestdbunit.annotation.DatabaseOperation;
-import com.github.springtestdbunit.annotation.DatabaseTearDown;
-import de.adorsys.ledgers.middleware.LedgersMiddlewareRestApplication;
 import de.adorsys.ledgers.middleware.api.domain.um.BearerTokenTO;
-import org.hamcrest.core.StringContains;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 
 /*@ExtendWith(SpringExtension.class)
@@ -42,7 +22,8 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
         DbUnitTestExecutionListener.class})
 @DatabaseTearDown(value = {"MiddlewareServiceImplIT-db-delete.xml"}, type = DatabaseOperation.DELETE_ALL)*/
 class AppManagementResourceIT {
-    private ObjectMapper mapper = new ObjectMapper();
+    private ObjectMapper mapper = new ObjectMapper(); //NOPMD
+
     @Autowired
     private WebApplicationContext wac;
     private MockMvc mockMvc;
@@ -66,7 +47,7 @@ class AppManagementResourceIT {
     }
 
     @Test*/
-    void givenInitURI_whenMockMVC_thenReturnsVoid() throws Exception {
+    void givenInitURI_whenMockMVC_thenReturnsVoid() throws Exception {  //NOPMD
 
         this.mockMvc.perform(
                 MockMvcRequestBuilders.post("/management/app/init")

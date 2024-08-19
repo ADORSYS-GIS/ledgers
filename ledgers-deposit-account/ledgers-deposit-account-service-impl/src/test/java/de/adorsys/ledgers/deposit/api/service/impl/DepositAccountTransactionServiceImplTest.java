@@ -54,6 +54,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@SuppressWarnings({"PMD.TooManyMethods", "CPD-START"})
 class DepositAccountTransactionServiceImplTest {
     private static final String ACCOUNT_ID = "ACCOUNT_ID";
     private static final LocalDateTime REQUEST_TIME = LocalDateTime.now();
@@ -62,7 +63,7 @@ class DepositAccountTransactionServiceImplTest {
     private static final Currency CHF = Currency.getInstance("CHF");
     private static final Currency GBP = Currency.getInstance("GBP");
     private static final String IBAN = "DE1234567890";
-    private static int PMT_ID = 0;
+    private static int PMT_ID = 0; //NOPMD
 
     @InjectMocks
     private DepositAccountTransactionServiceImpl transactionService;
@@ -480,11 +481,6 @@ class DepositAccountTransactionServiceImplTest {
         assertThat(debitLines).hasSize(3);
         assertEquals(debitLines.stream().map(PostingLineBO::getDebitAmount).reduce(BigDecimal::add),
                      creditLines.stream().map(PostingLineBO::getCreditAmount).reduce(BigDecimal::add));
-
-        lines.forEach(l -> checkLine(l, posting));
-    }
-
-    private void checkLine(PostingLineBO l, PostingBO posting) {
     }
 
     private PaymentTargetDetailsBO getExpectedDetails(PaymentBO payment, String trId, List<ExchangeRateBO> rates) {

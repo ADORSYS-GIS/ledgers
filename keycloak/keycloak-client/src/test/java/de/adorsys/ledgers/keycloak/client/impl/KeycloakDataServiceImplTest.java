@@ -14,27 +14,41 @@ import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.keycloak.admin.client.Keycloak;
-import org.keycloak.admin.client.resource.*;
+import org.keycloak.admin.client.resource.AuthenticationManagementResource;
+import org.keycloak.admin.client.resource.ClientScopesResource;
+import org.keycloak.admin.client.resource.ClientsResource;
+import org.keycloak.admin.client.resource.RealmResource;
+import org.keycloak.admin.client.resource.RealmsResource;
+import org.keycloak.admin.client.resource.RoleMappingResource;
+import org.keycloak.admin.client.resource.RoleResource;
+import org.keycloak.admin.client.resource.RoleScopeResource;
+import org.keycloak.admin.client.resource.RolesResource;
+import org.keycloak.admin.client.resource.UserResource;
+import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.admin.client.token.TokenManager;
 import org.keycloak.representations.AccessTokenResponse;
+import org.keycloak.representations.idm.RequiredActionProviderRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@SuppressWarnings("CPD-START")
 class KeycloakDataServiceImplTest {
 
     @InjectMocks
@@ -62,6 +76,11 @@ class KeycloakDataServiceImplTest {
         when(realmResource.roles()).thenReturn(rolesResource);
         ClientsResource clientResource = mock(ClientsResource.class);
         when(realmResource.clients()).thenReturn(clientResource);
+        RequiredActionProviderRepresentation mockAction = mock(RequiredActionProviderRepresentation.class);
+        when(mockAction.getAlias()).thenReturn("VERIFY_PROFILE");
+        AuthenticationManagementResource authenticationManagementResource = mock(AuthenticationManagementResource.class);
+        when(realmResource.flows()).thenReturn(authenticationManagementResource);
+        when(authenticationManagementResource.getRequiredActions()).thenReturn(List.of(mockAction));
         when(clientResource.create(any())).thenReturn(Response.created(new URI("")).build());
 
         service.createDefaultSchema();
@@ -83,7 +102,6 @@ class KeycloakDataServiceImplTest {
 
     @Test
     void clientExists_nf() {
-        RealmResource realmResource = mock(RealmResource.class);
         when(keycloak.realm(any())).thenThrow(NotFoundException.class);
 
         boolean exists = service.clientExists();
@@ -153,7 +171,6 @@ class KeycloakDataServiceImplTest {
         when(keycloak.realm(any())).thenReturn(realmResource);
         UsersResource usersResource = mock(UsersResource.class);
         when(realmResource.users()).thenReturn(usersResource);
-        UserResource userResource = mock(UserResource.class);
         when(usersResource.search(any(), eq(true))).thenReturn(Collections.singletonList(new UserRepresentation()));
 
         boolean exists = service.userExists("login");

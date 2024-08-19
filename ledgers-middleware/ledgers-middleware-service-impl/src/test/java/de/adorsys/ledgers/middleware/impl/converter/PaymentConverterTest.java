@@ -86,7 +86,7 @@ class PaymentConverterTest {
         try {
             return mapper.readValue(PaymentConverterTest.class.getResourceAsStream(file), aClass);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //NOPMD
             throw new IllegalStateException("Resource file not found", e);
         }
     }

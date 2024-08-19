@@ -11,7 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.adorsys.ledgers</groupId>
     <artifactId>ledgers</artifactId>
-    <version>5.1</version>
+    <version>6.0</version>
 
     <modules>
         <module>ledgers-app</module>
@@ -118,9 +118,9 @@
         <maven-pmd-plugin.version>3.21.0</maven-pmd-plugin.version>
 
         <!-- Spring-related versions -->
-        <spring-boot-dependencies.version>3.2.0</spring-boot-dependencies.version>
+        <spring-boot-dependencies.version>3.2.7</spring-boot-dependencies.version>
         <spring-cloud-starter-openfeign.version>4.1.0</spring-cloud-starter-openfeign.version>
-        <spring-security.version>6.1.3</spring-security.version>
+        <spring-security.version>6.1.9</spring-security.version>
         <spring-plugin.version>3.0.0</spring-plugin.version>
         <spring-test.version>6.1.3</spring-test.version>
 
@@ -130,12 +130,12 @@
         <commons-io.version>2.8.0</commons-io.version>
         <jetbrains.annotations.version>15.0</jetbrains.annotations.version>
         <dbunit.version>2.6.0</dbunit.version>
-        <keycloak.version>22.0.3</keycloak.version>
+        <keycloak.version>24.0.5</keycloak.version>
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <javatar-commons.version>0.7</javatar-commons.version>
         <h2database.version>2.2.220</h2database.version>
-        <postgresql.version>42.3.8</postgresql.version>
+        <postgresql.version>42.3.10</postgresql.version>
         <datecalc-common.version>1.4.0</datecalc-common.version>
         <datecalc-jdk8.version>1.4.0</datecalc-jdk8.version>
         <jaxb2-maven-plugin.version>2.5.0</jaxb2-maven-plugin.version>
@@ -143,8 +143,9 @@
         <jackson-annotations.version>2.15.3</jackson-annotations.version>
         <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
         <feign-slf4j.version>10.7.4</feign-slf4j.version>
-        <testcontainers.version>1.19.3</testcontainers.version>
+        <testcontainers.version>1.19.4</testcontainers.version>
         <testcontainers-keycloak.version>1.3.3</testcontainers-keycloak.version>
+        <jgiven-spring-junit5.version>1.2.5</jgiven-spring-junit5.version>
         <jboss-jaxrs-api_2.0_spec.version>1.0.1.Final</jboss-jaxrs-api_2.0_spec.version>
         <jboss-logging.version>3.3.1.Final</jboss-logging.version>
         <classgraph.version>4.8.139</classgraph.version>
@@ -155,6 +156,7 @@
         <guava.version>32.0.0-jre</guava.version>
         <hamcrest-library.version>1.3</hamcrest-library.version>
         <spring-test-dbunit.version>1.3.0</spring-test-dbunit.version>
+        <testcontainers.postgresql.version>1.19.0</testcontainers.postgresql.version>
 
         <commons-validator.version>1.7</commons-validator.version>
         <!-- automatically run annotation processors within the incremental compilation -->
@@ -530,6 +532,7 @@
                     <rulesets>
                         <ruleset>${ruleset.basedir}/qa/pmd/pmd-ruleset.xml</ruleset>
                     </rulesets>
+                    <includeTests>true</includeTests>
                     <failOnViolation>true</failOnViolation>
                     <printFailingErrors>true</printFailingErrors>
                     <excludes>
@@ -616,6 +619,10 @@
                 <version>${maven-failsafe-plugin.version}</version>
                 <configuration>
                     <skip>${skipITs}</skip>
+                    <classesDirectory>${project.build.outputDirectory}</classesDirectory>
+                    <includes>
+                        <include>**/*IT.java</include>
+                    </includes>
                 </configuration>
                 <executions>
                     <execution>

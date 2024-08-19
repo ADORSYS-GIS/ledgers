@@ -142,7 +142,7 @@ class AccessServiceTest {
     }
 
     @Test
-    void exchangeTokenEndSca_ms_enabled_complete() throws NoSuchFieldException {
+    void exchangeTokenEndSca_ms_enabled_complete() {
         exchangeTokenTest(true, false, SCOPE_PARTIAL_ACCESS);
         exchangeTokenTest(true, true, SCOPE_FULL_ACCESS);
         exchangeTokenTest(false, false, SCOPE_FULL_ACCESS);
@@ -151,7 +151,7 @@ class AccessServiceTest {
         verify(tokenService, times(3)).exchangeToken(any(), any(), eq(SCOPE_FULL_ACCESS));
     }
 
-    private void exchangeTokenTest(boolean multiLevel, boolean authCompleted, String expectedScope) {
+    private void exchangeTokenTest(boolean multiLevel, boolean authCompleted, String expectedScope) { //NOPMD TODO check why scope is null in result
         ReflectionTestUtils.setField(service, "multilevelScaEnable", multiLevel);
         when(tokenService.exchangeToken(any(), any(), any())).thenReturn(new BearerTokenTO());
         BearerTokenTO result = service.exchangeTokenEndSca(authCompleted, "token");

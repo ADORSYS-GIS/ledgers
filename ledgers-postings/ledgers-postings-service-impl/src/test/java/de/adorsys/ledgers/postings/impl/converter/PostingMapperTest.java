@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 @ExtendWith(MockitoExtension.class)
+@SuppressWarnings("CPD-START")
 class PostingMapperTest {
     private static final String OP_ID = "oprId";
     private static final LocalDateTime DATE_TIME = LocalDateTime.of(2018, 12, 20, 12, 12);

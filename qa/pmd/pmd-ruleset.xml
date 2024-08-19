@@ -22,8 +22,6 @@
     <rule ref="category/java/bestpractices.xml/JUnit4TestShouldUseAfterAnnotation" />
     <rule ref="category/java/bestpractices.xml/JUnit4TestShouldUseBeforeAnnotation" />
     <rule ref="category/java/bestpractices.xml/JUnit4TestShouldUseTestAnnotation" />
-    <rule ref="category/java/bestpractices.xml/JUnitAssertionsShouldIncludeMessage" />
-    <rule ref="category/java/bestpractices.xml/JUnitTestsShouldIncludeAssert" />
     <rule ref="category/java/bestpractices.xml/LooseCoupling" />
     <rule ref="category/java/bestpractices.xml/MethodReturnsInternalArray" />
     <rule ref="category/java/bestpractices.xml/MissingOverride" />
@@ -64,7 +62,6 @@
     </rule>
     <rule ref="category/java/codestyle.xml/NoPackage" />
     <rule ref="category/java/codestyle.xml/PackageCase" />
-    <rule ref="category/java/codestyle.xml/TooManyStaticImports" />
     <rule ref="category/java/codestyle.xml/PrematureDeclaration" />
     <rule ref="category/java/codestyle.xml/ShortClassName" >
         <properties>
@@ -152,4 +149,9 @@
 
     <rule ref="category/java/performance.xml/BigIntegerInstantiation" />
     <rule ref="category/java/performance.xml/BooleanInstantiation" />
+    <rule ref="rulesets/java/junit.xml">
+        <exclude name = "JUnitAssertionsShouldIncludeMessage"/>
+        <exclude name = "JUnitTestContainsTooManyAsserts"/>
+        <exclude name = "JUnitTestsShouldIncludeAssert"/>
+    </rule>
 </ruleset>

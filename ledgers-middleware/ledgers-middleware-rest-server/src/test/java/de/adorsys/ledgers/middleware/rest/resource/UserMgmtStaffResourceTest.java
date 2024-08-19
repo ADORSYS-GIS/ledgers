@@ -50,6 +50,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
+@SuppressWarnings("PMD.SignatureDeclareThrowsException")
 class UserMgmtStaffResourceTest {
 
     private static final String BRANCH = "branchId";

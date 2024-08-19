@@ -5,6 +5,7 @@
 
 package de.adorsys.ledgers.um.rest.controller;
 
+import de.adorsys.ledgers.um.api.domain.ScaUserDataBO;
 import de.adorsys.ledgers.um.api.domain.UserBO;
 import de.adorsys.ledgers.um.api.service.UserService;
 import org.junit.jupiter.api.Test;
@@ -31,6 +32,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
+@SuppressWarnings("PMD.SignatureDeclareThrowsException")
 class UserResourceTest {
 
     private static final String USER_LOGIN = "vne";
@@ -102,7 +104,7 @@ class UserResourceTest {
         when(userService.updateScaData(any(), anyString())).thenReturn(userBO);
 
         String jsonScaUserData = JsonReader.getInstance().getStringFromFile("de/adorsys/ledgers/um/rest/controller/scaUserData.json");
-        List scaUserData = JsonReader.getInstance().getObjectFromString(jsonScaUserData, ArrayList.class);
+        List<ScaUserDataBO> scaUserData = JsonReader.getInstance().getObjectFromString(jsonScaUserData, ArrayList.class); //NOPMD
 
         // When
         ResponseEntity actual = userResource.updateUserScaData(USER_ID, scaUserData);
@@ -135,7 +137,7 @@ class UserResourceTest {
         try {
             return this.reader.getObjectFromFile("de/adorsys/ledgers/um/rest/controller/user-BO.yml", UserBO.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //NOPMD
         }
         return null;
     }

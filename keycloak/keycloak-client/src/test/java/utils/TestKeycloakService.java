@@ -12,6 +12,7 @@ import org.keycloak.representations.idm.*;
 
 import java.util.*;
 
+@SuppressWarnings("PMD.TestClassWithoutTestCases")
 public class TestKeycloakService {
     private final Keycloak keycloak;
 

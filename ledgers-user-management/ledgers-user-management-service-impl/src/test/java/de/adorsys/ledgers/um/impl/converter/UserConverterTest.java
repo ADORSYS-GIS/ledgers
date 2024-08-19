@@ -20,7 +20,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+@SuppressWarnings("PMD.TooManyMethods")
 public class UserConverterTest {
     public static final String USER_ID = "someID";
     private static final String USER_EMAIL = "spe@adorsys.com.ua";
@@ -227,7 +227,7 @@ public class UserConverterTest {
         try {
             return YamlReader.getInstance().getListFromResource(UserConverterTest.class, fileName, aClass);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //NOPMD
         }
         return null;
     }

@@ -97,7 +97,6 @@ class PostingRepositoryIT {
         // Then
         assumeTrue(posting != null);
         assertEquals("Zd0ND5YwSzGwIfZilhumPg_POSTING2", posting.getId());
-        System.out.println(posting.getId());
     }
 
     @Test

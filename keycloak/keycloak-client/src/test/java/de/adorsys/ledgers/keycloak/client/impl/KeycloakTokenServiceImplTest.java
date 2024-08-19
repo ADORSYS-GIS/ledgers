@@ -66,10 +66,4 @@ class KeycloakTokenServiceImplTest {
         token.setOtherClaims("active", true);
         return ResponseEntity.ok(token);
     }
-
-    @Test
-    void validate() {
-        //already checked with previous test
-        assertTrue(true);
-    }
 }

@@ -39,6 +39,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
+@SuppressWarnings("PMD.SignatureDeclareThrowsException")
 class OperationInitiationResourceTest {
 
     private static final String USER_ID = "kjk345knkj45";

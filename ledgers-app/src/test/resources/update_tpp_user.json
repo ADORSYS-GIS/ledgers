@@ -1,0 +1,12 @@
+{
+  "id": "%USER_ID%",
+  "login": "%LOGIN%",
+  "email": "%EMAIL%",
+  "pin": "11111",
+  "userRoles": [
+    "STAFF"
+  ],
+  "branch": "%USER_ID%",
+  "blocked": false,
+  "systemBlocked": false
+}

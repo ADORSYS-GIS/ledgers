@@ -20,6 +20,7 @@ import org.springframework.security.config.annotation.method.configuration.Globa
 @Configuration
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@SuppressWarnings("PMD.TestClassWithoutTestCases")
 public class TestMethodSecurityConfig extends GlobalMethodSecurityConfiguration {
     private final MiddlewareAccountManagementService middlewareAccountService;
     private final MiddlewarePaymentService middlewareService;

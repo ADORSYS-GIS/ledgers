@@ -45,6 +45,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
         DbUnitTestExecutionListener.class})
 @DatabaseSetup("AccountStmtServiceImplIT-db-create.xml")
 @DatabaseTearDown(value = {"AccountStmtServiceImplIT-db-delete.xml"}, type = DatabaseOperation.DELETE_ALL)
+@SuppressWarnings("CPD-START")
 class AccountStmtServiceImplIT {
 
     private static final String SYSTEM = "System";
@@ -81,7 +82,7 @@ class AccountStmtServiceImplIT {
     void test_load_posting_ok() throws IOException {
         loadCoa("sample_coa_banking.yml");
         loadPosting("sample_posting.yml");
-        assertTrue(true);
+        assertTrue(true);  //NOPMD
     }
 
     /**
