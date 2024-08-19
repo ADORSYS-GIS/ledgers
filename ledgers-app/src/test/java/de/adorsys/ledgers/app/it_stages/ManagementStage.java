@@ -29,14 +29,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @JGivenStage
+@SuppressWarnings("PMD.TooManyMethods")
 public class ManagementStage extends BaseStage<ManagementStage> {
 
     private static final String UPLOAD_DATA = "/staff-access/data/upload";
     private static final String DELETE_USER_RESOURCE = "/staff-access/data/user/{userId}";
     private static final String USERS_RESOURCE_ADMIN = "/admin/user";
     private static final String USERS_RESOURCE_STAFF = "staff-access/users";
+    private static final String STAFF_BRANCH_RESOURCE = "/staff-access/data/branch/{branchId}";
     private static final String GET_ALL_USERS = "/admin/users/all";
     private static final String ACCOUNTS_RESOURCE = "/staff-access/accounts";
+    private static final String ACCOUNTS_MULTILEVEL_RESOURCE = "/users/multilevel";
+    private static final String ACC_ACCESS = "/staff-access/users/access/{userId}";
     private static final String ACCOUNT_BY_IBAN = "/staff-access/accounts/acc/acc";
     private static final String ACCOUNT_DETAIL = "/staff-access/accounts/{accountId}";
     private static final String DEPOSIT_CASH_RESOURCE = "/staff-access/accounts/{accountId}/cash";
@@ -47,6 +51,7 @@ public class ManagementStage extends BaseStage<ManagementStage> {
     private static final String MODIFY_USER_RESOURCE_AS_STAFF = "/staff-access/users/modify";
     private static final String MODIFY_SELF_RESOURCE = "/users/me";
     private static final String CUSTOMERS_RESOURCE_LOGIN = "/staff-access/users/logins";
+    private static final String STAFF_RESOURCE_SCA = "/staff-access/users/{userId}/sca-data";
 
     @Autowired
     private NamedParameterJdbcOperations jdbcOperations;
@@ -82,6 +87,21 @@ public class ManagementStage extends BaseStage<ManagementStage> {
 
         this.response = resp;
         this.bearerToken = getAccessToken(resp);
+        return self();
+    }
+
+    public ManagementStage modifyScaUser(String resourceSca, String smtpMethodValue) {
+        var resp = RestAssured.given()
+                           .header(AUTHORIZATION, this.bearerToken)
+                           .header(AUTHORIZATION, bearerToken)
+                           .contentType(ContentType.JSON)
+                           .body(resource(resourceSca, Map.of("METHOD_VALUE", smtpMethodValue)))
+                           .when()
+                           .post(STAFF_RESOURCE_SCA, userId)
+                           .then()
+                           .statusCode(HttpStatus.CREATED.value())
+                           .extract();
+        this.response = resp;
         return self();
     }
 
@@ -133,6 +153,19 @@ public class ManagementStage extends BaseStage<ManagementStage> {
                            .header(AUTHORIZATION, bearerToken)
                            .when()
                            .delete(DELETE_USER_RESOURCE, userId)
+                           .then()
+                           .statusCode(HttpStatus.OK.value())
+                           .and()
+                           .extract();
+
+        this.response = resp;
+        return self();
+    }
+    public ManagementStage deleteTppWithAllRelatedData(String branchId) {
+        var resp = RestAssured.given()
+                           .header(AUTHORIZATION, bearerToken)
+                           .when()
+                           .delete(STAFF_BRANCH_RESOURCE, branchId)
                            .then()
                            .statusCode(HttpStatus.OK.value())
                            .and()
@@ -201,8 +234,24 @@ public class ManagementStage extends BaseStage<ManagementStage> {
                           .extract();
 
         this.response = resp;
-        this.userId = this.response.path("findAll { o -> o.login.equals(\""+ login +"\") }[0].id");
+        this.userId = this.response.path("findAll { o -> o.login.equals(\"%s\") }[0].id".formatted(login));
         this.bearerToken = oldToken;
+        return self();
+    }
+
+    public ManagementStage multilevel(String login, String iban) {
+        var resp = RestAssured.given()
+                           .header(AUTHORIZATION, this.bearerToken)
+                           .contentType(MediaType.APPLICATION_JSON_VALUE)
+                           .when()
+                           .queryParams("login", login, "ibanParam", iban)
+                           .get(ACCOUNTS_MULTILEVEL_RESOURCE)
+                           .then()
+                           .statusCode(HttpStatus.OK.value())
+                           .and()
+                           .extract();
+
+        this.response = resp;
         return self();
     }
 
@@ -230,6 +279,36 @@ public class ManagementStage extends BaseStage<ManagementStage> {
                            .queryParams("userId", userId)
                            .when()
                            .post(ACCOUNTS_RESOURCE)
+                           .then()
+                           .statusCode(HttpStatus.OK.value())
+                           .and()
+                           .extract();
+        accountByIban(iban);
+        this.response = resp;
+        return self();
+    }
+
+public ManagementStage updateAccAccess(String resource, String iban) {
+    var resp = RestAssured.given()
+                       .header(AUTHORIZATION, this.bearerToken)
+                       .contentType(MediaType.APPLICATION_JSON_VALUE)
+                       .body(resource(resource, Map.of("IBAN", iban, "ACC_ID", this.accountId)))
+                       .when()
+                       .put(ACC_ACCESS, this.userId)
+                       .then()
+                       .statusCode(HttpStatus.OK.value())
+                       .and()
+                       .extract();
+    accountByIban(iban);
+    this.response = resp;
+    return self();
+}
+    public ManagementStage getAccountForUser() {
+        var resp = RestAssured.given()
+                           .header(AUTHORIZATION, this.bearerToken)
+                           .contentType(MediaType.APPLICATION_JSON_VALUE)
+                           .when()
+                           .get(ACCOUNTS_RESOURCE)
                            .then()
                            .statusCode(HttpStatus.OK.value())
                            .and()

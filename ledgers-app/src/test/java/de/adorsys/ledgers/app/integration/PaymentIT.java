@@ -4,12 +4,13 @@
  */
 
 package de.adorsys.ledgers.app.integration;
+
 import de.adorsys.ledgers.app.BaseContainersTest;
 import de.adorsys.ledgers.app.LedgersApplication;
 import de.adorsys.ledgers.app.TestDBConfiguration;
 import de.adorsys.ledgers.app.it_stages.ManagementStage;
-import de.adorsys.ledgers.app.it_stages.StatusStage;
 import de.adorsys.ledgers.app.it_stages.OperationStage;
+import de.adorsys.ledgers.app.it_stages.StatusStage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +18,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 import java.util.List;
 import static de.adorsys.ledgers.app.Const.ADMIN_LOGIN;
 import static de.adorsys.ledgers.app.Const.ADMIN_PASSWORD;
@@ -27,6 +27,7 @@ import static de.adorsys.ledgers.app.Const.PSU_LOGIN;
 import static de.adorsys.ledgers.app.Const.PSU_LOGIN_NEW;
 import static de.adorsys.ledgers.app.Const.PSU_PASSWORD;
 import static org.assertj.core.api.Assertions.assertThat;
+
 @ActiveProfiles({"testcontainers-it", "sandbox"})
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = LedgersApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -133,5 +134,30 @@ class PaymentIT extends BaseContainersTest<ManagementStage, OperationStage, Stat
                     assertThat(paymentTarget.size()).isEqualTo(2);
                     assertThat(paymentTarget).containsAll(BULK_PAYMENT_CREDITORS_IBAN);
                 });
+    }
+
+    @Test
+    void blockUnblockUserAndProceedPayment() {
+        given()
+                .obtainTokenFromKeycloak(ADMIN_LOGIN, ADMIN_PASSWORD)
+                .getUserIdByLogin(PSU_LOGIN)
+                .changeStatusUser()
+                .getAllUsers()
+                .path("findAll { o -> o.login.equals(\"" + PSU_LOGIN + "\") }[0].blocked", blocked -> assertThat(blocked).isEqualTo(true))
+                .changeStatusUser()
+                .getAllUsers()
+                .path("findAll { o -> o.login.equals(\"" + PSU_LOGIN + "\") }[0].blocked", blocked -> assertThat(blocked).isEqualTo(false))
+                .obtainTokenFromKeycloak(PSU_LOGIN, PSU_PASSWORD);
+
+        when()
+                .createSinglePayment("payment.json", "DE80760700240271232400")
+                .scaStart("sca_start_payment.json")
+                .listScaMethods()
+                .selectScaMethod("SMTP_OTP")
+                .reportChallengeValue(CHALLENGE_VALUE)
+                .getStatus().pathStr("scaStatus", stat -> assertThat(stat).isEqualTo("finalised"));
+
+        then()
+                .paymentStatus().pathStr("transactionStatus", status -> assertThat(status).isEqualTo("ACCP"));
     }
 }
