@@ -26,6 +26,7 @@
         <module>ledgers-jaxb-api</module>
         <module>keycloak</module>
         <module>ledgers-cleanup-service</module>
+        <module>ledgers-bank-account-access-management</module>
     </modules>
 
     <packaging>pom</packaging>
