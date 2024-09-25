@@ -15,16 +15,16 @@ env:
 
 jobs:
   build:
-    name: Build Ledgers (openjdk 1.11)
+    name: Build Ledgers (openjdk 17)
     runs-on: ubuntu-latest
     steps:
       - name: Clone ledgers develop repository
         uses: actions/checkout@v2
 
-      - name: Set up JDK 11 for x64
+      - name: Set up JDK 17 for x64
         uses: actions/setup-java@v1
         with:
-          java-version: 1.11
+          java-version: 17
           architecture: x64
 
       - name: Cache Maven packages
@@ -45,10 +45,10 @@ jobs:
       - name: Clone ledgers develop repository
         uses: actions/checkout@v2
 
-      - name: Set up JDK 11 for x64
+      - name: Set up JDK 17 for x64
         uses: actions/setup-java@v1
         with:
-          java-version: 1.11
+          java-version: 17
           architecture: x64
 
       - name: Cache Maven packages
@@ -72,10 +72,10 @@ jobs:
       - name: Clone ledgers develop repository
         uses: actions/checkout@v2
 
-      - name: Set up JDK 11 for x64
+      - name: Set up JDK 17 for x64
         uses: actions/setup-java@v1
         with:
-          java-version: 1.11
+          java-version: 17
           architecture: x64
 
       - name: Cache Maven packages
@@ -99,10 +99,10 @@ jobs:
       - name: Clone ledgers develop repository
         uses: actions/checkout@v2
 
-      - name: Set up JDK 11 for x64
+      - name: Set up JDK 17 for x64
         uses: actions/setup-java@v1
         with:
-          java-version: 1.11
+          java-version: 17
           architecture: x64
 
       - name: Cache Maven packages
@@ -123,10 +123,10 @@ jobs:
       - name: Clone ledgers develop repository
         uses: actions/checkout@v2
 
-      - name: Set up JDK 11 for x64
+      - name: Set up JDK 17 for x64
         uses: actions/setup-java@v1
         with:
-          java-version: 1.11
+          java-version: 17
           architecture: x64
 
       - name: Cache Maven packages
@@ -160,10 +160,10 @@ jobs:
       - name: Clone ledgers develop repository
         uses: actions/checkout@v2
 
-      - name: Set up JDK 11 for x64
+      - name: Set up JDK 17 for x64
         uses: actions/setup-java@v1
         with:
-          java-version: 1.11
+          java-version: 17
           architecture: x64
 
       - name: Cache Maven packages
