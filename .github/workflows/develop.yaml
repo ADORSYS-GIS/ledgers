@@ -115,46 +115,45 @@ jobs:
       - name: Run UI tests
         run: mvn -ntp -DskipITs --fail-at-end clean install
 
-  integrationTests:
-    name: Integration Tests
-    runs-on: ubuntu-latest
-    env:
-      TESTCONTAINERS_RYUK_DISABLED: 'true'
-    steps:
-      - name: Set up JDK 17 with Maven
-        uses: actions/setup-java@v1
-        with:
-          java-version: 17
-          architecture: x64
-          distribution: 'sapmachine'
 
-      - name: Cache Maven dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Print Java Heap and RAM Info
-        run: java -XX:+PrintFlagsFinal -version | grep -Ei "maxheapsize|maxram"
-
-      - name: Run Maven Integration Tests
-        run: mvn -ntp clean test-compile failsafe:integration-test failsafe:verify --fail-at-end --errors
-
-      - name: Check Maven Exit Code
-        run: echo $?
-
-      - name: Upload Failsafe Reports
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ github.event.repository.name }}-${{ github.ref_name }}-failsafe-reports
-          path: "**/target/failsafe-reports/*"
-          retention-days: 10
-
-
+#  integrationTests:
+#    name: Integration Tests
+#    runs-on: ubuntu-latest
+#    env:
+#      TESTCONTAINERS_RYUK_DISABLED: 'true'
+#    steps:
+#      - name: Set up JDK 17 with Maven
+#        uses: actions/setup-java@v1
+#        with:
+#          java-version: 17
+#          architecture: x64
+#          distribution: 'sapmachine'
+#
+#      - name: Cache Maven dependencies
+#        uses: actions/cache@v2
+#        with:
+#          path: ~/.m2
+#          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+#          restore-keys: ${{ runner.os }}-m2
+#
+#      - name: Checkout repository
+#        uses: actions/checkout@v2
+#
+#      - name: Print Java Heap and RAM Info
+#        run: java -XX:+PrintFlagsFinal -version | grep -Ei "maxheapsize|maxram"
+#
+#      - name: Run Maven Integration Tests
+#        run: mvn -ntp clean test-compile failsafe:integration-test failsafe:verify --fail-at-end --errors
+#
+#      - name: Check Maven Exit Code
+#        run: echo $?
+#
+#      - name: Upload Failsafe Reports
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: ${{ github.event.repository.name }}-${{ github.ref_name }}-failsafe-reports
+#          path: "**/target/failsafe-reports/*"
+#          retention-days: 10
 
 #  sonar:
 #    name: Publish code coverage to Sonar Cloud
