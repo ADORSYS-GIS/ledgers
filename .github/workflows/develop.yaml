@@ -154,6 +154,7 @@ jobs:
           path: "**/target/failsafe-reports/*"
           retention-days: 10
 
+
 #  sonar:
 #    name: Publish code coverage to Sonar Cloud
 #    needs: build
