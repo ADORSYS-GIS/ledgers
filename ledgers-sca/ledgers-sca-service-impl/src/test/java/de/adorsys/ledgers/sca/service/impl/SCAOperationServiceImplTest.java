@@ -12,7 +12,7 @@ import de.adorsys.ledgers.sca.db.domain.AuthCodeStatus;
 import de.adorsys.ledgers.sca.db.domain.OpType;
 import de.adorsys.ledgers.sca.db.domain.SCAOperationEntity;
 import de.adorsys.ledgers.sca.db.repository.SCAOperationRepository;
-import de.adorsys.ledgers.sca.domain.*;
+import de.adorsys.ledgers.sca.domain.*;//NOPMD
 import de.adorsys.ledgers.sca.domain.sca.message.ScaMessage;
 import de.adorsys.ledgers.sca.service.AuthCodeGenerator;
 import de.adorsys.ledgers.sca.service.SCASender;
@@ -53,9 +53,9 @@ import static de.adorsys.ledgers.sca.db.domain.ScaStatus.FINALISED;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;//NOPMD
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.*;//NOPMD
 
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings({"PMD.TooManyMethods", "CPD-START"})

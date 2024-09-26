@@ -10,7 +10,7 @@ import de.adorsys.ledgers.middleware.api.domain.um.ScaUserDataTO;
 import de.adorsys.ledgers.middleware.api.domain.um.UserExtendedTO;
 import de.adorsys.ledgers.middleware.api.domain.um.UserRoleTO;
 import de.adorsys.ledgers.middleware.api.domain.um.UserTO;
-import de.adorsys.ledgers.um.api.domain.*;
+import de.adorsys.ledgers.um.api.domain.*;//NOPMD
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

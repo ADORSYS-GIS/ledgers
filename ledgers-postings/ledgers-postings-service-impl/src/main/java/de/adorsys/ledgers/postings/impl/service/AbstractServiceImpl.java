@@ -19,7 +19,7 @@ import de.adorsys.ledgers.postings.impl.converter.LedgerAccountMapper;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 
-import static de.adorsys.ledgers.util.exception.PostingErrorCode.*;
+import static de.adorsys.ledgers.util.exception.PostingErrorCode.*;//NOPMD
 
 @RequiredArgsConstructor
 public class AbstractServiceImpl {

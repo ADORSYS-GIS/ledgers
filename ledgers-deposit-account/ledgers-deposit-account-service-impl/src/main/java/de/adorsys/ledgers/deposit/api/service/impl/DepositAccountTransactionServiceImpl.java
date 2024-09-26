@@ -6,7 +6,7 @@
 package de.adorsys.ledgers.deposit.api.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.adorsys.ledgers.deposit.api.domain.*;
+import de.adorsys.ledgers.deposit.api.domain.*;//NOPMD
 import de.adorsys.ledgers.deposit.api.service.CurrencyExchangeRatesService;
 import de.adorsys.ledgers.deposit.api.service.DepositAccountConfigService;
 import de.adorsys.ledgers.deposit.api.service.DepositAccountService;

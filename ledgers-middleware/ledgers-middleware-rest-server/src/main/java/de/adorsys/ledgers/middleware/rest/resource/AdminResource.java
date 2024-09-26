@@ -32,7 +32,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static de.adorsys.ledgers.middleware.api.domain.um.UserRoleTO.*;
+import static de.adorsys.ledgers.middleware.api.domain.um.UserRoleTO.*;//NOPMD
 
 
 @RestController

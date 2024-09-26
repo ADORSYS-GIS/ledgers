@@ -5,7 +5,7 @@
 
 package de.adorsys.ledgers.middleware.api.service;
 
-import de.adorsys.ledgers.middleware.api.domain.account.*;
+import de.adorsys.ledgers.middleware.api.domain.account.*;//NOPMD//NOPMD
 import de.adorsys.ledgers.middleware.api.domain.payment.AmountTO;
 import de.adorsys.ledgers.middleware.api.domain.sca.SCAConsentResponseTO;
 import de.adorsys.ledgers.middleware.api.domain.sca.ScaInfoTO;

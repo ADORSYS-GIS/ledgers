@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.EnumSet;
 
-import static de.adorsys.ledgers.sca.domain.OpTypeBO.*;
+import static de.adorsys.ledgers.sca.domain.OpTypeBO.*;//NOPMD
 
 @Component
 public class InitiateOperationObjectStepMessageHandler implements StepMessageHandler{

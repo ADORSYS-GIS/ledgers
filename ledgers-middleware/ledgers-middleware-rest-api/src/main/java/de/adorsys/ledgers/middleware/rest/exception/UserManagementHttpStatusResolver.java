@@ -10,8 +10,8 @@ import org.springframework.http.HttpStatus;
 
 import java.util.EnumMap;
 
-import static de.adorsys.ledgers.util.exception.UserManagementErrorCode.*;
-import static org.springframework.http.HttpStatus.*;
+import static de.adorsys.ledgers.util.exception.UserManagementErrorCode.*;//NOPMD
+import static org.springframework.http.HttpStatus.*;//NOPMD
 
 public class UserManagementHttpStatusResolver {
     private static final EnumMap<UserManagementErrorCode, HttpStatus> container = new EnumMap<>(UserManagementErrorCode.class);

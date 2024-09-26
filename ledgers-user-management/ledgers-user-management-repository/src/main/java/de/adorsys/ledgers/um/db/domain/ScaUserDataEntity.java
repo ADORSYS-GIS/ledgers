@@ -8,7 +8,7 @@ package de.adorsys.ledgers.um.db.domain;
 import de.adorsys.ledgers.util.Ids;
 import lombok.Data;
 
-import jakarta.persistence.*;
+import jakarta.persistence.*;//NOPMD
 
 @Entity
 @Table(name = "sca_data")

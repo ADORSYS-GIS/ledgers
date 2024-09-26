@@ -5,7 +5,7 @@
 
 package de.adorsys.ledgers.middleware.impl.converter;
 
-import de.adorsys.ledgers.deposit.api.domain.*;
+import de.adorsys.ledgers.deposit.api.domain.*;//NOPMD
 import de.adorsys.ledgers.middleware.api.domain.account.AccountDetailsExtendedTO;
 import de.adorsys.ledgers.middleware.api.domain.account.AccountDetailsTO;
 import de.adorsys.ledgers.middleware.api.domain.account.AccountStatusTO;

@@ -19,11 +19,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.*;//NOPMD
 
 import java.util.List;
 
-import static de.adorsys.ledgers.middleware.rest.utils.Constants.*;
+import static de.adorsys.ledgers.middleware.rest.utils.Constants.*;//NOPMD
 
 @Tag(name = "LDG010 - User Management (STAFF access)")
 public interface UserMgmtStaffResourceAPI {

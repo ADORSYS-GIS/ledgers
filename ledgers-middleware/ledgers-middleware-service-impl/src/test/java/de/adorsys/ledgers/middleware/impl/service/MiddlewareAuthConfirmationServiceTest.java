@@ -22,7 +22,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import static de.adorsys.ledgers.deposit.api.domain.TransactionStatusBO.PATC;
 import static de.adorsys.ledgers.deposit.api.domain.TransactionStatusBO.RJCT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.*;//NOPMD
 
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings("CPD-START")

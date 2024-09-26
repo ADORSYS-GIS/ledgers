@@ -10,12 +10,12 @@ import de.adorsys.ledgers.keycloak.client.model.KeycloakClient;
 import de.adorsys.ledgers.keycloak.client.model.KeycloakRealm;
 import de.adorsys.ledgers.keycloak.client.model.KeycloakUser;
 import org.junit.jupiter.api.Test;
-import org.keycloak.representations.idm.*;
+import org.keycloak.representations.idm.*;//NOPMD
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;//NOPMD
 
 class KeycloakDataMapperTest {
     private final KeycloakDataMapper mapper = Mappers.getMapper(KeycloakDataMapper.class);

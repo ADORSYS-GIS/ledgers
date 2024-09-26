@@ -5,7 +5,7 @@
 
 package de.adorsys.ledgers.deposit.api.service.impl;
 
-import de.adorsys.ledgers.deposit.api.domain.*;
+import de.adorsys.ledgers.deposit.api.domain.*;//NOPMD
 import de.adorsys.ledgers.deposit.api.service.CurrencyExchangeRatesService;
 import de.adorsys.ledgers.deposit.api.service.DepositAccountService;
 import de.adorsys.ledgers.deposit.api.service.DepositAccountTransactionService;
@@ -37,7 +37,7 @@ import java.util.stream.Stream;
 import static de.adorsys.ledgers.deposit.api.domain.PaymentTypeBO.SINGLE;
 import static de.adorsys.ledgers.deposit.api.domain.TransactionStatusBO.ACSP;
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.*;//NOPMD
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)

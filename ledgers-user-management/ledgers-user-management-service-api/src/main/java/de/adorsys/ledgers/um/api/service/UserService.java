@@ -5,7 +5,7 @@
 
 package de.adorsys.ledgers.um.api.service;
 
-import de.adorsys.ledgers.um.api.domain.*;
+import de.adorsys.ledgers.um.api.domain.*;//NOPMD
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

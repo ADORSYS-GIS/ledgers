@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import static de.adorsys.ledgers.middleware.rest.utils.Constants.*;
+import static de.adorsys.ledgers.middleware.rest.utils.Constants.*;//NOPMD
 
 @Tag(name = "LDG06 - Oauth authorisation")
 public interface OauthRestApi { //TODO Shall be removed after final migration to Keycloak

@@ -24,7 +24,7 @@ import java.util.function.Supplier;
 
 import static de.adorsys.ledgers.deposit.api.domain.PaymentTypeBO.BULK;
 import static de.adorsys.ledgers.deposit.api.domain.PaymentTypeBO.PERIODIC;
-import static de.adorsys.ledgers.middleware.impl.service.validation.PaymentFieldValidator.*;
+import static de.adorsys.ledgers.middleware.impl.service.validation.PaymentFieldValidator.*;//NOPMD
 
 @Slf4j
 @Service

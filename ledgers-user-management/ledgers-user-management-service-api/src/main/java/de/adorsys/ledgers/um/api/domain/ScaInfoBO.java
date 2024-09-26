@@ -5,7 +5,7 @@
 
 package de.adorsys.ledgers.um.api.domain;
 
-import lombok.*;
+import lombok.*;//NOPMD
 
 @Getter
 @Setter

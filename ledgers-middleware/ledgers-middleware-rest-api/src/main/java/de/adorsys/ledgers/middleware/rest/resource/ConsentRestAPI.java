@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import static de.adorsys.ledgers.middleware.rest.utils.Constants.*;
+import static de.adorsys.ledgers.middleware.rest.utils.Constants.*;//NOPMD
 
 @Tag(name = "LDG005 - Consent", description = "Provide an API to manage consent at the core banking level.")
 public interface ConsentRestAPI {

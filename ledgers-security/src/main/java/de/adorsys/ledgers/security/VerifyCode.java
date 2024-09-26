@@ -5,7 +5,7 @@
 
 package de.adorsys.ledgers.security;
 
-import lombok.*;
+import lombok.*;//NOPMD
 
 @Getter
 @Setter

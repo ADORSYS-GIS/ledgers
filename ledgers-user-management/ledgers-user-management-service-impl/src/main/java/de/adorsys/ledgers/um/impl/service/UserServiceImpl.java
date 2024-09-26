@@ -5,10 +5,10 @@
 
 package de.adorsys.ledgers.um.impl.service;
 
-import de.adorsys.ledgers.um.api.domain.*;
+import de.adorsys.ledgers.um.api.domain.*;//NOPMD
 import de.adorsys.ledgers.um.api.service.ScaUserDataService;
 import de.adorsys.ledgers.um.api.service.UserService;
-import de.adorsys.ledgers.um.db.domain.*;
+import de.adorsys.ledgers.um.db.domain.*;//NOPMD
 import de.adorsys.ledgers.um.db.repository.AisConsentRepository;
 import de.adorsys.ledgers.um.db.repository.UserRepository;
 import de.adorsys.ledgers.um.impl.converter.AisConsentMapper;
@@ -27,10 +27,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.*;//NOPMD
 import java.util.stream.Collectors;
 
-import static de.adorsys.ledgers.util.exception.UserManagementErrorCode.*;
+import static de.adorsys.ledgers.util.exception.UserManagementErrorCode.*;//NOPMD
 import static de.adorsys.ledgers.util.exception.UserManagementModuleException.getModuleExceptionSupplier;
 
 @Slf4j

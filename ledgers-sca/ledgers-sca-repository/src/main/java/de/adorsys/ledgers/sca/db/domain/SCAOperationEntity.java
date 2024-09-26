@@ -5,7 +5,7 @@
 
 package de.adorsys.ledgers.sca.db.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.*;//NOPMD
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -14,7 +14,7 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters.LocalDa
 import java.time.LocalDateTime;
 import java.util.EnumSet;
 
-import static de.adorsys.ledgers.sca.db.domain.AuthCodeStatus.*;
+import static de.adorsys.ledgers.sca.db.domain.AuthCodeStatus.*;//NOPMD
 
 /**
  * The SCA operation entity. We distinguish among following business operations.

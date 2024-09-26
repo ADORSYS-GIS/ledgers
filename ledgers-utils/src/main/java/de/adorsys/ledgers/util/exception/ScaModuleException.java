@@ -8,7 +8,7 @@ package de.adorsys.ledgers.util.exception;
 import lombok.Builder;
 import lombok.Data;
 
-import static de.adorsys.ledgers.util.exception.SCAErrorCode.*;
+import static de.adorsys.ledgers.util.exception.SCAErrorCode.*;//NOPMD
 
 @Data
 @Builder

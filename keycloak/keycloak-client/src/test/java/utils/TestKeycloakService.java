@@ -8,9 +8,9 @@ package utils;
 import dasniko.testcontainers.keycloak.KeycloakContainer;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
-import org.keycloak.representations.idm.*;
+import org.keycloak.representations.idm.*;//NOPMD
 
-import java.util.*;
+import java.util.*;//NOPMD
 
 @SuppressWarnings("PMD.TestClassWithoutTestCases")
 public class TestKeycloakService {

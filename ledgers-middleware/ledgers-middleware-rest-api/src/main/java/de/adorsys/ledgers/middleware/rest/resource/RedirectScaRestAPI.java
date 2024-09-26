@@ -11,11 +11,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.*;//NOPMD
 
 import static de.adorsys.ledgers.middleware.api.domain.Constants.SCOPE_FULL_ACCESS;
 import static de.adorsys.ledgers.middleware.api.domain.Constants.SCOPE_SCA;
-import static de.adorsys.ledgers.middleware.rest.utils.Constants.*;
+import static de.adorsys.ledgers.middleware.rest.utils.Constants.*;//NOPMD
 
 @Tag(name = "LDG007 - Redirect SCA", description = "Provide an API to preform SCA process for any kind of banking operation")
 public interface RedirectScaRestAPI {

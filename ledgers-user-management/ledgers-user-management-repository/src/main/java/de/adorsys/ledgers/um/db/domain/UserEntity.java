@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
-import jakarta.persistence.*;
+import jakarta.persistence.*;//NOPMD
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
