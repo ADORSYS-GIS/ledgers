@@ -40,7 +40,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 
-import static de.adorsys.ledgers.deposit.api.domain.TransactionStatusBO.*;
+import static de.adorsys.ledgers.deposit.api.domain.TransactionStatusBO.*;//NOPMD
 import static de.adorsys.ledgers.middleware.api.domain.Constants.SCOPE_FULL_ACCESS;
 import static de.adorsys.ledgers.sca.domain.OpTypeBO.CANCEL_PAYMENT;
 import static de.adorsys.ledgers.sca.domain.OpTypeBO.PAYMENT;

@@ -23,8 +23,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static de.adorsys.ledgers.sca.domain.OpTypeBO.*;
-import static de.adorsys.ledgers.util.exception.SCAErrorCode.*;
+import static de.adorsys.ledgers.sca.domain.OpTypeBO.*;//NOPMD
+import static de.adorsys.ledgers.util.exception.SCAErrorCode.*;//NOPMD
 
 @Slf4j
 @Service

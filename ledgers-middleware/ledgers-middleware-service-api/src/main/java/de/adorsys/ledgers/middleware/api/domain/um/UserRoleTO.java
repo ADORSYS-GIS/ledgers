@@ -5,7 +5,7 @@
 
 package de.adorsys.ledgers.middleware.api.domain.um;
 
-import java.util.*;
+import java.util.*;//NOPMD
 import java.util.stream.Collectors;
 
 public enum UserRoleTO {

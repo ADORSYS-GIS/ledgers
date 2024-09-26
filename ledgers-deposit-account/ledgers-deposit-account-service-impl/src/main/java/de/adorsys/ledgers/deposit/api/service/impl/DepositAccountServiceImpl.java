@@ -5,7 +5,7 @@
 
 package de.adorsys.ledgers.deposit.api.service.impl;
 
-import de.adorsys.ledgers.deposit.api.domain.*;
+import de.adorsys.ledgers.deposit.api.domain.*;//NOPMD
 import de.adorsys.ledgers.deposit.api.service.CurrencyExchangeRatesService;
 import de.adorsys.ledgers.deposit.api.service.DepositAccountConfigService;
 import de.adorsys.ledgers.deposit.api.service.DepositAccountService;
@@ -32,12 +32,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.*;//NOPMD
 import java.util.stream.Collectors;
 
 import static de.adorsys.ledgers.deposit.api.domain.BalanceTypeBO.CLOSING_BOOKED;
 import static de.adorsys.ledgers.deposit.api.domain.BalanceTypeBO.INTERIM_AVAILABLE;
-import static de.adorsys.ledgers.util.exception.DepositErrorCode.*;
+import static de.adorsys.ledgers.util.exception.DepositErrorCode.*;//NOPMD
 import static java.lang.String.format;
 
 @Slf4j

@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import jakarta.persistence.*;
+import jakarta.persistence.*;//NOPMD
 import java.time.LocalDateTime;
 
 /**

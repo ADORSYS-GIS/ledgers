@@ -39,7 +39,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import java.security.Principal;
 import java.util.Optional;
 
-import static de.adorsys.ledgers.app.server.auth.PermittedResources.*;
+import static de.adorsys.ledgers.app.server.auth.PermittedResources.*;//NOPMD
 
 @Configuration
 @EnableWebSecurity

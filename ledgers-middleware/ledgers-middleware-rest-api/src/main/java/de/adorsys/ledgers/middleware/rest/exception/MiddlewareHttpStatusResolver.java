@@ -10,8 +10,8 @@ import org.springframework.http.HttpStatus;
 
 import java.util.EnumMap;
 
-import static de.adorsys.ledgers.middleware.api.exception.MiddlewareErrorCode.*;
-import static org.springframework.http.HttpStatus.*;
+import static de.adorsys.ledgers.middleware.api.exception.MiddlewareErrorCode.*;//NOPMD
+import static org.springframework.http.HttpStatus.*;//NOPMD
 
 public class MiddlewareHttpStatusResolver {
     private static final EnumMap<MiddlewareErrorCode, HttpStatus> container = new EnumMap<>(MiddlewareErrorCode.class);

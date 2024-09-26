@@ -9,21 +9,21 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import de.adorsys.ledgers.deposit.api.domain.*;
+import de.adorsys.ledgers.deposit.api.domain.*;//NOPMD
 import de.adorsys.ledgers.deposit.api.service.DepositAccountService;
 import de.adorsys.ledgers.deposit.api.service.DepositAccountTransactionService;
 import de.adorsys.ledgers.keycloak.client.api.KeycloakTokenService;
 import de.adorsys.ledgers.middleware.api.domain.Constants;
-import de.adorsys.ledgers.middleware.api.domain.account.*;
+import de.adorsys.ledgers.middleware.api.domain.account.*;//NOPMD
 import de.adorsys.ledgers.middleware.api.domain.payment.AmountTO;
 import de.adorsys.ledgers.middleware.api.domain.sca.SCAConsentResponseTO;
 import de.adorsys.ledgers.middleware.api.domain.sca.ScaInfoTO;
-import de.adorsys.ledgers.middleware.api.domain.um.*;
+import de.adorsys.ledgers.middleware.api.domain.um.*;//NOPMD
 import de.adorsys.ledgers.middleware.api.exception.MiddlewareModuleException;
 import de.adorsys.ledgers.middleware.api.service.MiddlewareUserManagementService;
-import de.adorsys.ledgers.middleware.impl.converter.*;
+import de.adorsys.ledgers.middleware.impl.converter.*;//NOPMD
 import de.adorsys.ledgers.middleware.impl.service.message.PsuMessageResolver;
-import de.adorsys.ledgers.um.api.domain.*;
+import de.adorsys.ledgers.um.api.domain.*;//NOPMD
 import de.adorsys.ledgers.um.api.service.UserService;
 import de.adorsys.ledgers.util.DateTimeUtils;
 import de.adorsys.ledgers.util.domain.CustomPageImpl;
@@ -44,12 +44,12 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.*;//NOPMD
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;//NOPMD
+import static org.mockito.ArgumentMatchers.*;//NOPMD
+import static org.mockito.Mockito.*;//NOPMD
 
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings({"PMD.CouplingBetweenObjects", "PMD.TooManyMethods", "CPD-START"})

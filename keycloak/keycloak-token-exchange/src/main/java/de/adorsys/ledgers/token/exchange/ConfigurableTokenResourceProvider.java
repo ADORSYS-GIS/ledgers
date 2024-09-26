@@ -21,7 +21,7 @@ import org.keycloak.crypto.SignatureProvider;
 import org.keycloak.crypto.SignatureVerifierContext;
 import org.keycloak.events.EventBuilder;
 import org.keycloak.http.HttpRequest;
-import org.keycloak.models.*;
+import org.keycloak.models.*;//NOPMD
 import org.keycloak.protocol.oidc.TokenManager;
 import org.keycloak.representations.AccessToken;
 import org.keycloak.representations.AccessTokenResponse;

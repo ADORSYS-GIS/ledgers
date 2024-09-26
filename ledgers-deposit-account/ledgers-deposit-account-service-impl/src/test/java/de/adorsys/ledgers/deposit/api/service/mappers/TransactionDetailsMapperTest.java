@@ -8,8 +8,8 @@ package de.adorsys.ledgers.deposit.api.service.mappers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import de.adorsys.ledgers.deposit.api.domain.*;
-import de.adorsys.ledgers.postings.api.domain.*;
+import de.adorsys.ledgers.deposit.api.domain.*;//NOPMD
+import de.adorsys.ledgers.postings.api.domain.*;//NOPMD
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;

@@ -5,7 +5,7 @@
 
 package de.adorsys.ledgers.postings.impl.service;
 
-import de.adorsys.ledgers.postings.api.domain.*;
+import de.adorsys.ledgers.postings.api.domain.*;//NOPMD
 import de.adorsys.ledgers.postings.db.domain.ChartOfAccount;
 import de.adorsys.ledgers.postings.db.domain.Ledger;
 import de.adorsys.ledgers.postings.db.domain.LedgerAccount;
@@ -28,7 +28,7 @@ import static de.adorsys.ledgers.util.exception.PostingErrorCode.DOBLE_ENTRY_ERR
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.*;//NOPMD
 
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings("CPD-START")

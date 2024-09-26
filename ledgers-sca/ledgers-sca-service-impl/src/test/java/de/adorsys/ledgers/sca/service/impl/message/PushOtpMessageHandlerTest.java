@@ -15,10 +15,10 @@ import org.springframework.test.util.ReflectionTestUtils;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import static de.adorsys.ledgers.sca.service.impl.message.OtpHandlerHelper.*; //NOPMD
+import static de.adorsys.ledgers.sca.service.impl.message.OtpHandlerHelper.*;//NOPMD //NOPMD
 import static de.adorsys.ledgers.um.api.domain.ScaMethodTypeBO.PUSH_OTP;
 import static de.adorsys.ledgers.util.exception.SCAErrorCode.SCA_SENDER_ERROR;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;//NOPMD
 class PushOtpMessageHandlerTest {
     private final PushOtpMessageHandler handler = new PushOtpMessageHandler();
 

@@ -7,7 +7,7 @@ package de.adorsys.ledgers.deposit.db.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import jakarta.persistence.*;
+import jakarta.persistence.*;//NOPMD
 import lombok.Data;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.jetbrains.annotations.NotNull;

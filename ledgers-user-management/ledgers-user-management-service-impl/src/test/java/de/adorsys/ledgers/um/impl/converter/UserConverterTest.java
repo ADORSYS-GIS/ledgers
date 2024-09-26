@@ -5,7 +5,7 @@
 
 package de.adorsys.ledgers.um.impl.converter;
 
-import de.adorsys.ledgers.um.api.domain.*;
+import de.adorsys.ledgers.um.api.domain.*;//NOPMD
 import de.adorsys.ledgers.um.db.domain.AccountAccess;
 import de.adorsys.ledgers.um.db.domain.ScaUserDataEntity;
 import de.adorsys.ledgers.um.db.domain.UserEntity;

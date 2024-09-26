@@ -14,7 +14,7 @@ import de.adorsys.ledgers.middleware.api.domain.account.AccountReferenceTO;
 import de.adorsys.ledgers.middleware.api.domain.account.AdditionalAccountInformationTO;
 import de.adorsys.ledgers.middleware.api.domain.general.RecoveryPointTO;
 import de.adorsys.ledgers.middleware.api.domain.sca.ScaInfoTO;
-import de.adorsys.ledgers.middleware.api.domain.um.*;
+import de.adorsys.ledgers.middleware.api.domain.um.*;//NOPMD
 import de.adorsys.ledgers.middleware.api.exception.MiddlewareModuleException;
 import de.adorsys.ledgers.middleware.api.service.MiddlewareRecoveryService;
 import de.adorsys.ledgers.middleware.api.service.MiddlewareUserManagementService;
@@ -22,7 +22,7 @@ import de.adorsys.ledgers.middleware.impl.converter.AdditionalAccountInformation
 import de.adorsys.ledgers.middleware.impl.converter.KeycloakUserMapper;
 import de.adorsys.ledgers.middleware.impl.converter.PageMapper;
 import de.adorsys.ledgers.middleware.impl.converter.UserMapper;
-import de.adorsys.ledgers.um.api.domain.*;
+import de.adorsys.ledgers.um.api.domain.*;//NOPMD
 import de.adorsys.ledgers.um.api.service.UserService;
 import de.adorsys.ledgers.util.domain.CustomPageImpl;
 import de.adorsys.ledgers.util.domain.CustomPageableImpl;

@@ -28,7 +28,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.*;//NOPMD
 
 import static de.adorsys.ledgers.deposit.api.domain.PaymentTypeBO.SINGLE;
 import static de.adorsys.ledgers.deposit.api.domain.TransactionStatusBO.ACSC;

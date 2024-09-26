@@ -9,10 +9,10 @@ import de.adorsys.ledgers.keycloak.client.model.KeycloakClient;
 import de.adorsys.ledgers.keycloak.client.model.KeycloakRealm;
 import de.adorsys.ledgers.keycloak.client.model.KeycloakUser;
 import org.apache.commons.collections4.CollectionUtils;
-import org.keycloak.representations.idm.*;
+import org.keycloak.representations.idm.*;//NOPMD
 import org.mapstruct.Mapper;
 
-import java.util.*;
+import java.util.*;//NOPMD
 
 @Mapper(componentModel = "spring")
 public interface KeycloakDataMapper {

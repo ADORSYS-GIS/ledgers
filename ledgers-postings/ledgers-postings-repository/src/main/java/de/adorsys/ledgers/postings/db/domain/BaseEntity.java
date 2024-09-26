@@ -12,7 +12,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters.LocalDateTimeConverter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import jakarta.persistence.*;
+import jakarta.persistence.*;//NOPMD
 import java.time.LocalDateTime;
 
 /**

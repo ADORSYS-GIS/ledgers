@@ -25,7 +25,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 
-import static de.adorsys.ledgers.middleware.api.exception.MiddlewareErrorCode.*;
+import static de.adorsys.ledgers.middleware.api.exception.MiddlewareErrorCode.*;//NOPMD
 import static de.adorsys.ledgers.middleware.api.exception.MiddlewareModuleException.blockedSupplier;
 
 @Slf4j

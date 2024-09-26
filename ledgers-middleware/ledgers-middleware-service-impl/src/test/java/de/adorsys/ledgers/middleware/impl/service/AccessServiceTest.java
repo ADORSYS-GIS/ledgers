@@ -30,12 +30,12 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 
-import static de.adorsys.ledgers.middleware.api.domain.Constants.*;
+import static de.adorsys.ledgers.middleware.api.domain.Constants.*;//NOPMD
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.*;//NOPMD
 
 @ExtendWith(MockitoExtension.class)
 class AccessServiceTest {

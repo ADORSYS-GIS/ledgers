@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import static de.adorsys.ledgers.middleware.rest.utils.Constants.*;
+import static de.adorsys.ledgers.middleware.rest.utils.Constants.*;//NOPMD
 
 @Tag(name = "LDGXXX - Payment", description = "Provide endpoints for operation initiation")
 public interface OperationInitiationRestApi {

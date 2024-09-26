@@ -20,8 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.keycloak.admin.client.CreatedResponseUtil;
 import org.keycloak.admin.client.Keycloak;
-import org.keycloak.admin.client.resource.*;
-import org.keycloak.representations.idm.*;
+import org.keycloak.admin.client.resource.*;//NOPMD
+import org.keycloak.representations.idm.*;//NOPMD
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

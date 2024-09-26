@@ -40,7 +40,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalTime;
 
-import static de.adorsys.ledgers.deposit.api.domain.TransactionStatusBO.*;
+import static de.adorsys.ledgers.deposit.api.domain.TransactionStatusBO.*;//NOPMD
 import static de.adorsys.ledgers.middleware.api.domain.sca.OpTypeTO.CONSENT;
 import static de.adorsys.ledgers.middleware.api.domain.sca.OpTypeTO.PAYMENT;
 

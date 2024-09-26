@@ -10,7 +10,7 @@ import de.adorsys.ledgers.sca.db.domain.OpType;
 import de.adorsys.ledgers.sca.db.domain.SCAOperationEntity;
 import de.adorsys.ledgers.sca.db.domain.ScaStatus;
 import de.adorsys.ledgers.sca.db.repository.SCAOperationRepository;
-import de.adorsys.ledgers.sca.domain.*;
+import de.adorsys.ledgers.sca.domain.*;//NOPMD
 import de.adorsys.ledgers.sca.domain.sca.message.ScaMessage;
 import de.adorsys.ledgers.sca.service.AuthCodeGenerator;
 import de.adorsys.ledgers.sca.service.SCAOperationService;
@@ -36,11 +36,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.*;//NOPMD
 import java.util.stream.Collectors;
 
 import static de.adorsys.ledgers.sca.db.domain.AuthCodeStatus.SENT;
-import static de.adorsys.ledgers.util.exception.SCAErrorCode.*;
+import static de.adorsys.ledgers.util.exception.SCAErrorCode.*;//NOPMD
 
 @Slf4j
 @Service

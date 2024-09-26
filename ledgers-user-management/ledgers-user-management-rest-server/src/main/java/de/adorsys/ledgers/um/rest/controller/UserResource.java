@@ -13,7 +13,7 @@ import de.adorsys.ledgers.um.rest.exception.NotFoundRestException;
 import de.adorsys.ledgers.util.exception.UserManagementModuleException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.*;//NOPMD
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;

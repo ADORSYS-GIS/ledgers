@@ -9,12 +9,12 @@ import de.adorsys.ledgers.middleware.api.domain.account.AccountBalanceTO;
 import de.adorsys.ledgers.middleware.api.domain.account.AccountReferenceTO;
 import de.adorsys.ledgers.middleware.api.domain.account.BalanceTypeTO;
 import de.adorsys.ledgers.middleware.api.domain.general.AddressTO;
-import de.adorsys.ledgers.middleware.api.domain.payment.*;
+import de.adorsys.ledgers.middleware.api.domain.payment.*;//NOPMD
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.*;//NOPMD
 
 import static de.adorsys.ledgers.middleware.api.domain.payment.PaymentTypeTO.BULK;
 import static de.adorsys.ledgers.middleware.api.domain.payment.PaymentTypeTO.SINGLE;

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters.LocalDateTimeConverter;
 
-import jakarta.persistence.*;
+import jakarta.persistence.*;//NOPMD
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 

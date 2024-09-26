@@ -8,7 +8,7 @@ package de.adorsys.ledgers.sca.db.domain;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
-import jakarta.persistence.*;
+import jakarta.persistence.*;//NOPMD
 import java.time.LocalDateTime;
 
 @Entity

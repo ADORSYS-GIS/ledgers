@@ -7,7 +7,7 @@ package de.adorsys.ledgers.sca.service.impl;
 
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.*;//NOPMD
 import static org.hamcrest.MatcherAssert.assertThat;
 
 class AuthCodeGeneratorImplTest {
