@@ -1,6 +1,10 @@
 name: Develop CI
 
 on:
+  # Trigger the workflow when a pull request is opened
+  pull_request:
+    branches:
+      - develop
   push:
     branches:
       - develop
