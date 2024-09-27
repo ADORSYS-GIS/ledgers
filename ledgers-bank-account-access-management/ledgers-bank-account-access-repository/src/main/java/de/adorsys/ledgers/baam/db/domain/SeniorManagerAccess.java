@@ -6,15 +6,18 @@
 package de.adorsys.ledgers.baam.db.domain;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.util.HashMap;
 import java.util.Map;
 
 @Entity
+@Data
 public class SeniorManagerAccess {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
+        private String id;
 
         private String name;
 
@@ -22,12 +25,12 @@ public class SeniorManagerAccess {
         private AccessStatus status;
 
         @ElementCollection
-        private Map<Long, String> managerRoles = new HashMap<>();
+        private Map<String, String> managerRoles = new HashMap<>();
 
         // Constructor
-        public SeniorManagerAccess(String name) {
+        public SeniorManagerAccess(String name, AccessStatus status) {
             this.name = name;
-            this.status = AccessStatus.ACTIVE;
+            this.status = status.ACTIVE;
         }
 
         // Default constructor for JPA
@@ -37,14 +40,14 @@ public class SeniorManagerAccess {
         //...
 
         // Methods
-        public void createManagerRole(Long managerId, String permissions) {
+        public void createManagerRole(String managerId, String permissions) {
             if (this.status != AccessStatus.ACTIVE) {
                 throw new IllegalStateException("Cannot create roles when status is not active.");
             }
             managerRoles.put(managerId, permissions);
         }
 
-        public void modifyManagerRole(Long managerId, String newPermissions) {
+        public void modifyManagerRole(String managerId, String newPermissions) {
             if (managerRoles.containsKey(managerId)) {
                 managerRoles.put(managerId, newPermissions);
             } else {
@@ -52,7 +55,7 @@ public class SeniorManagerAccess {
             }
         }
 
-        public void revokeManagerRole(Long managerId) {
+        public void revokeManagerRole(String managerId) {
             if (managerRoles.containsKey(managerId)) {
                 managerRoles.remove(managerId);
             } else {
