@@ -5,7 +5,12 @@
 
 package de.adorsys.ledgers.deposit.db.repository;
 
-import de.adorsys.ledgers.deposit.db.domain.*;
+import de.adorsys.ledgers.deposit.db.domain.Payment;
+import de.adorsys.ledgers.deposit.db.domain.PaymentTarget;
+import de.adorsys.ledgers.deposit.db.domain.PaymentType;
+import de.adorsys.ledgers.deposit.db.domain.TransactionStatus;
+import de.adorsys.ledgers.deposit.db.domain.Amount;
+import de.adorsys.ledgers.deposit.db.domain.AccountReference;
 import de.adorsys.ledgers.deposit.db.test.DepositAccountRepositoryApplication;
 import de.adorsys.ledgers.util.Ids;
 import org.junit.jupiter.api.Test;

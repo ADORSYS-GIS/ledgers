@@ -5,8 +5,14 @@
 
 package de.adorsys.ledgers.sca.service;
 
-import de.adorsys.ledgers.sca.domain.*;
+import de.adorsys.ledgers.sca.domain.OpTypeBO;
+import de.adorsys.ledgers.sca.domain.AuthCodeDataBO;
+import de.adorsys.ledgers.sca.domain.SCAOperationBO;
+import de.adorsys.ledgers.sca.domain.ScaStatusBO;
+import de.adorsys.ledgers.sca.domain.ScaValidationBO;
+import de.adorsys.ledgers.sca.domain.ScaAuthConfirmationBO;
 import de.adorsys.ledgers.um.api.domain.UserBO;
+
 import de.adorsys.ledgers.util.exception.ScaModuleException;
 
 public interface SCAOperationService {

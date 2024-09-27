@@ -5,7 +5,16 @@
 
 package de.adorsys.ledgers.sca.db.domain;
 
-import jakarta.persistence.*;
+
+
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Id;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -14,7 +23,14 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters.LocalDa
 import java.time.LocalDateTime;
 import java.util.EnumSet;
 
-import static de.adorsys.ledgers.sca.db.domain.AuthCodeStatus.*;
+import static de.adorsys.ledgers.sca.db.domain.AuthCodeStatus.DONE;
+import static de.adorsys.ledgers.sca.db.domain.AuthCodeStatus.EXPIRED;
+import static de.adorsys.ledgers.sca.db.domain.AuthCodeStatus.FAILED;
+import static de.adorsys.ledgers.sca.db.domain.AuthCodeStatus.INITIATED;
+import static de.adorsys.ledgers.sca.db.domain.AuthCodeStatus.SENT;
+import static de.adorsys.ledgers.sca.db.domain.AuthCodeStatus.VALIDATED;
+
+
 
 /**
  * The SCA operation entity. We distinguish among following business operations.
