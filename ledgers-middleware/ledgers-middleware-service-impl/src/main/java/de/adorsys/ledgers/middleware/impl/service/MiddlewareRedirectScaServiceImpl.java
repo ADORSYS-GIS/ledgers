@@ -18,7 +18,7 @@ import de.adorsys.ledgers.middleware.api.service.MiddlewareRedirectScaService;
 import de.adorsys.ledgers.middleware.impl.converter.BearerTokenMapper;
 import de.adorsys.ledgers.middleware.impl.converter.ScaResponseConverter;
 import de.adorsys.ledgers.middleware.impl.service.message.PsuMessageResolver;
-import de.adorsys.ledgers.sca.domain.*;
+import de.adorsys.ledgers.sca.domain.*;//NOPMD
 import de.adorsys.ledgers.sca.service.SCAOperationService;
 import de.adorsys.ledgers.um.api.domain.BearerTokenBO;
 import de.adorsys.ledgers.um.api.domain.UserBO;

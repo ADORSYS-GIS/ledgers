@@ -47,9 +47,9 @@ import java.util.List;
 
 import static de.adorsys.ledgers.deposit.api.domain.TransactionStatusBO.ACSP;
 import static de.adorsys.ledgers.deposit.api.domain.TransactionStatusBO.ACTC;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;//NOPMD
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.*;//NOPMD
 
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings("CPD-START")

@@ -7,7 +7,7 @@ package de.adorsys.ledgers.middleware.impl.converter;
 
 import de.adorsys.ledgers.middleware.api.domain.sca.ChallengeDataTO;
 import de.adorsys.ledgers.middleware.api.domain.sca.GlobalScaResponseTO;
-import de.adorsys.ledgers.middleware.api.domain.um.*;
+import de.adorsys.ledgers.middleware.api.domain.um.*;//NOPMD
 import de.adorsys.ledgers.middleware.impl.sca.EmailScaChallengeData;
 import de.adorsys.ledgers.middleware.impl.service.ScaChallengeDataResolverImpl;
 import de.adorsys.ledgers.sca.domain.SCAOperationBO;
@@ -30,7 +30,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;//NOPMD
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 

@@ -5,8 +5,8 @@
 
 package de.adorsys.ledgers.postings.impl.converter;
 
-import de.adorsys.ledgers.postings.api.domain.*;
-import de.adorsys.ledgers.postings.db.domain.*;
+import de.adorsys.ledgers.postings.api.domain.*;//NOPMD
+import de.adorsys.ledgers.postings.db.domain.*;//NOPMD
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;

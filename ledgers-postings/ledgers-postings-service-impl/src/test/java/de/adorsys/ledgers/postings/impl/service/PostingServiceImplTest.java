@@ -5,9 +5,9 @@
 
 package de.adorsys.ledgers.postings.impl.service;
 
-import de.adorsys.ledgers.postings.api.domain.*;
-import de.adorsys.ledgers.postings.db.domain.*;
-import de.adorsys.ledgers.postings.db.repository.*;
+import de.adorsys.ledgers.postings.api.domain.*;//NOPMD
+import de.adorsys.ledgers.postings.db.domain.*;//NOPMD
+import de.adorsys.ledgers.postings.db.repository.*;//NOPMD
 import de.adorsys.ledgers.util.exception.PostingErrorCode;
 import de.adorsys.ledgers.util.exception.PostingModuleException;
 import org.apache.commons.collections.CollectionUtils;
@@ -28,7 +28,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;//NOPMD
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 

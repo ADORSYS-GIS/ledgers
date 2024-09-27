@@ -7,9 +7,9 @@ package de.adorsys.ledgers.middleware.api.domain.um;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.*;//NOPMD
 
-import java.util.*;
+import java.util.*;//NOPMD
 import java.util.stream.Collectors;
 
 @Getter

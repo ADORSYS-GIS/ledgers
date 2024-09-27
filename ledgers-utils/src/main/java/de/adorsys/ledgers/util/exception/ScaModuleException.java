@@ -8,11 +8,7 @@ package de.adorsys.ledgers.util.exception;
 import lombok.Builder;
 import lombok.Data;
 
-import static de.adorsys.ledgers.util.exception.SCAErrorCode.AUTHENTICATION_FAILURE;
-import static de.adorsys.ledgers.util.exception.SCAErrorCode.PSU_AUTH_ATTEMPT_INVALID;
-import static de.adorsys.ledgers.util.exception.SCAErrorCode.SCA_OPERATION_FAILED;
-import static de.adorsys.ledgers.util.exception.SCAErrorCode.SCA_SENDER_ERROR;
-import static de.adorsys.ledgers.util.exception.SCAErrorCode.SCA_VALIDATION_ATTEMPT_FAILED;
+import static de.adorsys.ledgers.util.exception.SCAErrorCode.*;//NOPMD
 
 @Data
 @Builder

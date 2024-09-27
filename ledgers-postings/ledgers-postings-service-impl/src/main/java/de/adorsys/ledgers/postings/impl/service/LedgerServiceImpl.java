@@ -9,7 +9,7 @@ import de.adorsys.ledgers.postings.api.domain.LedgerAccountBO;
 import de.adorsys.ledgers.postings.api.domain.LedgerBO;
 import de.adorsys.ledgers.postings.api.domain.NamedBO;
 import de.adorsys.ledgers.postings.api.service.LedgerService;
-import de.adorsys.ledgers.postings.db.domain.*;
+import de.adorsys.ledgers.postings.db.domain.*;//NOPMD
 import de.adorsys.ledgers.postings.db.repository.ChartOfAccountRepository;
 import de.adorsys.ledgers.postings.db.repository.LedgerAccountRepository;
 import de.adorsys.ledgers.postings.db.repository.LedgerRepository;

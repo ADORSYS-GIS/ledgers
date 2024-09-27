@@ -24,8 +24,8 @@ import org.springframework.test.util.ReflectionTestUtils;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
-import static de.adorsys.ledgers.util.exception.SCAErrorCode.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static de.adorsys.ledgers.util.exception.SCAErrorCode.*;//NOPMD
+import static org.junit.jupiter.api.Assertions.*;//NOPMD
 
 @ExtendWith(MockitoExtension.class)
 class ScaOperationValidationServiceTest {

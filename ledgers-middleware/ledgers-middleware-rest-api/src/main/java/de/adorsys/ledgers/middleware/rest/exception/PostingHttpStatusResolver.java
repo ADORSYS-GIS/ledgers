@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 
 import java.util.EnumMap;
 
-import static de.adorsys.ledgers.util.exception.PostingErrorCode.*;
+import static de.adorsys.ledgers.util.exception.PostingErrorCode.*;//NOPMD
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 

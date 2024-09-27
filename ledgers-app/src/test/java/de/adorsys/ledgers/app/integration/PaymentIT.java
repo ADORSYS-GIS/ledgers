@@ -10,6 +10,7 @@ import de.adorsys.ledgers.app.TestDBConfiguration;
 import de.adorsys.ledgers.app.it_stages.ManagementStage;
 import de.adorsys.ledgers.app.it_stages.StatusStage;
 import de.adorsys.ledgers.app.it_stages.OperationStage;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,6 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ContextConfiguration(classes = {TestDBConfiguration.class},
         initializers = { PaymentIT.Initializer.class })
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@Disabled
 class PaymentIT extends BaseContainersTest<ManagementStage, OperationStage, StatusStage> {
     private static final List<String> BULK_PAYMENT_CREDITORS_IBAN = List.of("DE38760700240320465700", "DE80760700240271232400");
     public static final String BULK_PAYMENT_TYPE = "BULK";

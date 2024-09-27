@@ -9,11 +9,7 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
-import de.adorsys.ledgers.postings.db.domain.Ledger;
-import de.adorsys.ledgers.postings.db.domain.LedgerAccount;
-import de.adorsys.ledgers.postings.db.domain.ChartOfAccount;
-import de.adorsys.ledgers.postings.db.domain.AccountCategory;
-import de.adorsys.ledgers.postings.db.domain.BalanceSide;
+import de.adorsys.ledgers.postings.db.domain.*;//NOPMD
 import de.adorsys.ledgers.postings.db.tests.PostingRepositoryApplication;
 import de.adorsys.ledgers.util.Ids;
 import org.junit.jupiter.api.Test;
@@ -29,10 +25,7 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import static org.junit.jupiter.api.Assertions.*;//NOPMD
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 @ExtendWith(SpringExtension.class)

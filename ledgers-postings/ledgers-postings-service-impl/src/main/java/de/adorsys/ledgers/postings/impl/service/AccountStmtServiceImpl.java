@@ -8,8 +8,8 @@ package de.adorsys.ledgers.postings.impl.service;
 import de.adorsys.ledgers.postings.api.domain.AccountStmtBO;
 import de.adorsys.ledgers.postings.api.domain.LedgerAccountBO;
 import de.adorsys.ledgers.postings.api.service.AccountStmtService;
-import de.adorsys.ledgers.postings.db.domain.*;
-import de.adorsys.ledgers.postings.db.repository.*;
+import de.adorsys.ledgers.postings.db.domain.*;//NOPMD
+import de.adorsys.ledgers.postings.db.repository.*;//NOPMD
 import de.adorsys.ledgers.postings.impl.converter.AccountStmtMapper;
 import de.adorsys.ledgers.util.Ids;
 import org.mapstruct.factory.Mappers;

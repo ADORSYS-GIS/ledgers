@@ -5,8 +5,7 @@
 
 package de.adorsys.ledgers.um.api.service;
 
-import de.adorsys.ledgers.um.api.domain.ScaUserDataBO;
-import de.adorsys.ledgers.um.api.domain.UserBO;
+import de.adorsys.ledgers.um.api.domain.*;//NOPMD
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import de.adorsys.ledgers.um.api.domain.AccountAccessBO;

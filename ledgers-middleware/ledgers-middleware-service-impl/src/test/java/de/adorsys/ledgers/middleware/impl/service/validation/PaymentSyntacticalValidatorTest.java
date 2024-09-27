@@ -5,7 +5,7 @@
 
 package de.adorsys.ledgers.middleware.impl.service.validation;
 
-import de.adorsys.ledgers.deposit.api.domain.*;
+import de.adorsys.ledgers.deposit.api.domain.*;//NOPMD
 import de.adorsys.ledgers.middleware.impl.config.PaymentProductsConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
