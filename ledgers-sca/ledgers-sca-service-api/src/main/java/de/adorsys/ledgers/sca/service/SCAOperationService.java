@@ -7,6 +7,7 @@ package de.adorsys.ledgers.sca.service;
 
 import de.adorsys.ledgers.sca.domain.*;//NOPMD
 import de.adorsys.ledgers.um.api.domain.UserBO;
+
 import de.adorsys.ledgers.util.exception.ScaModuleException;
 
 public interface SCAOperationService {
