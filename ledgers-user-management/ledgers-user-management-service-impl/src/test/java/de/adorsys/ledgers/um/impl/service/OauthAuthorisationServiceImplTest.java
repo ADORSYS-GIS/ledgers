@@ -6,7 +6,7 @@
 package de.adorsys.ledgers.um.impl.service;
 
 import de.adorsys.ledgers.um.api.domain.UserBO;
-import de.adorsys.ledgers.um.api.domain.oauth.*;
+import de.adorsys.ledgers.um.api.domain.oauth.*;//NOPMD
 import de.adorsys.ledgers.um.api.service.UserService;
 import de.adorsys.ledgers.um.db.domain.OauthCodeEntity;
 import de.adorsys.ledgers.um.db.repository.OauthCodeRepository;
@@ -23,8 +23,8 @@ import java.time.OffsetDateTime;
 import java.util.Collections;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
+import static org.junit.jupiter.api.Assertions.*;//NOPMD
+import static org.mockito.ArgumentMatchers.*;//NOPMD
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)

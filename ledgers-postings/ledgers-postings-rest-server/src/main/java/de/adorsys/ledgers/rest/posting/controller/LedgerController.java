@@ -11,7 +11,7 @@ import de.adorsys.ledgers.postings.api.service.LedgerService;
 import de.adorsys.ledgers.rest.exception.NotFoundRestException;
 import de.adorsys.ledgers.util.exception.PostingModuleException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.*;//NOPMD
 import org.springframework.web.util.UriBuilder;
 
 import java.net.URI;

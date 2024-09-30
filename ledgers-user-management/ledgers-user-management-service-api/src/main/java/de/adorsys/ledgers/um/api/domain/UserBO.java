@@ -12,7 +12,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.*;//NOPMD
 import java.util.stream.Collectors;
 
 @Getter

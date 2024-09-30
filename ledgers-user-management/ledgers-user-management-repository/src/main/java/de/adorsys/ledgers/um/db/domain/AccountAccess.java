@@ -6,7 +6,7 @@
 package de.adorsys.ledgers.um.db.domain;
 
 import de.adorsys.ledgers.util.Ids;
-import jakarta.persistence.*;
+import jakarta.persistence.*;//NOPMD
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;

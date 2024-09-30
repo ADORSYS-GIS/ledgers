@@ -8,7 +8,7 @@ package de.adorsys.ledgers.deposit.db.domain;
 import lombok.Data;
 import lombok.ToString;
 
-import jakarta.persistence.*;
+import jakarta.persistence.*;//NOPMD
 
 
 @Data

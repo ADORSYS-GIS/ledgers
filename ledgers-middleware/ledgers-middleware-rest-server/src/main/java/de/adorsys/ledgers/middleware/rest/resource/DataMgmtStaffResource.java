@@ -8,7 +8,7 @@ package de.adorsys.ledgers.middleware.rest.resource;
 import de.adorsys.ledgers.middleware.api.domain.general.BbanStructure;
 import de.adorsys.ledgers.middleware.api.domain.general.RecoveryPointTO;
 import de.adorsys.ledgers.middleware.api.domain.um.UploadedDataTO;
-import de.adorsys.ledgers.middleware.api.service.*;
+import de.adorsys.ledgers.middleware.api.service.*;//NOPMD
 import de.adorsys.ledgers.middleware.rest.annotation.MiddlewareResetResource;
 import de.adorsys.ledgers.middleware.rest.security.ScaInfoHolder;
 import lombok.RequiredArgsConstructor;

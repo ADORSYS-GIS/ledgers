@@ -10,7 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import jakarta.persistence.*;
+import jakarta.persistence.*;//NOPMD
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 

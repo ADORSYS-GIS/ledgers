@@ -9,8 +9,8 @@ import de.adorsys.ledgers.postings.api.domain.LedgerAccountBO;
 import de.adorsys.ledgers.postings.api.domain.PostingBO;
 import de.adorsys.ledgers.postings.api.domain.PostingLineBO;
 import de.adorsys.ledgers.postings.api.service.PostingService;
-import de.adorsys.ledgers.postings.db.domain.*;
-import de.adorsys.ledgers.postings.db.repository.*;
+import de.adorsys.ledgers.postings.db.domain.*;//NOPMD
+import de.adorsys.ledgers.postings.db.repository.*;//NOPMD
 import de.adorsys.ledgers.postings.impl.converter.PostingLineMapper;
 import de.adorsys.ledgers.postings.impl.converter.PostingMapper;
 import de.adorsys.ledgers.util.CloneUtils;
@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static de.adorsys.ledgers.util.exception.PostingErrorCode.*;
+import static de.adorsys.ledgers.util.exception.PostingErrorCode.*;//NOPMD
 
 @Slf4j
 @Service

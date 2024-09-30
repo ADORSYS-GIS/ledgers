@@ -7,7 +7,7 @@ package de.adorsys.ledgers.app.initiation;
 
 import de.adorsys.ledgers.keycloak.client.api.KeycloakTokenService;
 import de.adorsys.ledgers.middleware.api.domain.payment.PaymentTO;
-import de.adorsys.ledgers.middleware.api.domain.sca.*;
+import de.adorsys.ledgers.middleware.api.domain.sca.*;//NOPMD
 import de.adorsys.ledgers.middleware.api.domain.um.BearerTokenTO;
 import de.adorsys.ledgers.middleware.api.domain.um.UserTO;
 import de.adorsys.ledgers.middleware.client.rest.AuthRequestInterceptor;

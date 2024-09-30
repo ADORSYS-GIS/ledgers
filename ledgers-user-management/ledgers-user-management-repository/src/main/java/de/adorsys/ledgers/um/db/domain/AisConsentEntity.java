@@ -5,7 +5,7 @@
 
 package de.adorsys.ledgers.um.db.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.*;//NOPMD
 import lombok.Data;
 
 import java.time.LocalDate;

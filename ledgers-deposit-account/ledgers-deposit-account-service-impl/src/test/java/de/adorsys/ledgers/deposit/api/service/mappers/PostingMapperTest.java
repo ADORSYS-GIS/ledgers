@@ -5,7 +5,7 @@
 
 package de.adorsys.ledgers.deposit.api.service.mappers;
 
-import de.adorsys.ledgers.postings.api.domain.*;
+import de.adorsys.ledgers.postings.api.domain.*;//NOPMD
 import de.adorsys.ledgers.util.Ids;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;

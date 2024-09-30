@@ -9,7 +9,7 @@ import de.adorsys.ledgers.postings.api.domain.LedgerAccountBO;
 import de.adorsys.ledgers.postings.api.domain.PostingLineBO;
 import de.adorsys.ledgers.postings.api.domain.PostingStatusBO;
 import de.adorsys.ledgers.postings.api.domain.PostingTypeBO;
-import de.adorsys.ledgers.postings.db.domain.*;
+import de.adorsys.ledgers.postings.db.domain.*;//NOPMD
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;

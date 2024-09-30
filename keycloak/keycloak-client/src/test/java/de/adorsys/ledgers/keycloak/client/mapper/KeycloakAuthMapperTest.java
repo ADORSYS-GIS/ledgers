@@ -14,7 +14,7 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.time.Instant;
-import java.util.*;
+import java.util.*;//NOPMD
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

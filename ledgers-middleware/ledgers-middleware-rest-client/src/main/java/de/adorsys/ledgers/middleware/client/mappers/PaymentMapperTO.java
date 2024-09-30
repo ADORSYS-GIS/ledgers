@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import de.adorsys.ledgers.middleware.api.domain.account.AccountReferenceTO;
 import de.adorsys.ledgers.middleware.api.domain.general.AddressTO;
-import de.adorsys.ledgers.middleware.api.domain.payment.*;
+import de.adorsys.ledgers.middleware.api.domain.payment.*;//NOPMD
 import de.adorsys.ledgers.middleware.client.util.MultiPartContentUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import static de.adorsys.ledgers.sca.domain.OpTypeBO.PAYMENT;
-import static de.adorsys.ledgers.sca.service.impl.message.OtpHandlerHelper.*; //NOPMD
+import static de.adorsys.ledgers.sca.service.impl.message.OtpHandlerHelper.*;//NOPMD //NOPMD
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 

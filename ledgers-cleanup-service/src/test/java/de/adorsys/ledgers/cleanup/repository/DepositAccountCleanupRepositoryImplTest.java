@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.*;//NOPMD
 
 @ExtendWith(MockitoExtension.class)
 class DepositAccountCleanupRepositoryImplTest {

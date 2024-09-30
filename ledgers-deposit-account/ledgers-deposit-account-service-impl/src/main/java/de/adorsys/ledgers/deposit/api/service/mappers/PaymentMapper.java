@@ -7,7 +7,7 @@ package de.adorsys.ledgers.deposit.api.service.mappers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.adorsys.ledgers.deposit.api.domain.*;
+import de.adorsys.ledgers.deposit.api.domain.*;//NOPMD
 import de.adorsys.ledgers.deposit.db.domain.Payment;
 import de.adorsys.ledgers.deposit.db.domain.PaymentTarget;
 import de.adorsys.ledgers.deposit.db.domain.TransactionStatus;

@@ -10,8 +10,8 @@ import org.springframework.http.HttpStatus;
 
 import java.util.EnumMap;
 
-import static de.adorsys.ledgers.util.exception.SCAErrorCode.*;
-import static org.springframework.http.HttpStatus.*;
+import static de.adorsys.ledgers.util.exception.SCAErrorCode.*;//NOPMD
+import static org.springframework.http.HttpStatus.*;//NOPMD
 
 public class ScaHttpStatusResolver {
     private static final EnumMap<SCAErrorCode, HttpStatus> container = new EnumMap<>(SCAErrorCode.class);

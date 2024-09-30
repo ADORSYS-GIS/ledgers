@@ -5,7 +5,7 @@
 
 package de.adorsys.ledgers.um.impl.service;
 
-import de.adorsys.ledgers.um.api.domain.*;
+import de.adorsys.ledgers.um.api.domain.*;//NOPMD
 import de.adorsys.ledgers.um.api.service.ScaUserDataService;
 import de.adorsys.ledgers.um.db.domain.AccountAccess;
 import de.adorsys.ledgers.um.db.domain.AisConsentEntity;
@@ -40,8 +40,8 @@ import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;//NOPMD
+import static org.mockito.Mockito.*;//NOPMD
 
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings("PMD.TooManyMethods")

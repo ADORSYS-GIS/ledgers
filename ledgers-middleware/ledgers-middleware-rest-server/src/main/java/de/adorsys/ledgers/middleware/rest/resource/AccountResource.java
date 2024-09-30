@@ -5,7 +5,7 @@
 
 package de.adorsys.ledgers.middleware.rest.resource;
 
-import de.adorsys.ledgers.middleware.api.domain.account.*;
+import de.adorsys.ledgers.middleware.api.domain.account.*;//NOPMD
 import de.adorsys.ledgers.middleware.api.exception.MiddlewareModuleException;
 import de.adorsys.ledgers.middleware.api.service.MiddlewareAccountManagementService;
 import de.adorsys.ledgers.middleware.api.service.MiddlewareUserManagementService;

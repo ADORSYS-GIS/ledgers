@@ -9,7 +9,7 @@ import de.adorsys.ledgers.postings.api.domain.ChartOfAccountBO;
 import de.adorsys.ledgers.postings.api.service.ChartOfAccountService;
 import de.adorsys.ledgers.rest.exception.NotFoundRestException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.*;//NOPMD
 import org.springframework.web.util.UriBuilder;
 
 import java.net.URI;

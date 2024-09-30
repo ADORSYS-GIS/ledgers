@@ -10,8 +10,8 @@ import org.springframework.http.HttpStatus;
 
 import java.util.EnumMap;
 
-import static de.adorsys.ledgers.util.exception.DepositErrorCode.*;
-import static org.springframework.http.HttpStatus.*;
+import static de.adorsys.ledgers.util.exception.DepositErrorCode.*;//NOPMD
+import static org.springframework.http.HttpStatus.*;//NOPMD
 
 public class DepositHttpStatusResolver {
     private static final EnumMap<DepositErrorCode, HttpStatus> container = new EnumMap<>(DepositErrorCode.class);

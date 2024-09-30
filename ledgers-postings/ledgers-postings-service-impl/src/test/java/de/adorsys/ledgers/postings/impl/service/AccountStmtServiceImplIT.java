@@ -11,7 +11,7 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
-import de.adorsys.ledgers.postings.api.domain.*;
+import de.adorsys.ledgers.postings.api.domain.*;//NOPMD
 import de.adorsys.ledgers.postings.api.service.AccountStmtService;
 import de.adorsys.ledgers.postings.api.service.LedgerService;
 import de.adorsys.ledgers.postings.api.service.PostingService;
@@ -35,7 +35,7 @@ import java.time.LocalDateTime;
 import java.time.Month;
 
 import static de.adorsys.ledgers.util.exception.PostingErrorCode.LEDGER_NOT_FOUND;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;//NOPMD
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 @ExtendWith(SpringExtension.class)

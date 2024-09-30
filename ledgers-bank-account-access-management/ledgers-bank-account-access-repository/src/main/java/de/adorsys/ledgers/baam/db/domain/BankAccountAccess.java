@@ -6,14 +6,18 @@
 package de.adorsys.ledgers.baam.db.domain;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
-@Entity
-public class BankAccountAccess {
+@MappedSuperclass
+@Data
+@NoArgsConstructor(force = true)
+public abstract class BankAccountAccess {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "bank_account_access_id")
+    private String id;
 
     @NotNull
     private String accountId;

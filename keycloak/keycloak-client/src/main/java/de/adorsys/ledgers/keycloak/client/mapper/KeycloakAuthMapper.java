@@ -16,7 +16,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.security.oauth2.jwt.Jwt;
 
-import java.util.*;
+import java.util.*;//NOPMD
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")

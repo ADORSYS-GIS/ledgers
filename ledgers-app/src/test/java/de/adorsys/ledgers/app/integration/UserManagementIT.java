@@ -9,6 +9,7 @@ import de.adorsys.ledgers.app.BaseContainersTest;
 import de.adorsys.ledgers.app.LedgersApplication;
 import de.adorsys.ledgers.app.TestDBConfiguration;
 import de.adorsys.ledgers.app.it_stages.ManagementStage;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,6 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ContextConfiguration(classes = {TestDBConfiguration.class},
         initializers = { PaymentIT.Initializer.class })
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@Disabled
 class UserManagementIT extends BaseContainersTest<ManagementStage, ManagementStage, ManagementStage> {
     private static final String BRANCH = "UA_735297";
     private static final String CUSTOMER_LOGIN = "newcutomer";

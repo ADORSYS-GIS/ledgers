@@ -23,10 +23,10 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.*;//NOPMD
 import java.util.stream.Collectors;
 
-import static de.adorsys.ledgers.middleware.api.domain.Constants.*;
+import static de.adorsys.ledgers.middleware.api.domain.Constants.*;//NOPMD
 import static de.adorsys.ledgers.middleware.api.domain.um.UserRoleTO.STAFF;
 import static de.adorsys.ledgers.middleware.api.domain.um.UserRoleTO.SYSTEM;
 

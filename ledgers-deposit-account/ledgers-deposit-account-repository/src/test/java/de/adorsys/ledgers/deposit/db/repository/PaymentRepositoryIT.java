@@ -5,7 +5,7 @@
 
 package de.adorsys.ledgers.deposit.db.repository;
 
-import de.adorsys.ledgers.deposit.db.domain.*;
+import de.adorsys.ledgers.deposit.db.domain.*;//NOPMD
 import de.adorsys.ledgers.deposit.db.test.DepositAccountRepositoryApplication;
 import de.adorsys.ledgers.util.Ids;
 import org.junit.jupiter.api.Test;

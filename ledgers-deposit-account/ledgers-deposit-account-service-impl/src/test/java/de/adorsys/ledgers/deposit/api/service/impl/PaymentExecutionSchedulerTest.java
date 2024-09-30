@@ -21,7 +21,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.*;//NOPMD
 
 @ExtendWith(MockitoExtension.class)
 class PaymentExecutionSchedulerTest {

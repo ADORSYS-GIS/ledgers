@@ -5,13 +5,13 @@
 
 package de.adorsys.ledgers.um.api.service;
 
-import de.adorsys.ledgers.um.api.domain.*;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+//NOPMD
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
+import de.adorsys.ledgers.um.api.domain.*;
+import org.springframework.data.domain.*;
+
+import java.time.*;
+import java.util.*;
 
 public interface UserService {
 
