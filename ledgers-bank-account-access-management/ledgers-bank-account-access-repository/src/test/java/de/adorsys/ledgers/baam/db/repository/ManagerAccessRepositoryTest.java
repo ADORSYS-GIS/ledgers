@@ -5,8 +5,15 @@
 
 package de.adorsys.ledgers.baam.db.repository;
 
-import static org.junit.jupiter.api.Assertions.*;
+import de.adorsys.ledgers.baam.db.domain.ExampleManagerAccess;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-class ManagerAccessRepositoryTest {
+import java.util.UUID;
+
+
+@Repository
+public interface ManagerAccessRepositoryTest extends JpaRepository<ExampleManagerAccess, UUID> {
+
 
 }

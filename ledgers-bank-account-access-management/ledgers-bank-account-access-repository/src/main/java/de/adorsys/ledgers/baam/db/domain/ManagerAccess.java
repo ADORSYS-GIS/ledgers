@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -29,12 +30,10 @@ public class ManagerAccess {
     @Enumerated(EnumType.STRING)
     private AccessStatus status;
 
-    @ElementCollection(targetClass = TypeOfManagedAccess.class)
-    @Enumerated(EnumType.STRING)
-    private Set<TypeOfManagedAccess> managedAccessTypes;
+    @ElementCollection
+    private Set<TypeOfManagedAccess> managedAccessTypes = new HashSet<>();
 
-    @ElementCollection(targetClass = ScopeOfManagerAccess.class)
-    @Enumerated(EnumType.STRING)
-    private Set<ScopeOfManagerAccess> scopeOfAccess;
+    @ElementCollection
+    private Set<ScopeOfManagerAccess> scopeOfAccess = new HashSet<>();
 
 }
