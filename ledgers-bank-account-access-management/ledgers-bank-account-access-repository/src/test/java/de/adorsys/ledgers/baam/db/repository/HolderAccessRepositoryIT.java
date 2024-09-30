@@ -40,7 +40,7 @@ public class HolderAccessRepositoryIT {
         access.setScope(AccessScope.READ);
         access.setConditions(AccessCondition.AMOUNT_RESTRICTED);
         access.setPolicies("Standard Policy");
-        HolderAccess savedHolderAccess = repository.save(access);
+        repository.save(access);
 
         HolderAccess result = repository.findById(access.getId()).orElse(null);
 
