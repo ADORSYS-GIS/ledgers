@@ -6,13 +6,15 @@ import jakarta.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
 
+@Entity
+@Table (name = "senior_manager_access")
 public class SeniorManagerAccess extends BankAccountAccess {
 
     @ElementCollection
     private Map<String, String> managerRoles = new HashMap<>();
-        
+   
     public SeniorManagerAccess() {
-            this.status = AccessStatus.ACTIVE;
+            this.setStatus(AccessStatus.ACTIVE) ;
     }
 
     public Map<String, String> getManagerRoles() {
@@ -20,7 +22,7 @@ public class SeniorManagerAccess extends BankAccountAccess {
     }    
 
     public void createManagerRole(String managerId, String permissions) {
-        if (this.status != AccessStatus.ACTIVE) {
+        if (this.getStatus() != AccessStatus.ACTIVE) {
             throw new IllegalStateException("Cannot create roles when status is not active.");
         }
         managerRoles.put(managerId, permissions);
@@ -43,10 +45,10 @@ public class SeniorManagerAccess extends BankAccountAccess {
     }
 
     public void suspendAccess() {
-        this.status = AccessStatus.SUSPENDED;
+        this.setStatus(AccessStatus.SUSPENDED);
     }
 
     public void activateAccess() {
-        this.status = AccessStatus.ACTIVE;
+        this.setStatus(AccessStatus.ACTIVE);
     }
 }

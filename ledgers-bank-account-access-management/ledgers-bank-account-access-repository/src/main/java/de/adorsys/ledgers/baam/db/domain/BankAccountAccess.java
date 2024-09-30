@@ -34,7 +34,7 @@ public abstract class BankAccountAccess {
     private AccessCondition conditions; // Conditions on access
 
     @Enumerated(EnumType.STRING)
-    public AccessStatus status; // Active, restricted, or suspended
+    private AccessStatus status; // Active, restricted, or suspended
 
     private String policies; // Policies associated with the access
 
