@@ -17,9 +17,8 @@ public class AgentAccess extends BankAccountAccess {
             throw new IllegalStateException("Access is not active, impersonation is not allowed.");
         }
         if (this.getScope().allowsAction(action)) {
-
-            // Logic to execute the action on behalf of the account holder
-
+            return;
+            // Perform the payment logic
         } else {
             throw new IllegalArgumentException("Action not permitted within the current scope.");
         }
@@ -43,6 +42,7 @@ public class AgentAccess extends BankAccountAccess {
     // Example usage scenario: Execute a payment on behalf of the account holder
     public void executePayment(double amount) {
         if (this.getStatus() == AccessStatus.ACTIVE && this.getScope().allowsAction("EXECUTE_PAYMENT")) {
+           return;
             // Perform the payment logic
         } else {
             throw new IllegalStateException("Payment execution not allowed under the current access status or scope.");
