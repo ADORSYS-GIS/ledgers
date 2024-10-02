@@ -10,5 +10,6 @@ public enum AccessScope {
     READ,
     WRITE,
     EXECUTE,
-    DELETE;
+    DELETE
+
 }
