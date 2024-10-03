@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BankAccountAccessRepository extends JpaRepository<BankAccountAccess, Long> {
+public interface BankAccountAccessRepository extends JpaRepository<BankAccountAccess, String> {
 
 
 }
