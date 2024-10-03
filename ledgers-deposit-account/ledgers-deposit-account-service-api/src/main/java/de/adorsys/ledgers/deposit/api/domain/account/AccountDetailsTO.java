@@ -6,10 +6,6 @@
 package de.adorsys.ledgers.deposit.api.domain.account;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import de.adorsys.ledgers.middleware.api.domain.account.AccountBalanceTO;
-import de.adorsys.ledgers.middleware.api.domain.account.AccountStatusTO;
-import de.adorsys.ledgers.middleware.api.domain.account.AccountTypeTO;
-import de.adorsys.ledgers.middleware.api.domain.account.UsageTypeTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

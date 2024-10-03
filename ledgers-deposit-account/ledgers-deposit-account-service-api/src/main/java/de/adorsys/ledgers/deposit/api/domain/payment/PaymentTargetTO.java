@@ -5,12 +5,8 @@
 
 package de.adorsys.ledgers.deposit.api.domain.payment;
 
-import de.adorsys.ledgers.middleware.api.domain.account.AccountReferenceTO;
-import de.adorsys.ledgers.middleware.api.domain.general.AddressTO;
-import de.adorsys.ledgers.middleware.api.domain.payment.AmountTO;
-import de.adorsys.ledgers.middleware.api.domain.payment.ChargeBearerTO;
-import de.adorsys.ledgers.middleware.api.domain.payment.PurposeCodeTO;
-import de.adorsys.ledgers.middleware.api.domain.payment.RemittanceInformationStructuredTO;
+import de.adorsys.ledgers.deposit.api.domain.account.AccountReferenceTO;
+import de.adorsys.ledgers.deposit.api.domain.general.AddressTO;
 import lombok.Data;
 
 import java.util.Currency;

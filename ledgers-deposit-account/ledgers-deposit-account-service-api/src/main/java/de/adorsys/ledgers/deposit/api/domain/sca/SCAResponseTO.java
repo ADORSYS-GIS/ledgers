@@ -5,11 +5,11 @@
 
 package de.adorsys.ledgers.deposit.api.domain.sca;
 
-import de.adorsys.ledgers.middleware.api.domain.sca.AspspConsentDataSerial;
-import de.adorsys.ledgers.middleware.api.domain.sca.ChallengeDataTO;
-import de.adorsys.ledgers.middleware.api.domain.sca.ScaStatusTO;
-import de.adorsys.ledgers.middleware.api.domain.um.BearerTokenTO;
-import de.adorsys.ledgers.middleware.api.domain.um.ScaUserDataTO;
+import de.adorsys.ledgers.deposit.api.domain.sca.AspspConsentDataSerial;
+import de.adorsys.ledgers.deposit.api.domain.sca.ChallengeDataTO;
+import de.adorsys.ledgers.deposit.api.domain.sca.ScaStatusTO;
+import de.adorsys.ledgers.deposit.api.domain.um.BearerTokenTO;
+import de.adorsys.ledgers.deposit.api.domain.um.ScaUserDataTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
