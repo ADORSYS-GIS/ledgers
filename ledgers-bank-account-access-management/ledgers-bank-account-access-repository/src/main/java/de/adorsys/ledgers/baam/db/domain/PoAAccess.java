@@ -1,26 +1,22 @@
 package de.adorsys.ledgers.baam.db.domain;
 
 import jakarta.persistence.Entity;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
 @Entity
 public class PoAAccess extends BankAccountAccess {
 
-    // Getters and Setters
-    @Getter
-    @Setter
     private String attorneyInFact;
-    @Getter
-    @Setter
+
     private LocalDateTime validFrom;
-    @Getter
-    @Setter
+
     private LocalDateTime validUntil;
-    @Getter
-    @Setter
+
     private PoAType poaType;
     private double weight;
 
