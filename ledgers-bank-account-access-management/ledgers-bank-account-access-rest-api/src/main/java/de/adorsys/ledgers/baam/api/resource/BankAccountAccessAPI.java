@@ -20,19 +20,19 @@ public interface BankAccountAccessAPI {
     @Operation(summary = "Create Bank Account Access", description = "Creates a new bank account access entry")
     ResponseEntity<BankAccountAccess> createAccess(@RequestBody BankAccountAccess access);
 
-    @GetMapping("/{accessId}")
+    @GetMapping("/{Id}")
     @Operation(summary = "Get Bank Account Access", description = "Retrieves a bank account access entry by ID")
-    ResponseEntity<BankAccountAccess> getAccessById(@PathVariable String accessId);
+    ResponseEntity<BankAccountAccess> getAccessById(@PathVariable String Id);
 
     @GetMapping
     @Operation(summary = "Get All Bank Account Accesses details", description = "Retrieves all bank account access entries")
     ResponseEntity<List<BankAccountAccess>> getAllAccesses();
 
-    @PutMapping("/{accessId}")
+    @PutMapping("/{Id}")
     @Operation(summary = "Update Bank Account Access", description = "Updates an existing bank account access entry")
-    ResponseEntity<BankAccountAccess> updateAccess(@PathVariable String accessId, @RequestBody BankAccountAccess access);
+    ResponseEntity<BankAccountAccess> updateAccess(@PathVariable String Id, @RequestBody BankAccountAccess access);
 
-    @DeleteMapping("/{accessId}")
+    @DeleteMapping("/{Id}")
     @Operation(summary = "Delete Bank Account Access", description = "Deletes a bank account access entry by ID")
-    ResponseEntity<Void> deleteAccess(@PathVariable String accessId);
+    ResponseEntity<Void> deleteAccess(@PathVariable String Id);
 }
