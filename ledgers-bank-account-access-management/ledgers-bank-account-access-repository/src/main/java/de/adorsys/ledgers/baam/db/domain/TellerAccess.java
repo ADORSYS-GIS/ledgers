@@ -16,7 +16,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TellerAccess {
+public class TellerAccess  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -24,7 +24,6 @@ public class TellerAccess {
 
     private String name;
     private String tellerId;
-
 
     @Enumerated(EnumType.STRING)
     private AccessStatus status;
@@ -36,7 +35,6 @@ public class TellerAccess {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
-
 
     private String accessType = "TELLER_ACCESS";
 }
