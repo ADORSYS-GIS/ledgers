@@ -32,8 +32,8 @@ public class HolderAccessRepositoryIT {
         repository.deleteAll();
         HolderAccess access = new HolderAccess();
         access.setId("1");
-        access.setAccountId("1");
-        access.setEntityId("1");
+        access.setAccountId("1L");
+        access.setEntityId("1L");
         access.setWeight(1);
         access.setScope(AccessScope.READ);
         access.setConditions(AccessCondition.AMOUNT_RESTRICTED);
