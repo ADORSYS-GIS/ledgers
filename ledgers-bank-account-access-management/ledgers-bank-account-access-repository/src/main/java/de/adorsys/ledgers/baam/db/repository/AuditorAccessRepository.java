@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AuditorAccessRepository extends JpaRepository<AuditorAccess, String> {
-    // Additional query methods can be added here if necessary
+
 }
