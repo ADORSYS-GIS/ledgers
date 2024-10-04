@@ -16,8 +16,6 @@ import java.util.Set;
 @AllArgsConstructor
 public class ManagerAccess extends BankAccountAccess {
 
-    private double weight; // Level of access (0 to 1)
-
 
     @ElementCollection
     private Set<TypeOfManagedAccess> managedAccessTypes = new HashSet<>();

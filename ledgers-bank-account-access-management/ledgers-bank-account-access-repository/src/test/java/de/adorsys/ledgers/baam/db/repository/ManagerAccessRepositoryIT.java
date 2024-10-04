@@ -34,7 +34,6 @@ public class ManagerAccessRepositoryIT {
         // Initialize a ManagerAccess object for testing
         managerAccess = new ManagerAccess();
         managerAccess.setId("1");
-        managerAccess.setName("John Doe");
         managerAccess.setWeight(0.8);
         managerAccess.setStatus(AccessStatus.ACTIVE);
         managerAccess.setManagedAccessTypes(new HashSet<>(Set.of(TypeOfManagedAccess.AGENT_ACCESS)));
@@ -61,8 +60,6 @@ public class ManagerAccessRepositoryIT {
 
         // Verify that the retrieved object matches the one that was saved
         assertThat(foundManager).isNotNull();
-        assertThat(foundManager.getName()).isEqualTo("John Doe");
-        assertThat(foundManager.getWeight()).isEqualTo(0.8);
         assertThat(foundManager.getStatus()).isEqualTo(AccessStatus.ACTIVE);
         assertThat(foundManager.getManagedAccessTypes()).contains(TypeOfManagedAccess.AGENT_ACCESS);
         assertThat(foundManager.getScopeOfAccess()).contains(AccessScope.READ);
@@ -74,8 +71,7 @@ public class ManagerAccessRepositoryIT {
         managerAccessRepository.save(managerAccess);
 
         // Modify the details of the ManagerAccess
-        managerAccess.setName("Jane Doe");
-        managerAccess.setWeight(1.0);
+
         managerAccess.setStatus(AccessStatus.RESTRICTED);
 
         Set<AccessScope> newScopes = new HashSet<>();
@@ -85,8 +81,7 @@ public class ManagerAccessRepositoryIT {
         ManagerAccess updatedManager = managerAccessRepository.save(managerAccess);
 
         // Verify that the information has been updated correctly
-        assertThat(updatedManager.getName()).isEqualTo("Jane Doe");
-        assertThat(updatedManager.getWeight()).isEqualTo(1.0);
+
         assertThat(updatedManager.getStatus()).isEqualTo(AccessStatus.RESTRICTED);
         assertThat(updatedManager.getScopeOfAccess()).contains(AccessScope.EXECUTE);
     }
