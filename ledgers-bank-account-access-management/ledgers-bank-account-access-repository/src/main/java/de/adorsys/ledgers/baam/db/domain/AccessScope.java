@@ -12,15 +12,4 @@ public enum AccessScope {
     EXECUTE,
     DELETE;
 
-        public boolean allowsAction(String action) {
-            try {
-                AccessScope requestedAction = AccessScope.valueOf(action);
-                return this == requestedAction;
-            } catch (IllegalArgumentException e) {
-                // Action not allowed
-                return false;
-            }
-        }
-    
-    
 }
