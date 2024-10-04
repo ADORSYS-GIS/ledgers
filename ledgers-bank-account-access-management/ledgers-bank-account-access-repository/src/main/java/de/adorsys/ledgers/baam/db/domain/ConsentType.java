@@ -7,25 +7,25 @@ package de.adorsys.ledgers.baam.db.domain;
 public enum ConsentType {
 
      /*
-     * The need to implement Other Open Banking Services may arouse the creation of more ConsentTypes
+     * The need to implement Other Open Banking Services may call for the creation of more ConsentTypes
      */
 
     /**
-     * Consent allowing the third-party to access account information such as
+     * Consent allowing the third party to access account information such as
      * balances, transaction histories, and account details without modifying them.
      * This is typically used by Account Information Service Providers (AISP).
      */
     ACCOUNT_INFORMATION_CONSENT,
 
     /**
-     * Consent allowing the third-party to initiate payments from the account
+     * Consent allowing the third party to initiate payments from the account
      * on behalf of the account holder. This is typically used by Payment
      * Initiation Service Providers (PISP).
      */
     PAYMENT_INITIATION_CONSENT,
 
     /**
-     * Consent allowing the third-party to verify whether the account has
+     * Consent allowing the third party to verify whether the account has
      * sufficient funds for a particular transaction. No additional account
      * information is provided beyond the confirmation of funds.
      */
