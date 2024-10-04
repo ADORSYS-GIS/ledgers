@@ -32,8 +32,6 @@ public class HolderAccessRepositoryIT {
         repository.deleteAll();
         HolderAccess access = new HolderAccess();
         access.setId("1");
-        access.setUserId("1");
-        access.setHolderId("1");
         access.setAccountId("1");
         access.setEntityId("1");
         access.setWeight(1);

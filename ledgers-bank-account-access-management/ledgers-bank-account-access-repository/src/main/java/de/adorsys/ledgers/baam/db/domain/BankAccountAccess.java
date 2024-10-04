@@ -25,6 +25,11 @@ public abstract class BankAccountAccess {
     @NotNull
     private String entityId;
 
+    public BankAccountAccess(String accountId, String entityId) {
+        this.accountId = accountId;
+        this.entityId = entityId;
+    }
+
     @Enumerated(EnumType.STRING)
     private AccessScope scope; // Allowed actions
 
