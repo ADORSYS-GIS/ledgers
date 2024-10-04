@@ -7,11 +7,18 @@ package de.adorsys.ledgers.um.api.service;
 
 //NOPMD
 
-import de.adorsys.ledgers.um.api.domain.*;
-import org.springframework.data.domain.*;
+import de.adorsys.ledgers.um.api.domain.UserBO;
+import de.adorsys.ledgers.um.api.domain.ScaUserDataBO;
+import de.adorsys.ledgers.um.api.domain.AccountAccessBO;
+import de.adorsys.ledgers.um.api.domain.AisConsentBO;
+import de.adorsys.ledgers.um.api.domain.UserExtendedBO;
+import de.adorsys.ledgers.um.api.domain.UserRoleBO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.time.*;
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 
 public interface UserService {
 

@@ -11,4 +11,5 @@ public enum AccessScope {
     WRITE,
     EXECUTE,
     DELETE;
+
 }
