@@ -6,11 +6,8 @@
 package de.adorsys.ledgers.deposit.api.resource;
 
 import de.adorsys.ledgers.deposit.api.domain.account.AccountBalanceTO;
-import de.adorsys.ledgers.deposit.api.domain.account.AccountIdentifierTypeTO;
-import de.adorsys.ledgers.deposit.api.domain.account.AdditionalAccountInformationTO;
-import de.adorsys.ledgers.deposit.api.domain.account.FundsConfirmationRequestTO;
 import de.adorsys.ledgers.deposit.api.domain.account.TransactionTO;
-import de.adorsys.ledgers.middleware.api.domain.account.AccountDetailsTO;
+import de.adorsys.ledgers.deposit.api.domain.account.AccountDetailsTO;
 import de.adorsys.ledgers.util.domain.CustomPageImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -18,11 +15,9 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -33,21 +28,6 @@ import static de.adorsys.ledgers.deposit.api.utils.Constants.*;
 public interface AccountRestAPI {
     String BASE_PATH = "/accounts";
 
-//    /**
-//     * Return the list of accounts linked with the current customer.
-//     *
-//     * @return : the list of accounts linked with the current customer.
-//     */
-//    @GetMapping
-//    @Operation(summary = "List fo Accessible Accounts",
-//            description = "Returns the list of all accounts linked to the connected user. "
-//                    + "Call only available to role CUSTOMER.")
-// 
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = AccountDetailsTO.class)),
-//                    description = "List of accounts accessible to the user.")
-//    })
-//    ResponseEntity<List<AccountDetailsTO>> getListOfAccounts();
 
     @GetMapping("/{accountId}")
     @Operation(summary = "Load Account by AccountId",
@@ -98,19 +78,3 @@ public interface AccountRestAPI {
             @PathVariable(name = ACCOUNT_ID) String accountId,
             @Parameter(name = TRANSACTION_ID)
             @PathVariable(name = TRANSACTION_ID) String transactionId);}
-
-//    @Operation(summary = "Fund Confirmation", description = "Returns account details information given the account IBAN")
-//
-//    @PostMapping(value = "/funds-confirmation")
-//    ResponseEntity<Boolean> fundsConfirmation(
-//            @RequestBody FundsConfirmationRequestTO request);
-//
-//    @GetMapping(path = "/info/{accountIdentifierType}/{accountIdentifier}")
-//    @Operation(summary = "Load Account Owner Additional information", description = "Returns Additional Account Information by Account Identifier")
-//
-//    ResponseEntity<List<AdditionalAccountInformationTO>> getAdditionalAccountInfo(
-//            @Parameter(description = "Account identifier type i.e. ACCOUNT_ID / IBAN")
-//            @PathVariable(name = ACCOUNT_IDENTIFIER_TYPE) AccountIdentifierTypeTO accountIdentifierType,
-//            @Parameter(description = "The IBAN of the requested account: e.g.: DE69760700240340283600", example = "DE69760700240340283600")
-//            @PathVariable(name = ACCOUNT_IDENTIFIER) String accountIdentifier);
-//}

@@ -5,10 +5,13 @@
 
 package de.adorsys.ledgers.deposit.api.domain.account;
 
+import lombok.Getter;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@Getter
 public enum AccountStatusTO {
     ENABLED("enabled"),
     DELETED("deleted"),
@@ -26,10 +29,6 @@ public enum AccountStatusTO {
 
     AccountStatusTO(String value) {
         this.value = value;
-    }
-
-    public String getValue() {
-        return value;
     }
 
     public static Optional<AccountStatusTO> getByValue(String value) {
