@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface DelegatedAccessRepository extends JpaRepository<DelegatedAccess, String> {
 
-    List<DelegatedAccess> findByAccountId(String accountId123);
+    List<DelegatedAccess> findByAccountId(String accountId);
 }
