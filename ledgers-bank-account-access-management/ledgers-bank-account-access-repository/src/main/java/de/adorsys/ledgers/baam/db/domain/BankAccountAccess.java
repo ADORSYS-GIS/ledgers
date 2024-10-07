@@ -38,4 +38,9 @@ public abstract class BankAccountAccess {
 
     private String policies; // Policies associated with the access
 
+    public BankAccountAccess(@NotNull String accountId, @NotNull String entityId) {
+        this.accountId = accountId;
+        this.entityId = entityId;
+    }
+
 }
