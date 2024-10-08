@@ -16,7 +16,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static de.adorsys.ledgers.deposit.api.utils.Constants.*;
+import static de.adorsys.ledgers.deposit.api.utils.Constants.ACCOUNT_ID;
+import static de.adorsys.ledgers.deposit.api.utils.Constants.USER_ID;
+
 
 @Tag(name = "LDG022 - Accounts (Deposit Account)", description = "Provides access to the deposit account resource for  members.")
 public interface AccountMgmResourceAPI {

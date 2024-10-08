@@ -22,7 +22,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import static de.adorsys.ledgers.deposit.api.utils.Constants.*;
+
+import static de.adorsys.ledgers.deposit.api.utils.Constants.ACCOUNT_ID;
+import static de.adorsys.ledgers.deposit.api.utils.Constants.DATE_FROM_QUERY_PARAM;
+import static de.adorsys.ledgers.deposit.api.utils.Constants.DATE_TO_QUERY_PARAM;
+import static de.adorsys.ledgers.deposit.api.utils.Constants.LOCAL_DATE_YYYY_MM_DD_FORMAT;
+import static de.adorsys.ledgers.deposit.api.utils.Constants.PAGE;
+import static de.adorsys.ledgers.deposit.api.utils.Constants.SIZE;
+import static de.adorsys.ledgers.deposit.api.utils.Constants.TRANSACTION_ID;
+
 
 @Tag(name = "LDG003 - Accounts", description = "Provides access to a deposit account. This interface does not provide any endpoint to list all accounts.")
 public interface AccountRestAPI {
