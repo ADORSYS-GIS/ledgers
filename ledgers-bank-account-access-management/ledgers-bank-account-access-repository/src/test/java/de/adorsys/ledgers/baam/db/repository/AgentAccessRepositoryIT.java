@@ -1,18 +1,22 @@
 package de.adorsys.ledgers.baam.db.repository;
 
-import com.github.springtestdbunit.DbUnitTestExecutionListener;
-import de.adorsys.ledgers.baam.db.domain.*;
-import de.adorsys.ledgers.baam.db.test.BaamRepositoryApplication;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import com.github.springtestdbunit.*;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.*;
+import  de.adorsys.ledgers.baam.db.domain.AgentAccess;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.boot.test.context.*;
+import org.springframework.test.context.*;
+import org.springframework.test.context.junit.jupiter.*;
+import org.springframework.test.context.support.*;
+import org.springframework.test.context.transaction.*;
+import de.adorsys.ledgers.baam.db.domain.AccessCondition;
+import de.adorsys.ledgers.baam.db.domain.AccessScope;
+import de.adorsys.ledgers.baam.db.domain.AccessStatus;
+import  de.adorsys.ledgers.baam.db.test.BaamRepositoryApplication;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = BaamRepositoryApplication.class)
 @ExtendWith(SpringExtension.class)
