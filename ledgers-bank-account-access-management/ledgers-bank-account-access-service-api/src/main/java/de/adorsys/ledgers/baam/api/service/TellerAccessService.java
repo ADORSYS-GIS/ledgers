@@ -4,7 +4,10 @@
  */
 
 package de.adorsys.ledgers.baam.api.service;
-import de.adorsys.ledgers.baam.db.domain.*;
+import de.adorsys.ledgers.baam.db.domain.BankAccountAccess;
+import de.adorsys.ledgers.baam.db.domain.TellerAccess;
 
 public interface TellerAccessService extends BankAccountAccessService<TellerAccess>{
+    void createTellerAccess(BankAccountAccess bankAccountAccess);
+
 }

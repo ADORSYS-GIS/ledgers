@@ -14,12 +14,11 @@ public interface BankAccountAccessService<T extends BankAccountAccess> {
 
     T createBankAccountAccess(String accountId, String entityId, T accessDetails);
 
-    T modifyBankAccountAccess(String accessId, T accessDetails);
-
-    Optional<T> suspendBankAccountAccess(String accessId);
-
-    Optional<T> reactivateBankAccountAccess(String accessId);
-
-    Optional<T> deleteBankAccountAccess(String accessId);
+    void modifyBankAccountAccess(T bankAccountAccess);
+    void suspendBankAccountAccess(String id);
+    void reactivateBankAccountAccess(String id);
+    Optional<Boolean> revokeBankAccountAccess(String accessId);
+    List<T> getAllBankAccountAccess();
+    T getBankAccountAccessById(String id);
 }
 
