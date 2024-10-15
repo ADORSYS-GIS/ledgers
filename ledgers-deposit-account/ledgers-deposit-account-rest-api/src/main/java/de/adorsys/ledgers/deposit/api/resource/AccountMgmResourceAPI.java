@@ -7,7 +7,6 @@ package de.adorsys.ledgers.deposit.api.resource;
 
 import de.adorsys.ledgers.deposit.api.domain.account.AccountDetailsTO;
 import de.adorsys.ledgers.deposit.api.domain.payment.AmountTO;
-import de.adorsys.ledgers.util.domain.CustomPageImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -18,7 +17,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 import static de.adorsys.ledgers.deposit.api.utils.Constants.*;
 
@@ -26,7 +24,6 @@ import static de.adorsys.ledgers.deposit.api.utils.Constants.*;
 public interface AccountMgmResourceAPI {
 
     String BASE_PATH = "/AccountManagement";
-
 
 
     /**
@@ -44,9 +41,9 @@ public interface AccountMgmResourceAPI {
             @ApiResponse(responseCode = "404", description = "User with this ID not found"),
             @ApiResponse(responseCode = "409", description = "Account with given IBAN already exists.")
     })
-    @PostMapping
+    @PostMapping("/Account")
     ResponseEntity<Boolean> createDepositAccountForUser(@RequestParam(name = USER_ID) String userId,
-                                                     @RequestBody AccountDetailsTO accountDetailsTO);
+                                                        @RequestBody AccountDetailsTO accountDetailsTO);
 
     /**
      * Returns the list of accounts that belong to the same branch as user.
@@ -55,33 +52,13 @@ public interface AccountMgmResourceAPI {
      */
     @Operation(summary = "List fo Accessible Accounts",
             description = "Returns the list of all accounts linked to the connected user. "
-                                  + "Call only available to role CUSTOMER.")
+                    + "Call only available to role CUSTOMER.")
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = AccountDetailsTO[].class)), description = "List of accounts accessible to the user.")
     })
-    @GetMapping
-    ResponseEntity<List<AccountDetailsTO>> getListOfAccounts();
 
-    @Operation(summary = "List fo Accessible Accounts",
-            description = "Returns the list of all accounts linked to the connected user, paged view. "
-                    + "Query param represents full or partial IBAN")
 
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = AccountDetailsTO[].class)), description = "List of accounts accessible to the user.")
-    })
-    @GetMapping(path = "/page")
-    ResponseEntity<CustomPageImpl<AccountDetailsTO>> getListOfAccountsPaged(
-            @RequestParam(value = QUERY_PARAM, defaultValue = "", required = false) String queryParam,
-            @RequestParam(PAGE) int page, @RequestParam(SIZE) int size, @RequestParam(WITH_BALANCE_QUERY_PARAM) boolean withBalance);
-
-    @Operation(summary = "Load Account by AccountId",
-            description = "Returns account details information for the given account id. "
-                                  + "User must have access to the target account. This is also accessible to other token types like tpp token (DELEGATED_ACESS)")
-
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = AccountDetailsTO.class)), description = "Account details.")
-    })
     @GetMapping("/{accountId}")
     ResponseEntity<AccountDetailsTO> getAccountDetailsById(@Parameter(name = ACCOUNT_ID) @PathVariable(ACCOUNT_ID) String accountId);
 
@@ -103,7 +80,8 @@ public interface AccountMgmResourceAPI {
 
     @Operation(summary = "Load Extended Account Details by AccountId",
             description = "Returns extended account details information for the given account id. "
-                                  + "User must have access to the target account. This is also accessible to other token types like tpp token (DELEGATED_ACESS)")
+                    + "User must have access to the target account. This is also accessible to other token types like tpp token (DELEGATED_ACESS)")
 
     @PostMapping("/{accountId}/status")
-    ResponseEntity<Boolean> changeStatus(@PathVariable(ACCOUNT_ID) String accountId);}
+    ResponseEntity<Boolean> changeStatus(@PathVariable(ACCOUNT_ID) String accountId);
+}

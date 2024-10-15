@@ -37,7 +37,7 @@ public class ExceptionAdvisor {
 
 
     @ExceptionHandler(DepositModuleException.class)
-    public ResponseEntity<Map<String,String>> handleDepositModuleException(DepositModuleException ex) {
+    public ResponseEntity<Map<String,String>> handleDepositModuleException(DepositModuleException ex)  {
         HttpStatus status = DepositHttpStatusResolver.resolveHttpStatusByCode(ex.getErrorCode());
         Map<String, String> body = getHandlerContent(status, ex.getErrorCode().name(), null, ex.getDevMsg());
         log.error(ex.getDevMsg());

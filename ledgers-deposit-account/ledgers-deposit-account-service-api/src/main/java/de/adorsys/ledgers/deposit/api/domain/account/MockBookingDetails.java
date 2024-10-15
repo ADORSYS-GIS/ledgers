@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.util.Currency;
 
 @Data
-public class BookingDetails {
+public class MockBookingDetails {
     private String userAccount;
     private LocalDate bookingDate;
     private LocalDate valueDate;

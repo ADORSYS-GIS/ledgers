@@ -5,7 +5,7 @@
 
 package de.adorsys.ledgers.deposit.api.resource;
 
-import de.adorsys.ledgers.deposit.api.domain.account.BookingDetails;
+import de.adorsys.ledgers.deposit.api.domain.account.MockBookingDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -26,5 +26,5 @@ public interface TransactionsResourceAPI {
      */
     @Operation(summary = "Posts transactions to Ledgers")
     @PostMapping
-    ResponseEntity<Map<String, String>> transactions(@RequestBody List<BookingDetails> data);
+    ResponseEntity<Map<String, String>> transactions(@RequestBody List<MockBookingDetails> data);
 }

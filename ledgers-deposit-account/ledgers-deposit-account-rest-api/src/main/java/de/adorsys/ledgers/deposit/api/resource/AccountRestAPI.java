@@ -6,8 +6,6 @@
 package de.adorsys.ledgers.deposit.api.resource;
 
 import de.adorsys.ledgers.deposit.api.domain.account.AccountBalanceTO;
-import de.adorsys.ledgers.deposit.api.domain.account.AccountIdentifierTypeTO;
-import de.adorsys.ledgers.deposit.api.domain.account.AdditionalAccountInformationTO;
 import de.adorsys.ledgers.deposit.api.domain.account.FundsConfirmationRequestTO;
 import de.adorsys.ledgers.deposit.api.domain.account.TransactionTO;
 import de.adorsys.ledgers.util.domain.CustomPageImpl;
@@ -75,12 +73,5 @@ public interface AccountRestAPI {
     ResponseEntity<Boolean> fundsConfirmation(
             @RequestBody FundsConfirmationRequestTO request);
 
-    @GetMapping(path = "/info/{accountIdentifierType}/{accountIdentifier}")
-    @Operation(summary = "Load Account Owner Additional information", description = "Returns Additional Account Information by Account Identifier")
 
-    ResponseEntity<List<AdditionalAccountInformationTO>> getAdditionalAccountInfo(
-            @Parameter(description = "Account identifier type i.e. ACCOUNT_ID / IBAN")
-            @PathVariable(name = ACCOUNT_IDENTIFIER_TYPE) AccountIdentifierTypeTO accountIdentifierType,
-            @Parameter(description = "The IBAN of the requested account: e.g.: DE69760700240340283600", example = "DE69760700240340283600")
-            @PathVariable(name = ACCOUNT_IDENTIFIER) String accountIdentifier);
 }
