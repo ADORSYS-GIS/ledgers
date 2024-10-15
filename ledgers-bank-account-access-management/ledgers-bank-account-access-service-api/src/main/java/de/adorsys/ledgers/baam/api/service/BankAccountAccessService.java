@@ -7,17 +7,15 @@ package de.adorsys.ledgers.baam.api.service;
 
 import de.adorsys.ledgers.baam.db.domain.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public interface BankAccountAccessService<T extends BankAccountAccess> {
 
-    T createBankAccountAccess(String accountId, String entityId, T accessDetails);
-
+    T createBankAccountAccess(T accessDetails);
     void modifyBankAccountAccess(T bankAccountAccess);
     void suspendBankAccountAccess(String id);
     void reactivateBankAccountAccess(String id);
-    Optional<Boolean> revokeBankAccountAccess(String accessId);
+    void revokeBankAccountAccess(String accessId);
     List<T> getAllBankAccountAccess();
     T getBankAccountAccessById(String id);
 }
