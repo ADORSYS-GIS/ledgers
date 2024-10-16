@@ -27,6 +27,7 @@
         <module>keycloak</module>
         <module>ledgers-cleanup-service</module>
         <module>ledgers-bank-account-access-management</module>
+        <module>ledgers-account-access</module>
     </modules>
 
     <packaging>pom</packaging>
