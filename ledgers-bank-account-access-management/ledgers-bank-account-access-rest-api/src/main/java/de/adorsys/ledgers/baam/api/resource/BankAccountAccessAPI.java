@@ -4,11 +4,13 @@
  */
 
 package de.adorsys.ledgers.baam.api.resource;
-import de.adorsys.ledgers.baam.db.domain.BankAccountAccess;
+
+import de.adorsys.ledgers.baam.db.domain.*;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.tags.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.*;
 
 @Tag(name = "Bank Account Access", description = "Provide endpoint for managing bank account access.")
@@ -18,7 +20,7 @@ public interface BankAccountAccessAPI {
 
     @PostMapping
     @Operation(summary = "Create Bank Account Access", description = "Creates a new bank account access entry")
-    ResponseEntity<BankAccountAccess> createAccess(@RequestBody BankAccountAccess access);
+    ResponseEntity<BankAccountAccess> createAccountAccess(@RequestBody BankAccountAccess bankAccountAccess);
 
     @GetMapping("/{Id}")
     @Operation(summary = "Get Bank Account Access", description = "Retrieves a bank account access entry by ID")
@@ -30,7 +32,7 @@ public interface BankAccountAccessAPI {
 
     @PutMapping("/{Id}")
     @Operation(summary = "Update Bank Account Access", description = "Updates an existing bank account access entry")
-    ResponseEntity<BankAccountAccess> updateAccess(@PathVariable String Id, @RequestBody BankAccountAccess access);
+    ResponseEntity<BankAccountAccess> updateAccess(@PathVariable String Id, @RequestBody BankAccountAccess bankAccountAccess);
 
     @DeleteMapping("/{Id}")
     @Operation(summary = "Delete Bank Account Access", description = "Deletes a bank account access entry by ID")
