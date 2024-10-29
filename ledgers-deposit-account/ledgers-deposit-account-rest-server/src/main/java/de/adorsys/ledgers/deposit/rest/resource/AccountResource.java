@@ -5,6 +5,15 @@
 
 package de.adorsys.ledgers.deposit.rest.resource;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import de.adorsys.ledgers.deposit.api.domain.account.AccountBalanceTO;
 import de.adorsys.ledgers.deposit.api.domain.account.AccountDetailsTO;
 import de.adorsys.ledgers.deposit.api.domain.account.TransactionTO;
@@ -12,19 +21,8 @@ import de.adorsys.ledgers.deposit.api.resource.AccountRestAPI;
 import de.adorsys.ledgers.deposit.api.service.DepositAccountService;
 import de.adorsys.ledgers.deposit.rest.annotation.DepositUserResource;
 import de.adorsys.ledgers.util.domain.CustomPageImpl;
-import de.adorsys.ledgers.util.domain.CustomPageableImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @RestController
