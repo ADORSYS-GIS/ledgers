@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static de.adorsys.ledgers.deposit.api.utils.Constants.ACCOUNT_ID;
@@ -59,16 +60,16 @@ public interface AccountRestAPI {
     ResponseEntity<List<TransactionTO>> getTransactionByDates(
             @Parameter(name = ACCOUNT_ID)
             @PathVariable(ACCOUNT_ID) String accountId,
-            @RequestParam(name = DATE_FROM_QUERY_PARAM, required = false) @DateTimeFormat(pattern = LOCAL_DATE_YYYY_MM_DD_FORMAT) LocalDate dateFrom,
-            @RequestParam(name = DATE_TO_QUERY_PARAM) @DateTimeFormat(pattern = LOCAL_DATE_YYYY_MM_DD_FORMAT) LocalDate dateTo);
+            @RequestParam(name = DATE_FROM_QUERY_PARAM, required = false) @DateTimeFormat(pattern = LOCAL_DATE_YYYY_MM_DD_FORMAT) LocalDateTime dateFrom,
+            @RequestParam(name = DATE_TO_QUERY_PARAM) @DateTimeFormat(pattern = LOCAL_DATE_YYYY_MM_DD_FORMAT) LocalDateTime dateTo);
 
     @GetMapping(path = "/{accountId}/transactions/page", params = {DATE_FROM_QUERY_PARAM, DATE_TO_QUERY_PARAM, PAGE, SIZE})
     @Operation(summary = "Find Transactions By Date", description = "Returns transactions for the given account id for certain dates, paged view")
     ResponseEntity<CustomPageImpl<TransactionTO>> getTransactionByDatesPaged(
             @Parameter(name = ACCOUNT_ID)
             @PathVariable(name = ACCOUNT_ID) String accountId,
-            @RequestParam(name = DATE_FROM_QUERY_PARAM, required = false) @DateTimeFormat(pattern = LOCAL_DATE_YYYY_MM_DD_FORMAT) LocalDate dateFrom,
-            @RequestParam(name = DATE_TO_QUERY_PARAM) @DateTimeFormat(pattern = LOCAL_DATE_YYYY_MM_DD_FORMAT) LocalDate dateTo,
+            @RequestParam(name = DATE_FROM_QUERY_PARAM, required = false) @DateTimeFormat(pattern = LOCAL_DATE_YYYY_MM_DD_FORMAT) LocalDateTime dateFrom,
+            @RequestParam(name = DATE_TO_QUERY_PARAM) @DateTimeFormat(pattern = LOCAL_DATE_YYYY_MM_DD_FORMAT) LocalDateTime dateTo,
             @RequestParam(PAGE) int page,
             @RequestParam(SIZE) int size);
 
