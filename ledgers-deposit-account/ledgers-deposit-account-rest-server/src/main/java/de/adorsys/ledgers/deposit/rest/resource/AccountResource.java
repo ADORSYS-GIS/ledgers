@@ -5,26 +5,21 @@
 
 package de.adorsys.ledgers.deposit.rest.resource;
 
-import de.adorsys.ledgers.deposit.api.domain.account.AccountBalanceTO;
-import de.adorsys.ledgers.deposit.api.domain.account.AccountDetailsTO;
-import de.adorsys.ledgers.deposit.api.domain.account.TransactionTO;
-import de.adorsys.ledgers.deposit.api.resource.AccountRestAPI;
-import de.adorsys.ledgers.deposit.api.service.DepositAccountService;
-import de.adorsys.ledgers.deposit.rest.annotation.DepositUserResource;
-import de.adorsys.ledgers.util.domain.CustomPageImpl;
-import de.adorsys.ledgers.util.domain.CustomPageableImpl;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import de.adorsys.ledgers.deposit.api.domain.account.*;
+import de.adorsys.ledgers.deposit.api.resource.*;
+import de.adorsys.ledgers.deposit.api.service.*;
+import de.adorsys.ledgers.deposit.rest.annotation.*;
+import de.adorsys.ledgers.util.domain.*;
+import lombok.*;
+import lombok.extern.slf4j.*;
+import org.springframework.http.*;
+import org.springframework.security.access.prepost.*;
+import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.time.*;
+import java.util.*;
+
+import static de.adorsys.ledgers.middleware.api.exception.MiddlewareErrorCode.REQUEST_VALIDATION_FAILURE;
 
 @Slf4j
 @RestController
@@ -52,7 +47,7 @@ public class AccountResource implements AccountRestAPI {
     @Override
     @PreAuthorize("hasAccessToAccount(#accountId)")
     public ResponseEntity<List<TransactionTO>> getTransactionByDates(String accountId, LocalDateTime dateFrom, LocalDateTime dateTo) {
-//        dateChecker(dateFrom, dateTo);
+        dateChecker(dateFrom, dateTo);
 //        List<TransactionTO> transactions = depositAccountService.getTransactionsByDates(accountId, validDate(dateFrom), validDate(dateTo));
 //        return ResponseEntity.ok(transactions);
         return null;
@@ -61,7 +56,7 @@ public class AccountResource implements AccountRestAPI {
     @Override
     @PreAuthorize("hasAccessToAccount(#accountId)")
     public ResponseEntity<CustomPageImpl<TransactionTO>> getTransactionByDatesPaged(String accountId, LocalDateTime dateFrom, LocalDateTime dateTo, int page, int size) {
-//        dateChecker(dateFrom, dateTo);
+        dateChecker(dateFrom, dateTo);
 //        CustomPageableImpl pageable = new CustomPageableImpl(page, size);
 //        CustomPageImpl<TransactionTO> customPage = depositAccountService.getTransactionsByDatesPaged(accountId, dateFrom, dateTo, pageable);
 //        return ResponseEntity.ok(customPage);
@@ -78,10 +73,10 @@ public class AccountResource implements AccountRestAPI {
     private void dateChecker(LocalDateTime dateFrom, LocalDateTime dateTo) {
         if (!validDate(dateFrom).isEqual(validDate(dateTo))
                 && validDate(dateFrom).isAfter(validDate(dateTo))) {
-//            throw MiddlewareModuleException.builder()
-//                    .errorCode(REQUEST_VALIDATION_FAILURE)
-//                    .devMsg("Illegal request dates sequence, possibly swapped 'date from' with 'date to'")
-//                    .build();
+            throw de.adorsys.ledgers.middleware.api.exception.MiddlewareModuleException.builder()
+                    .errorCode(REQUEST_VALIDATION_FAILURE)
+                    .devMsg("Illegal request dates sequence, possibly swapped 'date from' with 'date to'")
+                    .build();
         }
     }
 

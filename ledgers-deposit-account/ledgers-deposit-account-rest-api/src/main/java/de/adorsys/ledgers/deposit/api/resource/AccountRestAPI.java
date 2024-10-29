@@ -5,32 +5,20 @@
 
 package de.adorsys.ledgers.deposit.api.resource;
 
-import de.adorsys.ledgers.deposit.api.domain.account.AccountBalanceTO;
-import de.adorsys.ledgers.deposit.api.domain.account.TransactionTO;
-import de.adorsys.ledgers.deposit.api.domain.account.AccountDetailsTO;
-import de.adorsys.ledgers.util.domain.CustomPageImpl;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.ResponseEntity;
+import de.adorsys.ledgers.deposit.api.domain.account.*;
+import de.adorsys.ledgers.util.domain.*;
+import io.swagger.v3.oas.annotations.*;
+import io.swagger.v3.oas.annotations.media.*;
+import io.swagger.v3.oas.annotations.responses.*;
+import io.swagger.v3.oas.annotations.tags.*;
+import org.springframework.format.annotation.*;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
+import java.time.*;
+import java.util.*;
 
-import static de.adorsys.ledgers.deposit.api.utils.Constants.ACCOUNT_ID;
-import static de.adorsys.ledgers.deposit.api.utils.Constants.DATE_FROM_QUERY_PARAM;
-import static de.adorsys.ledgers.deposit.api.utils.Constants.DATE_TO_QUERY_PARAM;
-import static de.adorsys.ledgers.deposit.api.utils.Constants.LOCAL_DATE_YYYY_MM_DD_FORMAT;
-import static de.adorsys.ledgers.deposit.api.utils.Constants.PAGE;
-import static de.adorsys.ledgers.deposit.api.utils.Constants.SIZE;
-import static de.adorsys.ledgers.deposit.api.utils.Constants.TRANSACTION_ID;
+import static de.adorsys.ledgers.deposit.api.utils.Constants.*;
 
 
 @Tag(name = "LDG??? - Accounts", description = "Provides access to a deposit account.")

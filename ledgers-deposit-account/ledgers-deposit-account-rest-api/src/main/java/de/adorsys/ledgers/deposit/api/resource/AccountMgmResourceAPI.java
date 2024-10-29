@@ -5,19 +5,14 @@
 
 package de.adorsys.ledgers.deposit.api.resource;
 
-import de.adorsys.ledgers.deposit.api.domain.account.AccountDetailsTO;
-import de.adorsys.ledgers.deposit.api.domain.payment.AmountTO;
-
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.ResponseEntity;
+import de.adorsys.ledgers.deposit.api.domain.account.*;
+import io.swagger.v3.oas.annotations.*;
+import io.swagger.v3.oas.annotations.responses.*;
+import io.swagger.v3.oas.annotations.tags.*;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
-import static de.adorsys.ledgers.deposit.api.utils.Constants.ACCOUNT_ID;
-import static de.adorsys.ledgers.deposit.api.utils.Constants.AUTHORIZATION;;
+import static de.adorsys.ledgers.deposit.api.utils.Constants.*;
 
 
 @Tag(name = "LDG??? - Accounts (Deposit Account)", description = "Provides access to the deposit account resource management interface")
