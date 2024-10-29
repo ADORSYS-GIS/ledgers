@@ -25,14 +25,19 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccountBalanceTO {
+
     private AmountTO amount;
+    
     private BalanceTypeTO balanceType;
+    
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime lastChangeDateTime;
+    
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate referenceDate;
+    
     private String lastCommittedTransaction;
     private String iban;
 }

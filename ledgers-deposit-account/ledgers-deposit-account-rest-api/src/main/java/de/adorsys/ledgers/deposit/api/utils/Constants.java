@@ -10,6 +10,7 @@ public abstract class Constants {
 
     public static final String ACCOUNT_ID = "accountId";
     public static final String USER_ID = "userId";
+    public static final String AUTHORIZATION = "Authorization";
 
     public static final String TRANSACTION_ID = "transactionId";
 

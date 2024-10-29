@@ -9,8 +9,6 @@
         <version>6.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-
-    <groupId>de.adorsys.ledgers.deposit.api</groupId>
     <artifactId>ledgers-deposit-account-rest-api</artifactId>
 
     <properties>
