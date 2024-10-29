@@ -22,6 +22,7 @@
 		<module>ledgers-deposit-account-repository</module>
         <module>ledgers-deposit-account-rest-api</module>
 		<module>ledgers-deposit-account-rest-server</module>
+        <module>ledgers-deposit-account-rest-client</module>
     </modules>
 
 	<packaging>pom</packaging>
