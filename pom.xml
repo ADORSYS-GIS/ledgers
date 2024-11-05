@@ -14,20 +14,8 @@
     <version>6.1-SNAPSHOT</version>
 
     <modules>
-        <module>ledgers-app</module>
         <module>ledgers-postings</module>
         <module>ledgers-utils</module>
-        <module>ledgers-deposit-account</module>
-        <module>ledgers-user-management</module>
-        <module>ledgers-middleware</module>
-        <module>ledgers-sca</module>
-        <module>ledgers-db</module>
-        <module>ledgers-security</module>
-        <module>ledgers-jaxb-api</module>
-        <module>keycloak</module>
-        <module>ledgers-cleanup-service</module>
-        <module>ledgers-bank-account-access-management</module>
-        <module>ledgers-account-access</module>
     </modules>
 
     <packaging>pom</packaging>
