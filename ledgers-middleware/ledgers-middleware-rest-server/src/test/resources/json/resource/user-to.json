@@ -1,9 +1,0 @@
-{
-  "login": "superman",
-  "email": "superman@localhost.net",
-  "pin": "111111",
-  "scaUserData": [],
-  "accountAccesses": [],
-  "userRoles": ["STAFF"],
-  "branch": "branchId"
-}

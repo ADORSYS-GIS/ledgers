@@ -17,7 +17,7 @@
 	</parent>
 
 	<modules>
-		<module>ledgers-postings-rest-server</module>
+		<!-- <module>ledgers-postings-rest-server</module> -->
 		<module>ledgers-postings-service-api</module>
 		<module>ledgers-postings-service-impl</module>
 		<module>ledgers-postings-repository</module>

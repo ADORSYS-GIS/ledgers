@@ -5,8 +5,7 @@
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.adorsys.ledgers</groupId>
@@ -14,20 +13,8 @@
     <version>6.1-SNAPSHOT</version>
 
     <modules>
-        <module>ledgers-app</module>
         <module>ledgers-postings</module>
         <module>ledgers-utils</module>
-        <module>ledgers-deposit-account</module>
-        <module>ledgers-user-management</module>
-        <module>ledgers-middleware</module>
-        <module>ledgers-sca</module>
-        <module>ledgers-db</module>
-        <module>ledgers-security</module>
-        <module>ledgers-jaxb-api</module>
-        <module>keycloak</module>
-        <module>ledgers-cleanup-service</module>
-        <module>ledgers-bank-account-access-management</module>
-        <module>ledgers-account-access</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -51,49 +38,6 @@
             <organization>adorsys GmbH &amp; Co KG</organization>
             <organizationUrl>https://adorsys.de/</organizationUrl>
         </developer>
-        <developer>
-            <name>Serhii Petrychenko</name>
-            <email>spe@adorsys.com.ua</email>
-            <organization>LLC Golden Dimension</organization>
-            <organizationUrl>https://adorsys.com.ua/</organizationUrl>
-        </developer>
-        <developer>
-            <name>Dmytro Mishchuck</name>
-            <email>dmi@adorsys.com.ua</email>
-            <organization>LLC Golden Dimension</organization>
-            <organizationUrl>https://adorsys.com.ua/</organizationUrl>
-        </developer>
-        <developer>
-            <name>Vladimir Nechai</name>
-            <email>vne@adorsys.de</email>
-            <organization>adorsys GmbH &amp; Co KG</organization>
-            <organizationUrl>https://adorsys.de/</organizationUrl>
-        </developer>
-        <developer>
-            <name>Ibragim Sautiev</name>
-            <email>isa@adorsys.de</email>
-            <organization>adorsys GmbH &amp; Co KG</organization>
-            <organizationUrl>https://adorsys.de/</organizationUrl>
-        </developer>
-        <developer>
-            <name>Petro Rudenko</name>
-            <email>pru@adorsys.com.ua</email>
-            <organization>LLC Golden Dimension</organization>
-            <organizationUrl>https://adorsys.com.ua/</organizationUrl>
-        </developer>
-        <developer>
-            <name>Hryhorii Hevorkian</name>
-            <email>hhe@adorsys.com.ua</email>
-            <organization>LLC Golden Dimension</organization>
-            <organizationUrl>https://adorsys.com.ua/</organizationUrl>
-        </developer>
-        <developer>
-            <name>Serhii Semenykhin</name>
-            <email>sse@adorsys.com.ua</email>
-            <organization>LLC Golden Dimension</organization>
-            <organizationUrl>https://adorsys.com.ua/</organizationUrl>
-        </developer>
-
     </developers>
 
     <properties>
@@ -750,12 +694,12 @@
             </build>
             <distributionManagement>
                 <repository>
-                    <id>gitlab-maven</id>
-                    <url>https://git.adorsys.de/api/v4/projects/1500/packages/maven</url>
+                    <id>github</id>
+                    <url>https://maven.pkg.github.com/ADORSYS-GIS/ledgers</url>
                 </repository>
                 <snapshotRepository>
-                    <id>gitlab-maven</id>
-                    <url>https://git.adorsys.de/api/v4/projects/1500/packages/maven</url>
+                    <id>github</id>
+                    <url>https://maven.pkg.github.com/ADORSYS-GIS/ledgers</url>
                 </snapshotRepository>
             </distributionManagement>
         </profile>

@@ -1,6 +1,0 @@
-{
-  "id": 123,
-  "description": "recovery point description",
-  "rollBackTime": "2021-12-03T10:15:30",
-  "branchId": "branch"
-}
